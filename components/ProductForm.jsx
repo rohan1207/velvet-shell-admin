@@ -50,6 +50,20 @@ function galleryExtras(variant) {
   return (variant?.gallery || []).filter((g) => g?.url && g.url !== variant.heroUrl);
 }
 
+function galleryOrdered(variant) {
+  return (variant?.gallery || []).filter((g) => g?.url);
+}
+
+/** Natural name sort so files named 1,2,3,10 upload in that order. */
+function sortFilesByName(files = []) {
+  return [...files].sort((a, b) =>
+    String(a?.name || '').localeCompare(String(b?.name || ''), undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    }),
+  );
+}
+
 function mediaSummary(variant) {
   const extras = galleryExtras(variant);
   return {
@@ -178,6 +192,8 @@ export default function ProductForm({
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null); // { current, total }
+  const [dragGalleryIndex, setDragGalleryIndex] = useState(null);
+  const [dragOverGalleryIndex, setDragOverGalleryIndex] = useState(null);
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [leaveOpen, setLeaveOpen] = useState(false);
@@ -331,7 +347,7 @@ export default function ProductForm({
   }
 
   async function onHeroFileSelected(event) {
-    const files = Array.from(event.target.files || []);
+    const files = sortFilesByName(Array.from(event.target.files || []));
     event.target.value = '';
     if (!files.length) return;
     setError('');
@@ -356,7 +372,7 @@ export default function ProductForm({
       setNotice(
         files.length === 1
           ? 'Hero image uploaded.'
-          : `Hero set · ${rest.length} more added to gallery.`
+          : `Hero set · ${rest.length} more added to gallery (order by filename).`
       );
     } catch (err) {
       setError(err.message);
@@ -367,7 +383,7 @@ export default function ProductForm({
   }
 
   async function onGalleryFilesSelected(event) {
-    const files = Array.from(event.target.files || []);
+    const files = sortFilesByName(Array.from(event.target.files || []));
     event.target.value = '';
     if (!files.length) return;
     setError('');
@@ -390,7 +406,7 @@ export default function ProductForm({
       setNotice(
         fresh.length === 1
           ? 'Gallery image uploaded.'
-          : `${fresh.length} gallery images uploaded.`
+          : `${fresh.length} gallery images uploaded (kept filename order).`
       );
     } catch (err) {
       setError(err.message);
@@ -398,6 +414,29 @@ export default function ProductForm({
       setUploadingGallery(false);
       setUploadProgress(null);
     }
+  }
+
+  function reorderGallery(fromIndex, toIndex) {
+    const list = galleryOrdered(variant);
+    if (
+      fromIndex == null ||
+      toIndex == null ||
+      fromIndex === toIndex ||
+      fromIndex < 0 ||
+      toIndex < 0 ||
+      fromIndex >= list.length ||
+      toIndex >= list.length
+    ) {
+      return;
+    }
+    const next = [...list];
+    const [moved] = next.splice(fromIndex, 1);
+    next.splice(toIndex, 0, moved);
+    patchVariant(form.activeVariantIndex, {
+      gallery: next,
+      heroUrl: next[0]?.url || '',
+    });
+    setNotice('Gallery order updated — first image is the hero on the storefront.');
   }
 
   function buildPayload() {
@@ -1181,33 +1220,85 @@ export default function ProductForm({
                 </span>
               </div>
             ) : null}
-            {galleryExtras(variant).map((item, i) => (
-              <div
-                key={`${item.url}-${i}`}
-                className="relative rounded-xl border border-[#2d2b2b]/8 p-2"
-              >
-                {item.kind === 'video' ? (
-                  <video src={item.url} className="h-28 w-full rounded-lg object-cover" muted />
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={item.url} alt="" className="h-28 w-full rounded-lg object-cover" />
-                )}
-                <button
-                  type="button"
-                  disabled={mediaBusy || saving}
-                  className="mt-2 text-[10px] uppercase tracking-wider text-[#5e062a] disabled:opacity-50"
-                  onClick={() =>
-                    patchVariant(form.activeVariantIndex, {
-                      gallery: (variant.gallery || []).filter((g) => g.url !== item.url),
-                    })
-                  }
+            {galleryOrdered(variant).map((item, i) => {
+              const isHero = item.url === variant.heroUrl || i === 0;
+              const isDragging = dragGalleryIndex === i;
+              const isOver = dragOverGalleryIndex === i && dragGalleryIndex !== i;
+              return (
+                <div
+                  key={`${item.url}-${i}`}
+                  draggable={!mediaBusy && !saving}
+                  onDragStart={(e) => {
+                    setDragGalleryIndex(i);
+                    e.dataTransfer.effectAllowed = 'move';
+                    try {
+                      e.dataTransfer.setData('text/plain', String(i));
+                    } catch {
+                      /* ignore */
+                    }
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (dragOverGalleryIndex !== i) setDragOverGalleryIndex(i);
+                  }}
+                  onDragLeave={() => {
+                    if (dragOverGalleryIndex === i) setDragOverGalleryIndex(null);
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const from = dragGalleryIndex;
+                    setDragGalleryIndex(null);
+                    setDragOverGalleryIndex(null);
+                    reorderGallery(from, i);
+                  }}
+                  onDragEnd={() => {
+                    setDragGalleryIndex(null);
+                    setDragOverGalleryIndex(null);
+                  }}
+                  className={`relative cursor-grab rounded-xl border p-2 active:cursor-grabbing ${
+                    isDragging
+                      ? 'border-[#5e062a]/40 opacity-50'
+                      : isOver
+                        ? 'border-[#5e062a] bg-[#5e062a]/5'
+                        : 'border-[#2d2b2b]/8'
+                  }`}
                 >
-                  Remove
-                </button>
-              </div>
-            ))}
+                  <div className="mb-1.5 flex items-center justify-between gap-1">
+                    <span className="text-[10px] font-medium tracking-wider text-[#7a736c] uppercase">
+                      {i + 1}
+                      {isHero ? ' · Hero' : ''}
+                    </span>
+                    <span className="text-[10px] text-[#7a736c]" aria-hidden>
+                      ⋮⋮
+                    </span>
+                  </div>
+                  {item.kind === 'video' ? (
+                    <video src={item.url} className="h-28 w-full rounded-lg object-cover" muted />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={item.url} alt="" className="h-28 w-full rounded-lg object-cover" />
+                  )}
+                  <button
+                    type="button"
+                    disabled={mediaBusy || saving}
+                    className="mt-2 text-[10px] uppercase tracking-wider text-[#5e062a] disabled:opacity-50"
+                    onClick={() => {
+                      const next = galleryOrdered(variant).filter((g) => g.url !== item.url);
+                      patchVariant(form.activeVariantIndex, {
+                        gallery: next,
+                        heroUrl:
+                          item.url === variant.heroUrl ? next[0]?.url || '' : variant.heroUrl || next[0]?.url || '',
+                      });
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
           </div>
-          {!galleryExtras(variant).length && (
+          {!galleryOrdered(variant).length && (
             <p className="text-sm text-[#7a736c]">
               {form.hasColorVariants
                 ? `No gallery images for ${variant.colorLabel} yet.`
@@ -1230,7 +1321,8 @@ export default function ProductForm({
             />
           </label>
           <p className="text-[11px] text-[#7a736c]">
-            Select multiple images in the file picker to upload them all at once.
+            Select multiple at once (named 1, 2, 3… keep that order). Drag tiles to rearrange — this
+            sequence is used on the storefront. First image is the hero.
           </p>
         </div>
       </section>
