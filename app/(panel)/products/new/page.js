@@ -71,8 +71,11 @@ export default function NewProductPage() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Save failed');
             router.replace(`/products/${data.product.slug}`);
+            return data.product;
           } catch (err) {
             setError(err.message);
+            throw err;
+          } finally {
             setSaving(false);
           }
         }}

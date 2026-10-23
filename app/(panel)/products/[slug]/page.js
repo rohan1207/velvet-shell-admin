@@ -97,9 +97,11 @@ export default function EditProductPage() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Save failed');
             setProduct(data.product);
-            setSaving(false);
+            return data.product;
           } catch (err) {
             setError(err.message);
+            throw err;
+          } finally {
             setSaving(false);
           }
         }}
