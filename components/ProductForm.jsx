@@ -4,36 +4,26 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { slugify } from '@/lib/format';
 import { DEFAULT_SHIPPING, normalizeShipping } from '@/lib/shipping';
-import {
-  FINISH_OPTIONS,
-  GEM_COLOR_PRESETS,
-  isMetalColorLabel,
-  isRealGemColor,
-  normalizeFinishLabel,
-} from '@/lib/finishes';
 
-const DEFAULT_FINISH = FINISH_OPTIONS[0].label;
-const DEFAULT_SWATCH = '#C5C5C5';
+function materialForColor(label = '') {
+  const l = String(label).toLowerCase();
+  if (/\bgold\b/.test(l)) return '18K Gold Plated';
+  if (/\bsilver\b|sterling|925/.test(l)) return 'Sterling Silver';
+  return 'Sterling Silver';
+}
 
-function newVariant(
-  label = 'Default',
-  swatch = DEFAULT_SWATCH,
-  primary = true,
-  finish = DEFAULT_FINISH,
-) {
-  const finishLabel = normalizeFinishLabel(finish);
+function newVariant(label = 'Default', swatch = '#C5C5C5', primary = true) {
   return {
     id: `tmp-${Math.random().toString(36).slice(2, 9)}`,
     colorLabel: label,
     colorSwatch: swatch,
-    finishLabel,
     isPrimary: primary,
     price: 0,
     description: '',
     story: '',
     care: '',
     features: [],
-    material: finishLabel,
+    material: materialForColor(label),
     length: 'Adjustable',
     sizeTags: ['Adjustable'],
     reviews: { rating: 0, count: 0, highlights: [] },
@@ -68,40 +58,6 @@ function mediaSummary(variant) {
   };
 }
 
-function variantKey(v) {
-  const color = String(v?.colorLabel || 'Default').trim().toLowerCase();
-  return `${color}::${normalizeFinishLabel(v?.finishLabel, v?.material, v?.colorLabel)}`;
-}
-
-/** Finish labels in use, in FINISH_OPTIONS order (any unknown labels appended). */
-function finishesInUse(variants = []) {
-  const used = new Set(
-    variants.map((v) => normalizeFinishLabel(v?.finishLabel, v?.material, v?.colorLabel)),
-  );
-  const known = FINISH_OPTIONS.map((f) => f.label).filter((l) => used.has(l));
-  const extra = [...used].filter((l) => !known.includes(l));
-  return [...known, ...extra];
-}
-
-function variantTitleOf(v, hasColorVariants) {
-  const finish = normalizeFinishLabel(v?.finishLabel, v?.material, v?.colorLabel);
-  return hasColorVariants ? `${v?.colorLabel || 'Colour'} · ${finish}` : finish;
-}
-
-function cloneDetails(source) {
-  return {
-    price: source.price,
-    description: source.description,
-    story: source.story,
-    care: source.care,
-    features: [...(source.features || [])],
-    length: source.length,
-    sizeTags: [...(source.sizeTags || [])],
-    reviews: { ...source.reviews, highlights: [...(source.reviews?.highlights || [])] },
-    stock: source.stock,
-  };
-}
-
 /** Stable snapshot for dirty checks (ignore UI-only activeVariantIndex). */
 function serializeFormState(form, featuresText) {
   const variants = (form.variants || []).map((v, i) => {
@@ -111,7 +67,6 @@ function serializeFormState(form, featuresText) {
       id: v.id,
       colorLabel: v.colorLabel,
       colorSwatch: v.colorSwatch,
-      finishLabel: normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel),
       isPrimary: !!v.isPrimary,
       price: Number(v.price) || 0,
       description: v.description || '',
@@ -141,7 +96,6 @@ function serializeFormState(form, featuresText) {
     badge: form.badge || '',
     status: form.status || 'draft',
     hasColorVariants: !!form.hasColorVariants,
-    hasFinishVariants: finishesInUse(form.variants || []).length > 1,
     customizationEnabled: !!form.customizationEnabled,
     customizationFields: form.customizationFields || [],
     shipping: form.shipping || {},
@@ -149,6 +103,14 @@ function serializeFormState(form, featuresText) {
     variants,
   });
 }
+
+const SWATCH_PRESETS = [
+  { label: 'Silver', swatch: '#C5C5C5' },
+  { label: 'Gold', swatch: '#D4AF64' },
+  { label: 'Pink', swatch: '#E8B4C4' },
+  { label: 'White', swatch: '#F2F0EC' },
+  { label: 'Green', swatch: '#7A9E7E' },
+];
 
 export default function ProductForm({
   initial,
@@ -186,23 +148,14 @@ export default function ProductForm({
         : [],
       shipping: normalizeShipping(initial.shipping),
       recommendedFamilyIds: initial.recommendedFamilyIds || [],
-      // Legacy data may use Silver/Gold as a "colour" — fold that into the finish axis.
-      hasColorVariants:
-        !!initial.hasColorVariants &&
-        (initial.variants || []).some((v) => isRealGemColor(v.colorLabel)),
       variants: (initial.variants?.length ? initial.variants : [newVariant()]).map((v) => {
         const sizeTags = Array.isArray(v.sizeTags)
           ? v.sizeTags.map((t) => String(t || '').trim()).filter(Boolean)
           : [];
         const length = String(v.length || '').trim();
-        const finishLabel = normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel);
         return {
           ...newVariant(),
           ...v,
-          colorLabel:
-            !v.colorLabel || isMetalColorLabel(v.colorLabel) ? 'Default' : v.colorLabel,
-          finishLabel,
-          material: finishLabel,
           features: Array.isArray(v.features) ? v.features : [],
           reviews: v.reviews || { rating: 0, count: 0, highlights: [] },
           gallery: Array.isArray(v.gallery) ? v.gallery : [],
@@ -241,20 +194,9 @@ export default function ProductForm({
   const autoSlug = useMemo(() => slugify(form.name), [form.name]);
   const familySlug = lockSlug ? form.slug : autoSlug;
   const variant = form.variants[form.activeVariantIndex] || form.variants[0];
-  // Selected metal finishes (derived from variants so it can never drift out of sync).
-  const selectedFinishes = useMemo(() => finishesInUse(form.variants), [form.variants]);
-  const hasFinishVariants = selectedFinishes.length > 1;
-  const multiVariant = form.variants.length > 1;
-  const activeTitle = variantTitleOf(variant, form.hasColorVariants);
-  const gemColors = useMemo(() => {
-    const seen = new Map();
-    for (const v of form.variants) {
-      const label = String(v.colorLabel || 'Default').trim();
-      const key = label.toLowerCase();
-      if (!seen.has(key)) seen.set(key, { label, swatch: v.colorSwatch || DEFAULT_SWATCH });
-    }
-    return [...seen.values()];
-  }, [form.variants]);
+  const colorLabel = form.hasColorVariants
+    ? variant?.colorLabel || 'this colour'
+    : 'this product';
   const activeMedia = mediaSummary(variant);
 
   useEffect(() => {
@@ -316,134 +258,28 @@ export default function ProductForm({
     setFeaturesText(featuresToText(variants[index]?.features));
     setSizeTagDraft('');
     setNotice(
-      variants.length > 1
-        ? `Editing ${variantTitleOf(variants[index], form.hasColorVariants)} — hero & gallery below are only for this variant.`
+      form.hasColorVariants
+        ? `Editing ${variants[index]?.colorLabel || 'colour'} — hero & gallery below are only for this colour.`
         : '',
     );
   }
 
-  /** Copy the in-progress features textarea into the active variant. */
-  function variantsWithFlushedFeatures() {
-    return form.variants.map((v, i) =>
-      i === form.activeVariantIndex ? { ...v, features: textToFeatures(featuresText) } : v,
-    );
-  }
-
-  /** Re-pick the active index by id after the variant list changed. */
-  function commitVariants(variants, activeId, extra = {}) {
-    let list = variants;
-    if (!list.some((v) => v.isPrimary)) {
-      list = list.map((v, i) => (i === 0 ? { ...v, isPrimary: true } : v));
-    }
-    const found = list.findIndex((v) => v.id === activeId);
-    const index = found >= 0 ? found : 0;
-    setForm((f) => ({ ...f, ...extra, variants: list, activeVariantIndex: index }));
-    setFeaturesText(featuresToText(list[index]?.features));
-    setSizeTagDraft('');
-  }
-
-  function toggleFinish(label) {
-    setError('');
-    const variants = variantsWithFlushedFeatures();
-    const activeId = variants[form.activeVariantIndex]?.id;
-    const isOn = selectedFinishes.includes(label);
-
-    if (isOn) {
-      const remaining = variants.filter(
-        (v) => normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel) !== label,
-      );
-      if (!remaining.length) {
-        setNotice('Keep at least one metal finish selected.');
-        return;
-      }
-      commitVariants(remaining, activeId);
-      setNotice(`Removed ${label} variants.`);
-      return;
-    }
-
-    const existingKeys = new Set(variants.map(variantKey));
-    const colors = form.hasColorVariants
-      ? gemColors
-      : [{ label: 'Default', swatch: variants[0]?.colorSwatch || DEFAULT_SWATCH }];
-    const added = [];
-    for (const color of colors) {
-      const probe = { colorLabel: color.label, finishLabel: label };
-      if (existingKeys.has(variantKey(probe))) continue;
-      const sibling =
-        variants.find((v) => String(v.colorLabel || 'Default') === color.label) || variants[0];
-      const next = newVariant(color.label, color.swatch, false, label);
-      if (sibling) Object.assign(next, cloneDetails(sibling));
-      next.heroUrl = '';
-      next.gallery = [];
-      added.push(next);
-    }
-    commitVariants([...variants, ...added], activeId);
-    setNotice(
-      `Added ${label}. Upload ${label} photos on each ${label} tab — images are not copied across finishes.`,
-    );
-  }
-
   function addColor(preset) {
-    const label = String(preset.label || '').trim();
-    if (!label) return;
-    if (isMetalColorLabel(label)) {
-      setError('Silver / Gold are metal finishes, not colours — use the Metal finishes section.');
-      return;
-    }
-    setError('');
-    const variants = variantsWithFlushedFeatures();
-    if (form.hasColorVariants && gemColors.some((c) => c.label.toLowerCase() === label.toLowerCase())) {
-      setNotice(`${label} is already added.`);
-      return;
-    }
-    const added = selectedFinishes.map((finish) => {
-      const next = newVariant(label, preset.swatch || '#CCCCCC', false, finish);
-      const sibling = variants.find(
-        (v) => normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel) === finish,
-      );
-      if (sibling) Object.assign(next, cloneDetails(sibling));
-      next.heroUrl = '';
-      next.gallery = [];
-      return next;
+    const next = newVariant(preset.label, preset.swatch, false);
+    next.material = materialForColor(preset.label);
+    setForm((f) => {
+      const variants = [...f.variants, next];
+      return {
+        ...f,
+        hasColorVariants: true,
+        variants,
+        activeVariantIndex: variants.length - 1,
+      };
     });
-    commitVariants([...variants, ...added], added[0]?.id, { hasColorVariants: true });
+    setFeaturesText('');
     setNotice(
-      `Added ${label}. Upload only ${label} photos on each ${label} tab — do not mix colours or finishes in one gallery.`,
+      `Added ${preset.label}. Upload only ${preset.label} photos on this colour tab — do not mix metals in one gallery.`,
     );
-  }
-
-  function removeActiveColor() {
-    if (gemColors.length < 2) return;
-    const variants = variantsWithFlushedFeatures();
-    const active = variants[form.activeVariantIndex];
-    const key = String(active.colorLabel || 'Default').trim().toLowerCase();
-    const remaining = variants.filter(
-      (v) => String(v.colorLabel || 'Default').trim().toLowerCase() !== key,
-    );
-    commitVariants(remaining, remaining[0]?.id);
-    setNotice(`Removed ${active.colorLabel}.`);
-  }
-
-  function toggleColorVariants(on) {
-    setError('');
-    if (on) {
-      patchForm({ hasColorVariants: true });
-      return;
-    }
-    // Collapse to one variant per finish, all with colour "Default".
-    const variants = variantsWithFlushedFeatures();
-    const activeId = variants[form.activeVariantIndex]?.id;
-    const collapsed = selectedFinishes
-      .map((finish) => {
-        const matches = variants.filter(
-          (v) => normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel) === finish,
-        );
-        return matches.find((v) => v.isPrimary) || matches[0];
-      })
-      .filter(Boolean)
-      .map((v) => ({ ...v, colorLabel: 'Default', colorSwatch: DEFAULT_SWATCH, isPrimary: false }));
-    if (collapsed[0]) collapsed[0].isPrimary = true;
-    commitVariants(collapsed, activeId, { hasColorVariants: false });
   }
 
   function importFromVariant(sourceIndex) {
@@ -454,6 +290,7 @@ export default function ProductForm({
       price: source.price,
       description: source.description,
       features: [...(source.features || [])],
+      material: source.material,
       length: source.length,
       sizeTags: [...(source.sizeTags || [])],
       reviews: { ...source.reviews, highlights: [...(source.reviews?.highlights || [])] },
@@ -461,7 +298,7 @@ export default function ProductForm({
       // intentionally NOT copying heroUrl / gallery
     });
     setFeaturesText(featuresToText(source.features));
-    setNotice('Copied details from that variant. Images/videos and finish were left unchanged.');
+    setNotice('Copied details from that color. Images/videos were left empty for this swatch.');
   }
 
   async function uploadFile(file) {
@@ -538,12 +375,8 @@ export default function ProductForm({
         ? v.sizeTags.map((t) => String(t || '').trim()).filter(Boolean)
         : [];
       const length = sizeTags[0] || String(v.length || '').trim();
-      const finishLabel = normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel);
       return {
         ...v,
-        colorLabel: form.hasColorVariants ? v.colorLabel : 'Default',
-        finishLabel,
-        material: finishLabel,
         features,
         sizeTags,
         length,
@@ -561,7 +394,6 @@ export default function ProductForm({
       badge: form.badge,
       status: form.status,
       hasColorVariants: form.hasColorVariants,
-      hasFinishVariants: finishesInUse(variants).length > 1,
       customizationEnabled: !!form.customizationEnabled,
       customizationFields: form.customizationEnabled
         ? (form.customizationFields || [])
@@ -588,10 +420,6 @@ export default function ProductForm({
 
   async function persist() {
     setError('');
-    const keys = form.variants.map(variantKey);
-    if (new Set(keys).size !== keys.length) {
-      throw new Error('Two variants share the same colour and finish — change one of them.');
-    }
     await onSave(buildPayload());
     markClean();
   }
@@ -759,111 +587,253 @@ export default function ProductForm({
         </div>
       </section>
 
-      {/* Metal finishes */}
-      <section className="card space-y-4 p-6">
-        <div>
-          <p className="font-label text-[10px] text-[#7a736c]">Metal finishes</p>
-          <p className="mt-1 text-sm text-[#7a736c]">
-            Finish is separate from gem colour. Every selected finish gets its own variant (and
-            its own photos) for each colour.
+      {/* Shipping */}
+      <section className="overflow-hidden rounded-[1.5rem] border border-[#2d2b2b]/10 bg-white">
+        <div className="border-b border-[#2d2b2b]/8 bg-[#faf7f2] px-6 py-5">
+          <p className="font-label text-[10px] tracking-[0.2em] text-[#7a736c]">SHIPPING</p>
+          <p className="mt-2 text-sm font-light text-[#5a534c]">
+            Prefills India-only delivery (5–7 working days). Edit freely if needed.
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
-          {FINISH_OPTIONS.map((finish) => {
-            const checked = selectedFinishes.includes(finish.label);
-            return (
-              <label
-                key={finish.id}
-                className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm ${
-                  checked
-                    ? 'border-[#5e062a] bg-[#5e062a]/5 text-[#2d2b2b]'
-                    : 'border-[#2d2b2b]/15 bg-white text-[#2d2b2b]'
-                }`}
+        <div className="space-y-5 px-6 py-6">
+          <label className="block">
+            <span className="text-xs text-[#7a736c]">Intro</span>
+            <textarea
+              className="input mt-1 min-h-20 rounded-2xl"
+              value={form.shipping.intro}
+              onChange={(e) =>
+                patchForm({ shipping: { ...form.shipping, intro: e.target.value } })
+              }
+            />
+          </label>
+          <div className="overflow-hidden rounded-xl border border-[#2d2b2b]/10">
+            <div className="grid grid-cols-2 border-b border-[#2d2b2b]/10 bg-[#faf7f2] px-4 py-3 text-xs font-medium text-[#2d2b2b]">
+              <span>Location</span>
+              <span>Estimated shipping time</span>
+            </div>
+            {(form.shipping.regions || []).map((row, i) => (
+              <div
+                key={i}
+                className="grid grid-cols-2 gap-3 border-b border-[#2d2b2b]/8 px-4 py-3 last:border-b-0"
               >
                 <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => toggleFinish(finish.label)}
+                  className="input"
+                  value={row.location}
+                  onChange={(e) => {
+                    const regions = [...form.shipping.regions];
+                    regions[i] = { ...regions[i], location: e.target.value };
+                    patchForm({ shipping: { ...form.shipping, regions } });
+                  }}
                 />
-                <span
-                  className="h-3 w-3 rounded-full border border-black/10"
-                  style={{ background: finish.swatch }}
+                <input
+                  className="input"
+                  value={row.eta}
+                  onChange={(e) => {
+                    const regions = [...form.shipping.regions];
+                    regions[i] = { ...regions[i], eta: e.target.value };
+                    patchForm({ shipping: { ...form.shipping, regions } });
+                  }}
                 />
-                {finish.label}
-              </label>
-            );
-          })}
+              </div>
+            ))}
+          </div>
+          <p className="text-xs italic text-[#7a736c]">
+            Default: India · 5–7 working days (crafting/dispatch may add time).
+          </p>
+          <label className="block">
+            <span className="text-xs text-[#7a736c]">Shipping & delivery note</span>
+            <textarea
+              className="input mt-1 min-h-20 rounded-2xl"
+              value={form.shipping.note}
+              onChange={(e) =>
+                patchForm({ shipping: { ...form.shipping, note: e.target.value } })
+              }
+            />
+          </label>
+          <label className="block">
+            <span className="text-xs text-[#7a736c]">Delayed or lost shipments</span>
+            <textarea
+              className="input mt-1 min-h-20 rounded-2xl"
+              value={form.shipping.delayed}
+              onChange={(e) =>
+                patchForm({ shipping: { ...form.shipping, delayed: e.target.value } })
+              }
+            />
+          </label>
         </div>
-        <p className="text-xs text-[#7a736c]">
-          {hasFinishVariants
-            ? 'Shoppers will see a metal finish selector on the product page.'
-            : 'Single finish — no finish selector will be shown.'}
-        </p>
       </section>
 
-      {/* Gem colour variants */}
+      {/* Recommendations */}
       <section className="card space-y-4 p-6">
-        <p className="font-label text-[10px] text-[#7a736c]">Gem colour variants</p>
+        <p className="font-label text-[10px] text-[#7a736c]">Recommendations</p>
+        <p className="text-sm font-light text-[#7a736c]">
+          Select other products to show as “You may also like”.
+        </p>
+        <div className="max-h-56 space-y-2 overflow-y-auto rounded-2xl border border-[#2d2b2b]/8 p-3">
+          {allProducts
+            .filter((p) => p.id !== form.id)
+            .map((p) => {
+              const checked = form.recommendedFamilyIds.includes(p.id);
+              return (
+                <label key={p.id} className="flex items-center gap-3 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={(e) => {
+                      const next = e.target.checked
+                        ? [...form.recommendedFamilyIds, p.id]
+                        : form.recommendedFamilyIds.filter((id) => id !== p.id);
+                      patchForm({ recommendedFamilyIds: next });
+                    }}
+                  />
+                  <span>
+                    {p.name}
+                    <span className="text-[#7a736c]"> · {p.category}</span>
+                  </span>
+                </label>
+              );
+            })}
+          {!allProducts.length && (
+            <p className="text-sm text-[#7a736c]">Save more products first to recommend them.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Customization */}
+      <section className="card space-y-4 p-6">
+        <div>
+          <p className="font-label text-[10px] text-[#7a736c]">Customization</p>
+          <p className="mt-1 text-sm text-[#7a736c]">
+            Let shoppers answer free-form prompts for this piece (length, message, initials…).
+          </p>
+        </div>
+        <label className="flex items-center gap-3 text-sm">
+          <input
+            type="checkbox"
+            checked={!!form.customizationEnabled}
+            onChange={(e) => {
+              const on = e.target.checked;
+              patchForm({
+                customizationEnabled: on,
+                customizationFields:
+                  on && !(form.customizationFields || []).length
+                    ? [
+                        {
+                          id: `field_${Math.random().toString(36).slice(2, 8)}`,
+                          label: 'Specify the dangles length',
+                          inputType: 'text',
+                          required: false,
+                          placeholder: 'e.g. 2.5 inches',
+                        },
+                      ]
+                    : form.customizationFields || [],
+              });
+            }}
+          />
+          Customization available?
+        </label>
+
+        {form.customizationEnabled ? (
+          <div className="space-y-3">
+            {(form.customizationFields || []).map((field, index) => (
+              <div
+                key={field.id || index}
+                className="grid gap-3 rounded-xl border border-[#2d2b2b]/8 bg-[#faf7f2]/70 p-4 md:grid-cols-[minmax(0,1.4fr)_140px_minmax(0,1fr)_auto]"
+              >
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Prompt shown to shopper</span>
+                  <input
+                    className="input mt-1"
+                    value={field.label}
+                    placeholder="e.g. Specify the dangles length"
+                    onChange={(e) => patchCustomizationField(index, { label: e.target.value })}
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Input type</span>
+                  <select
+                    className="input mt-1"
+                    value={field.inputType || 'text'}
+                    onChange={(e) => patchCustomizationField(index, { inputType: e.target.value })}
+                  >
+                    <option value="text">Text</option>
+                    <option value="number">Number</option>
+                    <option value="textarea">Long text</option>
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Placeholder</span>
+                  <input
+                    className="input mt-1"
+                    value={field.placeholder || ''}
+                    placeholder="Optional hint"
+                    onChange={(e) =>
+                      patchCustomizationField(index, { placeholder: e.target.value })
+                    }
+                  />
+                </label>
+                <div className="flex items-end gap-2 pb-1">
+                  <label className="flex items-center gap-2 text-xs text-[#7a736c]">
+                    <input
+                      type="checkbox"
+                      checked={!!field.required}
+                      onChange={(e) =>
+                        patchCustomizationField(index, { required: e.target.checked })
+                      }
+                    />
+                    Required
+                  </label>
+                  <button
+                    type="button"
+                    className="text-xs text-[#5e062a] hover:underline"
+                    onClick={() => removeCustomizationField(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+            <button type="button" className="btn-ghost" onClick={addCustomizationField}>
+              + Add prompt
+            </button>
+          </div>
+        ) : null}
+      </section>
+
+      {/* Color variants toggle */}
+      <section className="card space-y-4 p-6">
+        <p className="font-label text-[10px] text-[#7a736c]">Color variants</p>
         <label className="flex items-center gap-3 text-sm">
           <input
             type="checkbox"
             checked={form.hasColorVariants}
-            onChange={(e) => toggleColorVariants(e.target.checked)}
+            onChange={(e) => {
+              const on = e.target.checked;
+              if (!on) {
+                patchForm({
+                  hasColorVariants: false,
+                  variants: [{ ...form.variants[0], colorLabel: 'Default', isPrimary: true }],
+                  activeVariantIndex: 0,
+                });
+                setFeaturesText(featuresToText(form.variants[0]?.features));
+              } else {
+                patchForm({ hasColorVariants: true });
+              }
+            }}
           />
-          Does this product come in different gem / stone colours?
+          Does this product have color variants?
         </label>
 
         {form.hasColorVariants && (
           <div className="space-y-3">
             <p className="text-sm text-[#7a736c]">
-              Colour means the stone (Green, Purple, Pink…) — not Silver or Gold. Each colour ×
-              finish has its own hero + gallery; they are never shared.
+              Each colour has its own hero + gallery. Select a colour tab, then upload images only
+              for that colour — they are never shared.
             </p>
-            <div className="flex flex-wrap gap-2">
-              {GEM_COLOR_PRESETS.map((preset) => {
-                const added = gemColors.some(
-                  (c) => c.label.toLowerCase() === preset.label.toLowerCase(),
-                );
-                return (
-                  <button
-                    key={preset.label}
-                    type="button"
-                    disabled={added}
-                    className="flex items-center gap-1.5 rounded-full border border-[#2d2b2b]/12 px-3 py-1 text-[11px] disabled:opacity-40"
-                    onClick={() => addColor(preset)}
-                  >
-                    <span
-                      className="h-2.5 w-2.5 rounded-full border border-black/10"
-                      style={{ background: preset.swatch }}
-                    />
-                    + {preset.label}
-                  </button>
-                );
-              })}
-              <button
-                type="button"
-                className="rounded-full border border-dashed border-[#2d2b2b]/25 px-3 py-1 text-[11px]"
-                onClick={() =>
-                  addColor({ label: `Colour ${gemColors.length + 1}`, swatch: '#CCCCCC' })
-                }
-              >
-                + Custom colour
-              </button>
-            </div>
-          </div>
-        )}
-
-        {multiVariant && (
-          <div className="space-y-3">
-            <p className="text-xs text-[#7a736c]">Variants — select one to edit it below.</p>
             <div className="flex flex-wrap gap-2">
               {form.variants.map((v, i) => {
                 const media = mediaSummary(v);
                 const selected = i === form.activeVariantIndex;
-                const finishOpt = FINISH_OPTIONS.find(
-                  (f) =>
-                    f.label === normalizeFinishLabel(v.finishLabel, v.material, v.colorLabel),
-                );
                 return (
                   <button
                     key={v.id}
@@ -877,13 +847,9 @@ export default function ProductForm({
                   >
                     <span
                       className="h-3 w-3 rounded-full border border-black/10"
-                      style={{
-                        background: form.hasColorVariants
-                          ? v.colorSwatch
-                          : finishOpt?.swatch || v.colorSwatch,
-                      }}
+                      style={{ background: v.colorSwatch }}
                     />
-                    {variantTitleOf(v, form.hasColorVariants)}
+                    {v.colorLabel}
                     {v.isPrimary ? ' · primary' : ''}
                     <span
                       className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-wider ${
@@ -897,7 +863,26 @@ export default function ProductForm({
                 );
               })}
             </div>
-            <div className="flex flex-wrap items-end gap-4">
+            <div className="flex flex-wrap gap-2">
+              {SWATCH_PRESETS.map((preset) => (
+                <button
+                  key={preset.label}
+                  type="button"
+                  className="rounded-full border border-[#2d2b2b]/12 px-3 py-1 text-[11px]"
+                  onClick={() => addColor(preset)}
+                >
+                  + {preset.label}
+                </button>
+              ))}
+              <button
+                type="button"
+                className="rounded-full border border-dashed border-[#2d2b2b]/25 px-3 py-1 text-[11px]"
+                onClick={() => addColor({ label: `Color ${form.variants.length + 1}`, swatch: '#CCCCCC' })}
+              >
+                + Custom color
+              </button>
+            </div>
+            {form.variants.length > 1 && (
               <label className="block max-w-xs">
                 <span className="text-xs text-[#7a736c]">Import details from</span>
                 <select
@@ -909,26 +894,17 @@ export default function ProductForm({
                     e.target.value = '';
                   }}
                 >
-                  <option value="">Choose a variant…</option>
+                  <option value="">Choose a color…</option>
                   {form.variants.map((v, i) =>
                     i === form.activeVariantIndex ? null : (
                       <option key={v.id} value={i}>
-                        {variantTitleOf(v, form.hasColorVariants)}
+                        {v.colorLabel}
                       </option>
-                    ),
+                    )
                   )}
                 </select>
               </label>
-              {form.hasColorVariants && gemColors.length > 1 ? (
-                <button
-                  type="button"
-                  className="pb-2 text-xs text-[#5e062a] hover:underline"
-                  onClick={removeActiveColor}
-                >
-                  Remove colour “{variant.colorLabel}”
-                </button>
-              ) : null}
-            </div>
+            )}
           </div>
         )}
       </section>
@@ -938,93 +914,43 @@ export default function ProductForm({
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="font-label text-[10px] text-[#7a736c]">
-              {multiVariant ? `Variant · ${activeTitle}` : 'Product details'}
+              {form.hasColorVariants ? `Variant · ${variant.colorLabel}` : 'Product details'}
             </p>
             <p className="mt-1 text-sm text-[#7a736c]">
-              {multiVariant
-                ? `Details and images for ${activeTitle} only — other variants stay untouched.`
+              {form.hasColorVariants
+                ? `Details and images for ${variant.colorLabel} only — other colours stay untouched.`
                 : 'Product details and media for this listing.'}
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <label className="block">
-              <span className="text-xs text-[#7a736c]">Finish</span>
-              <select
-                className="input mt-1"
-                value={normalizeFinishLabel(
-                  variant.finishLabel,
-                  variant.material,
-                  variant.colorLabel,
-                )}
-                onChange={(e) => {
-                  const finishLabel = e.target.value;
-                  const clash = form.variants.some(
-                    (v, i) =>
-                      i !== form.activeVariantIndex &&
-                      variantKey(v) === variantKey({ ...variant, finishLabel }),
-                  );
-                  if (clash) {
-                    setError(`Another variant already uses ${finishLabel} for this colour.`);
-                    return;
-                  }
-                  setError('');
-                  patchVariant(form.activeVariantIndex, { finishLabel, material: finishLabel });
-                }}
-              >
-                {FINISH_OPTIONS.map((f) => (
-                  <option key={f.id} value={f.label}>
-                    {f.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            {form.hasColorVariants && (
+          {form.hasColorVariants && (
+            <div className="flex flex-wrap gap-3">
               <label className="block">
-                <span className="text-xs text-[#7a736c]">Gem colour name</span>
+                <span className="text-xs text-[#7a736c]">Color name</span>
                 <input
                   className="input mt-1"
                   value={variant.colorLabel}
                   onChange={(e) => {
-                    const next = e.target.value;
-                    const oldKey = String(variant.colorLabel || 'Default').trim().toLowerCase();
-                    // Rename the colour across all finishes so they stay grouped.
-                    setForm((f) => ({
-                      ...f,
-                      variants: f.variants.map((v) =>
-                        String(v.colorLabel || 'Default').trim().toLowerCase() === oldKey
-                          ? { ...v, colorLabel: next }
-                          : v,
-                      ),
-                    }));
+                    const colorLabel = e.target.value;
+                    const next = { colorLabel };
+                    const inferred = materialForColor(colorLabel);
+                    if (inferred && (colorLabel || '').trim()) {
+                      next.material = inferred;
+                    }
+                    patchVariant(form.activeVariantIndex, next);
                   }}
                 />
               </label>
-            )}
-          </div>
-          {multiVariant && (
-            <div className="flex flex-wrap gap-3">
-              {form.hasColorVariants && (
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Swatch</span>
-                  <input
-                    className="input mt-1 h-11 w-20 p-1"
-                    type="color"
-                    value={variant.colorSwatch || DEFAULT_SWATCH}
-                    onChange={(e) => {
-                      const key = String(variant.colorLabel || 'Default').trim().toLowerCase();
-                      const colorSwatch = e.target.value;
-                      setForm((f) => ({
-                        ...f,
-                        variants: f.variants.map((v) =>
-                          String(v.colorLabel || 'Default').trim().toLowerCase() === key
-                            ? { ...v, colorSwatch }
-                            : v,
-                        ),
-                      }));
-                    }}
-                  />
-                </label>
-              )}
+              <label className="block">
+                <span className="text-xs text-[#7a736c]">Swatch</span>
+                <input
+                  className="input mt-1 h-11 w-20 p-1"
+                  type="color"
+                  value={variant.colorSwatch || '#C5C5C5'}
+                  onChange={(e) =>
+                    patchVariant(form.activeVariantIndex, { colorSwatch: e.target.value })
+                  }
+                />
+              </label>
               <label className="flex items-center gap-2 pt-6 text-sm">
                 <input
                   type="checkbox"
@@ -1040,7 +966,7 @@ export default function ProductForm({
                     }));
                   }}
                 />
-                Primary listing variant
+                Primary listing color
               </label>
             </div>
           )}
@@ -1073,11 +999,14 @@ export default function ProductForm({
             />
           </label>
           <label className="block">
-            <span className="text-xs text-[#7a736c]">Material (synced to finish)</span>
+            <span className="text-xs text-[#7a736c]">Material</span>
             <input
-              className="input mt-1 bg-[#faf7f2]"
-              value={normalizeFinishLabel(variant.finishLabel, variant.material, variant.colorLabel)}
-              readOnly
+              className="input mt-1"
+              value={variant.material}
+              onChange={(e) =>
+                patchVariant(form.activeVariantIndex, { material: e.target.value })
+              }
+              placeholder="Sterling Silver or 18K Gold Plated"
             />
           </label>
           <div className="block md:col-span-2">
@@ -1240,23 +1169,23 @@ export default function ProductForm({
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="font-label text-[10px] text-[#7a736c]">
-              {multiVariant
-                ? `Images for ${activeTitle}`
+              {form.hasColorVariants
+                ? `Images for ${variant.colorLabel}`
                 : 'Hero & gallery'}
             </p>
             <p className="mt-1 text-sm font-light text-[#7a736c]">
-              {multiVariant
-                ? `Hero and gallery below belong only to ${activeTitle}. Switch variant tabs above to manage other colours / finishes — images are never mixed.`
+              {form.hasColorVariants
+                ? `Hero and gallery below belong only to ${colorLabel}. Switch colour tabs above to manage other colours — images are never mixed.`
                 : 'Upload a hero image and optional gallery. Files go to Cloudflare R2.'}
             </p>
           </div>
-          {multiVariant ? (
+          {form.hasColorVariants ? (
             <div className="flex items-center gap-2 rounded-full border border-[#2d2b2b]/10 bg-[#faf7f2] px-3 py-1.5 text-xs text-[#2d2b2b]">
               <span
                 className="h-3 w-3 rounded-full border border-black/10"
                 style={{ background: variant.colorSwatch }}
               />
-              {activeTitle}
+              {variant.colorLabel}
               <span className="text-[#7a736c]">
                 · {activeMedia.hasHero ? 'hero set' : 'needs hero'}
                 {activeMedia.galleryCount
@@ -1267,7 +1196,7 @@ export default function ProductForm({
           ) : null}
         </div>
 
-        {multiVariant ? (
+        {form.hasColorVariants && form.variants.length > 1 ? (
           <div className="grid gap-2 sm:grid-cols-2">
             {form.variants.map((v, i) => {
               const media = mediaSummary(v);
@@ -1288,7 +1217,7 @@ export default function ProductForm({
                       className="h-3.5 w-3.5 rounded-full border border-black/10"
                       style={{ background: v.colorSwatch }}
                     />
-                    {variantTitleOf(v, form.hasColorVariants)}
+                    {v.colorLabel}
                     {selected ? (
                       <span className="text-[10px] uppercase tracking-wider text-[#5e062a]">
                         editing
@@ -1312,8 +1241,8 @@ export default function ProductForm({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-medium text-[#2d2b2b]">
               Hero image
-              {multiVariant ? (
-                <span className="font-normal text-[#7a736c]"> · {activeTitle} only</span>
+              {form.hasColorVariants ? (
+                <span className="font-normal text-[#7a736c]"> · {variant.colorLabel} only</span>
               ) : null}
             </p>
             {uploadingHero && (
@@ -1363,8 +1292,8 @@ export default function ProductForm({
             <p className="text-sm text-[#7a736c]">
               {uploadingHero
                 ? 'Uploading hero…'
-                : multiVariant
-                  ? `No hero for ${activeTitle} yet.`
+                : form.hasColorVariants
+                  ? `No hero for ${variant.colorLabel} yet.`
                   : 'No hero image yet.'}
             </p>
           )}
@@ -1372,8 +1301,8 @@ export default function ProductForm({
             className={`btn-ghost inline-flex cursor-pointer ${mediaBusy || saving ? 'pointer-events-none opacity-50' : ''}`}
           >
             {variant.heroUrl
-              ? `Replace ${multiVariant ? `${activeTitle} ` : ''}hero`
-              : `Upload ${multiVariant ? `${activeTitle} ` : ''}hero`}
+              ? `Replace ${form.hasColorVariants ? `${variant.colorLabel} ` : ''}hero`
+              : `Upload ${form.hasColorVariants ? `${variant.colorLabel} ` : ''}hero`}
             <input
               className="hidden"
               type="file"
@@ -1388,8 +1317,8 @@ export default function ProductForm({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-medium text-[#2d2b2b]">
               Gallery images
-              {multiVariant ? (
-                <span className="font-normal text-[#7a736c]"> · {activeTitle} only</span>
+              {form.hasColorVariants ? (
+                <span className="font-normal text-[#7a736c]"> · {variant.colorLabel} only</span>
               ) : null}
             </p>
             {uploadingGallery && (
@@ -1442,16 +1371,16 @@ export default function ProductForm({
           </div>
           {!galleryExtras(variant).length && (
             <p className="text-sm text-[#7a736c]">
-              {multiVariant
-                ? `No gallery images for ${activeTitle} yet.`
+              {form.hasColorVariants
+                ? `No gallery images for ${variant.colorLabel} yet.`
                 : 'No gallery images yet.'}
             </p>
           )}
           <label
             className={`btn-ghost inline-flex cursor-pointer ${mediaBusy || saving ? 'pointer-events-none opacity-50' : ''}`}
           >
-            {multiVariant
-              ? `Upload ${activeTitle} gallery`
+            {form.hasColorVariants
+              ? `Upload ${variant.colorLabel} gallery`
               : 'Upload gallery images'}
             <input
               className="hidden"
@@ -1460,219 +1389,6 @@ export default function ProductForm({
               multiple
               disabled={mediaBusy || saving}
               onChange={onGalleryFilesSelected}
-            />
-          </label>
-        </div>
-      </section>
-
-      {/* Customization */}
-      <section className="card space-y-4 p-6">
-        <div>
-          <p className="font-label text-[10px] text-[#7a736c]">Customization</p>
-          <p className="mt-1 text-sm text-[#7a736c]">
-            Let shoppers answer free-form prompts for this piece (length, message, initials…).
-          </p>
-        </div>
-        <label className="flex items-center gap-3 text-sm">
-          <input
-            type="checkbox"
-            checked={!!form.customizationEnabled}
-            onChange={(e) => {
-              const on = e.target.checked;
-              patchForm({
-                customizationEnabled: on,
-                customizationFields:
-                  on && !(form.customizationFields || []).length
-                    ? [
-                        {
-                          id: `field_${Math.random().toString(36).slice(2, 8)}`,
-                          label: 'Specify the dangles length',
-                          inputType: 'text',
-                          required: false,
-                          placeholder: 'e.g. 2.5 inches',
-                        },
-                      ]
-                    : form.customizationFields || [],
-              });
-            }}
-          />
-          Customization available?
-        </label>
-
-        {form.customizationEnabled ? (
-          <div className="space-y-3">
-            {(form.customizationFields || []).map((field, index) => (
-              <div
-                key={field.id || index}
-                className="grid gap-3 rounded-xl border border-[#2d2b2b]/8 bg-[#faf7f2]/70 p-4 md:grid-cols-[minmax(0,1.4fr)_140px_minmax(0,1fr)_auto]"
-              >
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Prompt shown to shopper</span>
-                  <input
-                    className="input mt-1"
-                    value={field.label}
-                    placeholder="e.g. Specify the dangles length"
-                    onChange={(e) => patchCustomizationField(index, { label: e.target.value })}
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Input type</span>
-                  <select
-                    className="input mt-1"
-                    value={field.inputType || 'text'}
-                    onChange={(e) => patchCustomizationField(index, { inputType: e.target.value })}
-                  >
-                    <option value="text">Text</option>
-                    <option value="number">Number</option>
-                    <option value="textarea">Long text</option>
-                  </select>
-                </label>
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Placeholder</span>
-                  <input
-                    className="input mt-1"
-                    value={field.placeholder || ''}
-                    placeholder="Optional hint"
-                    onChange={(e) =>
-                      patchCustomizationField(index, { placeholder: e.target.value })
-                    }
-                  />
-                </label>
-                <div className="flex items-end gap-2 pb-1">
-                  <label className="flex items-center gap-2 text-xs text-[#7a736c]">
-                    <input
-                      type="checkbox"
-                      checked={!!field.required}
-                      onChange={(e) =>
-                        patchCustomizationField(index, { required: e.target.checked })
-                      }
-                    />
-                    Required
-                  </label>
-                  <button
-                    type="button"
-                    className="text-xs text-[#5e062a] hover:underline"
-                    onClick={() => removeCustomizationField(index)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-            <button type="button" className="btn-ghost" onClick={addCustomizationField}>
-              + Add prompt
-            </button>
-          </div>
-        ) : null}
-      </section>
-
-      {/* Recommendations */}
-      <section className="card space-y-4 p-6">
-        <p className="font-label text-[10px] text-[#7a736c]">Recommendations</p>
-        <p className="text-sm font-light text-[#7a736c]">
-          Select other products to show as “You may also like”.
-        </p>
-        <div className="max-h-56 space-y-2 overflow-y-auto rounded-2xl border border-[#2d2b2b]/8 p-3">
-          {allProducts
-            .filter((p) => p.id !== form.id)
-            .map((p) => {
-              const checked = form.recommendedFamilyIds.includes(p.id);
-              return (
-                <label key={p.id} className="flex items-center gap-3 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={(e) => {
-                      const next = e.target.checked
-                        ? [...form.recommendedFamilyIds, p.id]
-                        : form.recommendedFamilyIds.filter((id) => id !== p.id);
-                      patchForm({ recommendedFamilyIds: next });
-                    }}
-                  />
-                  <span>
-                    {p.name}
-                    <span className="text-[#7a736c]"> · {p.category}</span>
-                  </span>
-                </label>
-              );
-            })}
-          {!allProducts.length && (
-            <p className="text-sm text-[#7a736c]">Save more products first to recommend them.</p>
-          )}
-        </div>
-      </section>
-
-      {/* Shipping */}
-      <section className="overflow-hidden rounded-[1.5rem] border border-[#2d2b2b]/10 bg-white">
-        <div className="border-b border-[#2d2b2b]/8 bg-[#faf7f2] px-6 py-5">
-          <p className="font-label text-[10px] tracking-[0.2em] text-[#7a736c]">SHIPPING</p>
-          <p className="mt-2 text-sm font-light text-[#5a534c]">
-            Prefills India-only delivery (5–7 working days). Edit freely if needed.
-          </p>
-        </div>
-        <div className="space-y-5 px-6 py-6">
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Intro</span>
-            <textarea
-              className="input mt-1 min-h-20 rounded-2xl"
-              value={form.shipping.intro}
-              onChange={(e) =>
-                patchForm({ shipping: { ...form.shipping, intro: e.target.value } })
-              }
-            />
-          </label>
-          <div className="overflow-hidden rounded-xl border border-[#2d2b2b]/10">
-            <div className="grid grid-cols-2 border-b border-[#2d2b2b]/10 bg-[#faf7f2] px-4 py-3 text-xs font-medium text-[#2d2b2b]">
-              <span>Location</span>
-              <span>Estimated shipping time</span>
-            </div>
-            {(form.shipping.regions || []).map((row, i) => (
-              <div
-                key={i}
-                className="grid grid-cols-2 gap-3 border-b border-[#2d2b2b]/8 px-4 py-3 last:border-b-0"
-              >
-                <input
-                  className="input"
-                  value={row.location}
-                  onChange={(e) => {
-                    const regions = [...form.shipping.regions];
-                    regions[i] = { ...regions[i], location: e.target.value };
-                    patchForm({ shipping: { ...form.shipping, regions } });
-                  }}
-                />
-                <input
-                  className="input"
-                  value={row.eta}
-                  onChange={(e) => {
-                    const regions = [...form.shipping.regions];
-                    regions[i] = { ...regions[i], eta: e.target.value };
-                    patchForm({ shipping: { ...form.shipping, regions } });
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-          <p className="text-xs italic text-[#7a736c]">
-            Default: India · 5–7 working days (crafting/dispatch may add time).
-          </p>
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Shipping & delivery note</span>
-            <textarea
-              className="input mt-1 min-h-20 rounded-2xl"
-              value={form.shipping.note}
-              onChange={(e) =>
-                patchForm({ shipping: { ...form.shipping, note: e.target.value } })
-              }
-            />
-          </label>
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Delayed or lost shipments</span>
-            <textarea
-              className="input mt-1 min-h-20 rounded-2xl"
-              value={form.shipping.delayed}
-              onChange={(e) =>
-                patchForm({ shipping: { ...form.shipping, delayed: e.target.value } })
-              }
             />
           </label>
         </div>
