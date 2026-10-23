@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --burgundy: #5e062a;
+  --ivory: #f5eee8;
+  --pearl: #faf7f2;
+  --cream: #ebe3da;
+  --ink: #2d2b2b;
+  --gold: #d4af64;
+  --stone: #7a736c;
+  --panel: #f4f2ef;
+  --surface: #ffffff;
+  --border: rgba(45, 43, 43, 0.08);
+  --font-display: 'Playfair Display', ui-serif, Georgia, serif;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-label: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-num: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+}
+
+html,
+body {
+  background: var(--panel);
+  color: var(--ink);
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-label {
+  font-family: var(--font-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.font-num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: 0;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex h-10 items-center justify-center rounded-lg px-5 text-[12px] font-medium tracking-[0.04em] transition disabled:opacity-50;
+    background: var(--burgundy);
+    color: var(--ivory);
+  }
+  .btn-primary:hover {
+    opacity: 0.92;
+  }
+  .btn-ghost {
+    @apply inline-flex h-10 items-center justify-center rounded-lg px-4 text-[12px] font-medium tracking-[0.02em] transition;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    border-color: rgba(94, 6, 42, 0.28);
+    color: var(--burgundy);
+  }
+  .input {
+    @apply w-full rounded-lg bg-white px-3.5 py-2.5 text-sm outline-none transition;
+    border: 1px solid var(--border);
+  }
+  .input:focus {
+    border-color: rgba(94, 6, 42, 0.35);
+    box-shadow: 0 0 0 3px rgba(94, 6, 42, 0.08);
+  }
+  .card {
+    @apply rounded-xl bg-white;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(45, 43, 43, 0.03);
+  }
+  .table-wrap {
+    @apply overflow-x-auto rounded-xl bg-white;
+    border: 1px solid var(--border);
+  }
+  .status-pill {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium capitalize;
+  }
+}

@@ -1,0 +1,3685 @@
+{
+  "collections": [
+    {
+      "slug": "the-shell-edit",
+      "name": "The Shell Edit",
+      "line": "Sculptural gold, drawn with quiet architecture."
+    },
+    {
+      "slug": "pearls-of-nacre",
+      "name": "Lumen Line",
+      "line": "Fine gold and light, worn close to the skin."
+    },
+    {
+      "slug": "gilded-tide",
+      "name": "Gilded Tide",
+      "line": "Worn like water. Held like architecture."
+    },
+    {
+      "slug": "private-atelier",
+      "name": "Private Atelier",
+      "line": "Made in small numbers. Never hurried."
+    }
+  ],
+  "categories": [
+    {
+      "slug": "necklaces",
+      "name": "Necklaces",
+      "line": "Floral forms worn close to the collarbone.",
+      "banner": "/images/category-banner-necklaces.jpg"
+    },
+    {
+      "slug": "earrings",
+      "name": "Earrings",
+      "line": "Nature-drawn gold and silver for the ear.",
+      "banner": "/images/category-banner-earrings.jpg"
+    },
+    {
+      "slug": "rings",
+      "name": "Rings",
+      "line": "Petals and polish, shaped for the hand.",
+      "banner": "/images/category-banner-rings.jpg"
+    },
+    {
+      "slug": "bracelets",
+      "name": "Bracelets",
+      "line": "Delicate branches that follow the wrist.",
+      "banner": "/images/category-banner-bracelets.jpg"
+    },
+    {
+      "slug": "cuffs",
+      "name": "Brooches",
+      "line": "Calla lilies and quiet botanical pins.",
+      "banner": "/images/category-banner-brooches.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-1",
+      "slug": "flower-in-the-rain-pink",
+      "name": "Flower In The Rain",
+      "collection": "pearls-of-nacre",
+      "category": "bracelets",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "Adjustable"
+      ],
+      "image": "/bracelets/flower-rain-pink-hero.jpg",
+      "hoverImage": "/bracelets/flower-rain-pink-wear.jpg",
+      "gallery": [
+        "/bracelets/flower-rain-pink-hero.jpg",
+        "/bracelets/flower-rain-pink-2.jpg",
+        "/bracelets/flower-rain-pink-3.jpg",
+        "/bracelets/flower-rain-pink-4.jpg",
+        "/bracelets/flower-rain-pink-wear.jpg"
+      ],
+      "description": "A fine silver chain bracelet with a textured branch, silver leaves and a soft translucent pink bloom.",
+      "story": "A flower caught after rain Ã¢â‚¬â€ light on the wrist, full of quiet detail.",
+      "details": [
+        "S925 silver",
+        "Translucent pink flower",
+        "Adjustable extender",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store flat in the pouch.",
+      "status": "draft",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Flower In The Rain | Velvet Shell",
+      "metaDescription": "A fine silver chain bracelet with a textured branch, silver leaves and a soft translucent pink bloom.",
+      "createdAt": "2026-10-04T13:17:36.389Z",
+      "updatedAt": "2026-10-04T13:17:36.391Z"
+    },
+    {
+      "id": "prod-2",
+      "slug": "flower-in-the-rain-white",
+      "name": "Flower In The Rain Ã¢â‚¬â€ White",
+      "collection": "pearls-of-nacre",
+      "category": "bracelets",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "Adjustable"
+      ],
+      "image": "/bracelets/flower-in-the-rain-white-hero.jpg",
+      "hoverImage": "/bracelets/flower-in-the-rain-white-hero.jpg",
+      "gallery": [
+        "/bracelets/flower-in-the-rain-white-hero.jpg"
+      ],
+      "description": "The same branch motif in silver, finished with a frosted white flower Ã¢â‚¬â€ cool, luminous and quietly botanical.",
+      "story": "White bloom, silver branch Ã¢â‚¬â€ a softer rain.",
+      "details": [
+        "S925 silver",
+        "Frosted white flower",
+        "Adjustable extender",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store flat in the pouch.",
+      "status": "active",
+      "stock": 9,
+      "outOfStock": false,
+      "metaTitle": "Flower In The Rain Ã¢â‚¬â€ White | Velvet Shell",
+      "metaDescription": "The same branch motif in silver, finished with a frosted white flower Ã¢â‚¬â€ cool, luminous and quietly botanical.",
+      "createdAt": "2026-10-03T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-3",
+      "slug": "flower-in-the-rain-edit",
+      "name": "Flower In The Rain Ã¢â‚¬â€ Edit",
+      "collection": "pearls-of-nacre",
+      "category": "bracelets",
+      "price": 5980,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Pair",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "Adjustable"
+      ],
+      "image": "/bracelets/flower-in-the-rain-edit-hero.jpg",
+      "hoverImage": "/bracelets/flower-in-the-rain-edit-2.jpg",
+      "gallery": [
+        "/bracelets/flower-in-the-rain-edit-hero.jpg",
+        "/bracelets/flower-in-the-rain-edit-2.jpg",
+        "/bracelets/flower-in-the-rain-edit-3.jpg",
+        "/bracelets/flower-in-the-rain-edit-4.jpg",
+        "/bracelets/flower-in-the-rain-edit-5.jpg",
+        "/bracelets/flower-in-the-rain-edit-6.jpg"
+      ],
+      "description": "The Flower In The Rain bracelets shown together Ã¢â‚¬â€ pink and white blooms on silver branches.",
+      "story": "Two rains, one quiet language.",
+      "details": [
+        "S925 silver",
+        "Pink and white floral centres",
+        "Pair edit",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Store each piece separately in the pouch.",
+      "status": "active",
+      "stock": 10,
+      "outOfStock": false,
+      "metaTitle": "Flower In The Rain Ã¢â‚¬â€ Edit | Velvet Shell",
+      "metaDescription": "The Flower In The Rain bracelets shown together Ã¢â‚¬â€ pink and white blooms on silver branches.",
+      "createdAt": "2026-10-02T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-4",
+      "slug": "forget-me-not-bangles",
+      "name": "Forget-Me-Not Bangles",
+      "collection": "private-atelier",
+      "category": "bracelets",
+      "price": 4250,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Open cuff"
+      ],
+      "image": "/bracelets/forget-me-not-bangles-hero.jpg",
+      "hoverImage": "/bracelets/forget-me-not-bangles-2.jpg",
+      "gallery": [
+        "/bracelets/forget-me-not-bangles-hero.jpg",
+        "/bracelets/forget-me-not-bangles-2.jpg",
+        "/bracelets/forget-me-not-bangles-3.jpg",
+        "/bracelets/forget-me-not-bangles-4.jpg",
+        "/bracelets/forget-me-not-bangles-5.jpg"
+      ],
+      "description": "An open silver cuff of three parallel strands, crowned with three textured flowers and a gold teardrop bud.",
+      "story": "A small garden held at the wrist.",
+      "details": [
+        "S925 silver",
+        "Gold-toned flower centres",
+        "Open cuff",
+        "Handmade in Jaipur"
+      ],
+      "care": "Slide on gently. Avoid bending the open ends. Wipe with a soft cloth.",
+      "status": "active",
+      "stock": 11,
+      "outOfStock": false,
+      "metaTitle": "Forget-Me-Not Bangles | Velvet Shell",
+      "metaDescription": "An open silver cuff of three parallel strands, crowned with three textured flowers and a gold teardrop bud.",
+      "createdAt": "2026-10-01T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-5",
+      "slug": "forget-me-not-cuff",
+      "name": "Forget-Me-Not Cuff",
+      "collection": "private-atelier",
+      "category": "bracelets",
+      "price": 4680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Open cuff"
+      ],
+      "image": "/bracelets/forget-me-not-cuff-hero.jpg",
+      "hoverImage": "/bracelets/forget-me-not-cuff-2.jpg",
+      "gallery": [
+        "/bracelets/forget-me-not-cuff-hero.jpg",
+        "/bracelets/forget-me-not-cuff-2.jpg",
+        "/bracelets/forget-me-not-cuff-3.jpg",
+        "/bracelets/forget-me-not-cuff-4.jpg"
+      ],
+      "description": "A polished silver open cuff with a cascading cluster of matte forget-me-not flowers and tiny gold centres.",
+      "story": "Many blooms, one quiet gesture.",
+      "details": [
+        "S925 silver",
+        "Gold-toned centres",
+        "Open cuff",
+        "Handmade in Jaipur"
+      ],
+      "care": "Slide on gently. Avoid bending the open ends. Wipe with a soft cloth.",
+      "status": "active",
+      "stock": 12,
+      "outOfStock": false,
+      "metaTitle": "Forget-Me-Not Cuff | Velvet Shell",
+      "metaDescription": "A polished silver open cuff with a cascading cluster of matte forget-me-not flowers and tiny gold centres.",
+      "createdAt": "2026-09-30T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-6",
+      "slug": "lotus-whisper-pink",
+      "name": "Lotus Whisper Ã¢â‚¬â€ Pink",
+      "collection": "the-shell-edit",
+      "category": "bracelets",
+      "price": 3560,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Adjustable"
+      ],
+      "image": "/bracelets/lotus-whisper-pink-hero.jpg",
+      "hoverImage": "/bracelets/lotus-whisper-pink-2.jpg",
+      "gallery": [
+        "/bracelets/lotus-whisper-pink-hero.jpg",
+        "/bracelets/lotus-whisper-pink-2.jpg",
+        "/bracelets/lotus-whisper-pink-3.jpg",
+        "/bracelets/lotus-whisper-pink-4.jpg",
+        "/bracelets/lotus-whisper-pink-5.jpg"
+      ],
+      "description": "A silver chain bracelet with a translucent pink stone disc topped by a detailed silver lotus with gold accents.",
+      "story": "A quiet lotus, worn close.",
+      "details": [
+        "S925 silver",
+        "Pink stone centre",
+        "Lotus motif",
+        "Handmade in Jaipur"
+      ],
+      "care": "Keep away from perfume and water. Wipe with a soft dry cloth.",
+      "status": "active",
+      "stock": 13,
+      "outOfStock": false,
+      "metaTitle": "Lotus Whisper Ã¢â‚¬â€ Pink | Velvet Shell",
+      "metaDescription": "A silver chain bracelet with a translucent pink stone disc topped by a detailed silver lotus with gold accents.",
+      "createdAt": "2026-09-29T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-7",
+      "slug": "lotus-whisper-green",
+      "name": "Lotus Whisper Ã¢â‚¬â€ Green",
+      "collection": "the-shell-edit",
+      "category": "bracelets",
+      "price": 3560,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Adjustable"
+      ],
+      "image": "/bracelets/lotus-whisper-green-hero.jpg",
+      "hoverImage": "/bracelets/lotus-whisper-green-2.jpg",
+      "gallery": [
+        "/bracelets/lotus-whisper-green-hero.jpg",
+        "/bracelets/lotus-whisper-green-2.jpg",
+        "/bracelets/lotus-whisper-green-3.jpg",
+        "/bracelets/lotus-whisper-green-4.jpg",
+        "/bracelets/lotus-whisper-green-5.jpg",
+        "/bracelets/lotus-whisper-green-6.jpg",
+        "/bracelets/lotus-whisper-green-7.jpg"
+      ],
+      "description": "A silver chain bracelet with a translucent green stone disc and a silver lotus flower Ã¢â‚¬â€ cool colour, warm detail.",
+      "story": "Green light at the wrist.",
+      "details": [
+        "S925 silver",
+        "Green stone centre",
+        "Lotus motif",
+        "Handmade in Jaipur"
+      ],
+      "care": "Keep away from perfume and water. Wipe with a soft dry cloth.",
+      "status": "active",
+      "stock": 14,
+      "outOfStock": false,
+      "metaTitle": "Lotus Whisper Ã¢â‚¬â€ Green | Velvet Shell",
+      "metaDescription": "A silver chain bracelet with a translucent green stone disc and a silver lotus flower Ã¢â‚¬â€ cool colour, warm detail.",
+      "createdAt": "2026-09-28T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-8",
+      "slug": "lotus-whisper-edit",
+      "name": "Lotus Whisper Ã¢â‚¬â€ Edit",
+      "collection": "the-shell-edit",
+      "category": "bracelets",
+      "price": 6780,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Pair",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Adjustable"
+      ],
+      "image": "/bracelets/lotus-whisper-edit-hero.jpg",
+      "hoverImage": "/bracelets/lotus-whisper-edit-hero.jpg",
+      "gallery": [
+        "/bracelets/lotus-whisper-edit-hero.jpg"
+      ],
+      "description": "Lotus Whisper in pink and green, shown together Ã¢â‚¬â€ twin discs of colour with silver lotus blooms.",
+      "story": "Two stones, one quiet conversation.",
+      "details": [
+        "S925 silver",
+        "Pink and green stone centres",
+        "Pair edit",
+        "Handmade in Jaipur"
+      ],
+      "care": "Keep away from perfume and water. Store each piece separately.",
+      "status": "active",
+      "stock": 15,
+      "outOfStock": false,
+      "metaTitle": "Lotus Whisper Ã¢â‚¬â€ Edit | Velvet Shell",
+      "metaDescription": "Lotus Whisper in pink and green, shown together Ã¢â‚¬â€ twin discs of colour with silver lotus blooms.",
+      "createdAt": "2026-09-27T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-9",
+      "slug": "lotus-whisper-bangle-pink",
+      "name": "Lotus Whisper Bangle Ã¢â‚¬â€ Pink",
+      "collection": "gilded-tide",
+      "category": "bracelets",
+      "price": 3890,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Open bangle"
+      ],
+      "image": "/bracelets/lotus-whisper-bangle-pink-hero.jpg",
+      "hoverImage": "/bracelets/lotus-whisper-bangle-pink-2.jpg",
+      "gallery": [
+        "/bracelets/lotus-whisper-bangle-pink-hero.jpg",
+        "/bracelets/lotus-whisper-bangle-pink-2.jpg"
+      ],
+      "description": "A slender open silver bangle with a translucent pink bud on one end and a blooming silver flower with gold stamens on the other.",
+      "story": "Bud to bloom Ã¢â‚¬â€ a stem for the wrist.",
+      "details": [
+        "S925 silver",
+        "Pink bud accent",
+        "Open bangle",
+        "Handmade in Jaipur"
+      ],
+      "care": "Slide on carefully. Store alone to protect the bloom.",
+      "status": "active",
+      "stock": 16,
+      "outOfStock": false,
+      "metaTitle": "Lotus Whisper Bangle Ã¢â‚¬â€ Pink | Velvet Shell",
+      "metaDescription": "A slender open silver bangle with a translucent pink bud on one end and a blooming silver flower with gold stamens on the other.",
+      "createdAt": "2026-09-26T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-10",
+      "slug": "lotus-whisper-bangle-green",
+      "name": "Lotus Whisper Bangle Ã¢â‚¬â€ Green",
+      "collection": "gilded-tide",
+      "category": "bracelets",
+      "price": 3890,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "Open bangle"
+      ],
+      "image": "/bracelets/lotus-whisper-bangle-green-hero.jpg",
+      "hoverImage": "/bracelets/lotus-whisper-bangle-green-2.jpg",
+      "gallery": [
+        "/bracelets/lotus-whisper-bangle-green-hero.jpg",
+        "/bracelets/lotus-whisper-bangle-green-2.jpg"
+      ],
+      "description": "A slender open silver bangle with a translucent green bud and a blooming silver flower Ã¢â‚¬â€ botanical, light, distinctive.",
+      "story": "A green whisper of the lotus line.",
+      "details": [
+        "S925 silver",
+        "Green bud accent",
+        "Open bangle",
+        "Handmade in Jaipur"
+      ],
+      "care": "Slide on carefully. Store alone to protect the bloom.",
+      "status": "active",
+      "stock": 17,
+      "outOfStock": false,
+      "metaTitle": "Lotus Whisper Bangle Ã¢â‚¬â€ Green | Velvet Shell",
+      "metaDescription": "A slender open silver bangle with a translucent green bud and a blooming silver flower Ã¢â‚¬â€ botanical, light, distinctive.",
+      "createdAt": "2026-09-25T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-11",
+      "slug": "agate-bee-honey-ring",
+      "name": "Agate Bee & Honey Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 3480,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/agate-bee-honey-ring-hero.jpg",
+      "hoverImage": "/rings/agate-bee-honey-ring-2.jpg",
+      "gallery": [
+        "/rings/agate-bee-honey-ring-hero.jpg",
+        "/rings/agate-bee-honey-ring-2.jpg",
+        "/rings/agate-bee-honey-ring-3.jpg",
+        "/rings/agate-bee-honey-ring-4.jpg",
+        "/rings/agate-bee-honey-ring-5.jpg",
+        "/rings/agate-bee-honey-ring-6.jpg",
+        "/rings/agate-bee-honey-ring-7.jpg"
+      ],
+      "description": "A gold twig band crowned with a striped bee â€” black enamel abdomen, open wings, and honey-warm polish.",
+      "story": "A garden visitor, held still on the hand.",
+      "details": [
+        "Gold-toned metal",
+        "Enamel bee body",
+        "Organic twig band",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 18,
+      "outOfStock": false,
+      "metaTitle": "Agate Bee & Honey Ring | Velvet Shell",
+      "metaDescription": "A gold twig band crowned with a striped bee â€” black enamel abdomen, open wings, and honey-warm polish.",
+      "createdAt": "2026-09-24T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-12",
+      "slug": "aquamarine-butterfly-ring",
+      "name": "Aquamarine Butterfly Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 4280,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Stone",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/aquamarine-butterfly-ring-hero.jpg",
+      "hoverImage": "/rings/aquamarine-butterfly-ring-2.jpg",
+      "gallery": [
+        "/rings/aquamarine-butterfly-ring-hero.jpg",
+        "/rings/aquamarine-butterfly-ring-2.jpg",
+        "/rings/aquamarine-butterfly-ring-3.jpg",
+        "/rings/aquamarine-butterfly-ring-4.jpg",
+        "/rings/aquamarine-butterfly-ring-5.jpg",
+        "/rings/aquamarine-butterfly-ring-6.jpg",
+        "/rings/aquamarine-butterfly-ring-7.jpg",
+        "/rings/aquamarine-butterfly-ring-8.jpg"
+      ],
+      "description": "A raw aquamarine crystal on a silver branch band, with a tiny gold butterfly perched at the crest.",
+      "story": "Stone, wing, and silver twig â€” quiet flight.",
+      "details": [
+        "S925 silver band",
+        "Raw aquamarine",
+        "Gold butterfly accent",
+        "Adjustable",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Aquamarine Butterfly Ring | Velvet Shell",
+      "metaDescription": "A raw aquamarine crystal on a silver branch band, with a tiny gold butterfly perched at the crest.",
+      "createdAt": "2026-09-23T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-13",
+      "slug": "bees-kissing-roses-ring",
+      "name": "Bees Kissing Roses Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 3980,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/bees-kissing-roses-ring-hero.jpg",
+      "hoverImage": "/rings/bees-kissing-roses-ring-2.jpg",
+      "gallery": [
+        "/rings/bees-kissing-roses-ring-hero.jpg",
+        "/rings/bees-kissing-roses-ring-2.jpg",
+        "/rings/bees-kissing-roses-ring-3.jpg",
+        "/rings/bees-kissing-roses-ring-4.jpg",
+        "/rings/bees-kissing-roses-ring-5.jpg",
+        "/rings/bees-kissing-roses-ring-6.jpg",
+        "/rings/bees-kissing-roses-ring-7.jpg",
+        "/rings/bees-kissing-roses-ring-8.jpg",
+        "/rings/bees-kissing-roses-ring-9.jpg"
+      ],
+      "description": "Twin bees meet at a rose bloom â€” detailed wings, soft petals, and a botanical silver setting.",
+      "story": "Two bees, one rose â€” a small romance in metal.",
+      "details": [
+        "Botanical setting",
+        "Bee and rose motif",
+        "Adjustable",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 8,
+      "outOfStock": false,
+      "metaTitle": "Bees Kissing Roses Ring | Velvet Shell",
+      "metaDescription": "Twin bees meet at a rose bloom â€” detailed wings, soft petals, and a botanical silver setting.",
+      "createdAt": "2026-09-22T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-14",
+      "slug": "crystal-flower-in-rain-ring",
+      "name": "Crystal Flower In Rain Ring",
+      "collection": "pearls-of-nacre",
+      "category": "rings",
+      "price": 3680,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/crystal-flower-in-rain-ring-hero.jpg",
+      "hoverImage": "/rings/crystal-flower-in-rain-ring-2.jpg",
+      "gallery": [
+        "/rings/crystal-flower-in-rain-ring-hero.jpg",
+        "/rings/crystal-flower-in-rain-ring-2.jpg",
+        "/rings/crystal-flower-in-rain-ring-3.jpg",
+        "/rings/crystal-flower-in-rain-ring-4.jpg",
+        "/rings/crystal-flower-in-rain-ring-5.jpg",
+        "/rings/crystal-flower-in-rain-ring-6.jpg",
+        "/rings/crystal-flower-in-rain-ring-7.jpg",
+        "/rings/crystal-flower-in-rain-ring-8.jpg",
+        "/rings/crystal-flower-in-rain-ring-9.jpg"
+      ],
+      "description": "A frosted translucent flower on a silver branch band â€” soft petals, silver stamens, cool light.",
+      "story": "A bloom after rain, worn close to the hand.",
+      "details": [
+        "S925 silver",
+        "Frosted crystal flower",
+        "Branch band",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 9,
+      "outOfStock": false,
+      "metaTitle": "Crystal Flower In Rain Ring | Velvet Shell",
+      "metaDescription": "A frosted translucent flower on a silver branch band â€” soft petals, silver stamens, cool light.",
+      "createdAt": "2026-09-21T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-15",
+      "slug": "flower-adjustable-ring",
+      "name": "Flower Adjustable Ring",
+      "collection": "pearls-of-nacre",
+      "category": "rings",
+      "price": 2980,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/flower-adjustable-ring-hero.jpg",
+      "hoverImage": "/rings/flower-adjustable-ring-2.jpg",
+      "gallery": [
+        "/rings/flower-adjustable-ring-hero.jpg",
+        "/rings/flower-adjustable-ring-2.jpg",
+        "/rings/flower-adjustable-ring-3.jpg",
+        "/rings/flower-adjustable-ring-4.jpg",
+        "/rings/flower-adjustable-ring-5.jpg",
+        "/rings/flower-adjustable-ring-6.jpg",
+        "/rings/flower-adjustable-ring-7.jpg",
+        "/rings/flower-adjustable-ring-8.jpg"
+      ],
+      "description": "An open adjustable ring with a sculpted flower centre â€” light on the finger, full of quiet detail.",
+      "story": "A bloom that finds its size.",
+      "details": [
+        "Adjustable open form",
+        "Floral centre",
+        "Everyday weight",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 10,
+      "outOfStock": false,
+      "metaTitle": "Flower Adjustable Ring | Velvet Shell",
+      "metaDescription": "An open adjustable ring with a sculpted flower centre â€” light on the finger, full of quiet detail.",
+      "createdAt": "2026-09-20T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-16",
+      "slug": "flower-adjustable-ring-gold",
+      "name": "Flower Adjustable Ring â€” Gold",
+      "collection": "gilded-tide",
+      "category": "rings",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/flower-adjustable-ring-gold-hero.jpg",
+      "hoverImage": "/rings/flower-adjustable-ring-gold-hero.jpg",
+      "gallery": [
+        "/rings/flower-adjustable-ring-gold-hero.jpg"
+      ],
+      "description": "The flower adjustable ring in warm gold â€” same open form, richer light.",
+      "story": "Gold for the days that want warmth.",
+      "details": [
+        "Gold-toned finish",
+        "Adjustable",
+        "Floral centre",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 11,
+      "outOfStock": false,
+      "metaTitle": "Flower Adjustable Ring â€” Gold | Velvet Shell",
+      "metaDescription": "The flower adjustable ring in warm gold â€” same open form, richer light.",
+      "createdAt": "2026-09-19T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-17",
+      "slug": "flower-adjustable-ring-silver",
+      "name": "Flower Adjustable Ring â€” Silver",
+      "collection": "pearls-of-nacre",
+      "category": "rings",
+      "price": 3080,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/flower-adjustable-ring-silver-hero.jpg",
+      "hoverImage": "/rings/flower-adjustable-ring-silver-2.jpg",
+      "gallery": [
+        "/rings/flower-adjustable-ring-silver-hero.jpg",
+        "/rings/flower-adjustable-ring-silver-2.jpg"
+      ],
+      "description": "The flower adjustable ring in cool silver â€” open band, crisp bloom.",
+      "story": "Silver for quieter light.",
+      "details": [
+        "S925 silver",
+        "Adjustable",
+        "Floral centre",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 12,
+      "outOfStock": false,
+      "metaTitle": "Flower Adjustable Ring â€” Silver | Velvet Shell",
+      "metaDescription": "The flower adjustable ring in cool silver â€” open band, crisp bloom.",
+      "createdAt": "2026-09-18T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-18",
+      "slug": "flying-swallow-ring",
+      "name": "Flying Swallow Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 3380,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/flying-swallow-ring-hero.jpg",
+      "hoverImage": "/rings/flying-swallow-ring-2.jpg",
+      "gallery": [
+        "/rings/flying-swallow-ring-hero.jpg",
+        "/rings/flying-swallow-ring-2.jpg",
+        "/rings/flying-swallow-ring-3.jpg",
+        "/rings/flying-swallow-ring-4.jpg",
+        "/rings/flying-swallow-ring-5.jpg",
+        "/rings/flying-swallow-ring-6.jpg",
+        "/rings/flying-swallow-ring-7.jpg"
+      ],
+      "description": "A swallow in mid-flight across an adjustable silver band â€” light wings, decisive line.",
+      "story": "A bird that never lands.",
+      "details": [
+        "S925 silver",
+        "Swallow motif",
+        "Adjustable",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "draft",
+      "stock": 13,
+      "outOfStock": false,
+      "metaTitle": "Flying Swallow Ring | Velvet Shell",
+      "metaDescription": "A swallow in mid-flight across an adjustable silver band â€” light wings, decisive line.",
+      "createdAt": "2026-09-17T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-19",
+      "slug": "lily-of-the-valley-ring",
+      "name": "Lily Of The Valley Ring",
+      "collection": "pearls-of-nacre",
+      "category": "rings",
+      "price": 4120,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Crystal",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/lily-of-the-valley-ring-hero.jpg",
+      "hoverImage": "/rings/lily-of-the-valley-ring-2.jpg",
+      "gallery": [
+        "/rings/lily-of-the-valley-ring-hero.jpg",
+        "/rings/lily-of-the-valley-ring-2.jpg",
+        "/rings/lily-of-the-valley-ring-3.jpg",
+        "/rings/lily-of-the-valley-ring-4.jpg",
+        "/rings/lily-of-the-valley-ring-5.jpg",
+        "/rings/lily-of-the-valley-ring-6.jpg"
+      ],
+      "description": "Natural crystal bells along a silver stem â€” lily of the valley, held as a ring.",
+      "story": "Spring, cast in crystal and silver.",
+      "details": [
+        "Natural crystal drops",
+        "S925 silver",
+        "Botanical stem",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 14,
+      "outOfStock": false,
+      "metaTitle": "Lily Of The Valley Ring | Velvet Shell",
+      "metaDescription": "Natural crystal bells along a silver stem â€” lily of the valley, held as a ring.",
+      "createdAt": "2026-09-16T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-20",
+      "slug": "lotus-natural-stone-ring",
+      "name": "Lotus Natural Stone Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 4480,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Stone",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/lotus-natural-stone-ring-hero.jpg",
+      "hoverImage": "/rings/lotus-natural-stone-ring-2.jpg",
+      "gallery": [
+        "/rings/lotus-natural-stone-ring-hero.jpg",
+        "/rings/lotus-natural-stone-ring-2.jpg",
+        "/rings/lotus-natural-stone-ring-3.jpg",
+        "/rings/lotus-natural-stone-ring-4.jpg",
+        "/rings/lotus-natural-stone-ring-5.jpg",
+        "/rings/lotus-natural-stone-ring-6.jpg",
+        "/rings/lotus-natural-stone-ring-7.jpg",
+        "/rings/lotus-natural-stone-ring-8.jpg",
+        "/rings/lotus-natural-stone-ring-9.jpg",
+        "/rings/lotus-natural-stone-ring-10.jpg"
+      ],
+      "description": "A lotus bloom set with natural stone â€” layered petals, cool silver, quiet weight.",
+      "story": "Lotus light for the hand.",
+      "details": [
+        "Natural stone centre",
+        "Lotus motif",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 15,
+      "outOfStock": false,
+      "metaTitle": "Lotus Natural Stone Ring | Velvet Shell",
+      "metaDescription": "A lotus bloom set with natural stone â€” layered petals, cool silver, quiet weight.",
+      "createdAt": "2026-09-15T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-21",
+      "slug": "lotus-natural-stone-ring-pink",
+      "name": "Lotus Natural Stone Ring â€” Pink",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 4580,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Stone",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/lotus-natural-stone-ring-pink-hero.jpg",
+      "hoverImage": "/rings/lotus-natural-stone-ring-pink-hero.jpg",
+      "gallery": [
+        "/rings/lotus-natural-stone-ring-pink-hero.jpg"
+      ],
+      "description": "The lotus natural stone ring in a soft pink stone â€” same petal architecture, warmer heart.",
+      "story": "Pink lotus, quieter fire.",
+      "details": [
+        "Pink natural stone",
+        "Lotus motif",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 16,
+      "outOfStock": false,
+      "metaTitle": "Lotus Natural Stone Ring â€” Pink | Velvet Shell",
+      "metaDescription": "The lotus natural stone ring in a soft pink stone â€” same petal architecture, warmer heart.",
+      "createdAt": "2026-09-14T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-22",
+      "slug": "pencil-shaving-ring-gold",
+      "name": "Pencil Shaving Ring â€” Gold",
+      "collection": "the-shell-edit",
+      "category": "rings",
+      "price": 3280,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Sculptural",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/pencil-shaving-ring-gold-hero.jpg",
+      "hoverImage": "/rings/pencil-shaving-ring-gold-2.jpg",
+      "gallery": [
+        "/rings/pencil-shaving-ring-gold-hero.jpg",
+        "/rings/pencil-shaving-ring-gold-2.jpg",
+        "/rings/pencil-shaving-ring-gold-3.jpg"
+      ],
+      "description": "A sculptural gold band coiled like a pencil shaving â€” continuous ribbon, soft spiral.",
+      "story": "A line that learned to turn.",
+      "details": [
+        "Gold-toned metal",
+        "Spiral ribbon form",
+        "Statement band",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 17,
+      "outOfStock": false,
+      "metaTitle": "Pencil Shaving Ring â€” Gold | Velvet Shell",
+      "metaDescription": "A sculptural gold band coiled like a pencil shaving â€” continuous ribbon, soft spiral.",
+      "createdAt": "2026-09-13T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-23",
+      "slug": "pencil-shaving-ring-silver",
+      "name": "Pencil Shaving Ring â€” Silver",
+      "collection": "the-shell-edit",
+      "category": "rings",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Sculptural",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/pencil-shaving-ring-silver-hero.jpg",
+      "hoverImage": "/rings/pencil-shaving-ring-silver-2.jpg",
+      "gallery": [
+        "/rings/pencil-shaving-ring-silver-hero.jpg",
+        "/rings/pencil-shaving-ring-silver-2.jpg",
+        "/rings/pencil-shaving-ring-silver-3.jpg",
+        "/rings/pencil-shaving-ring-silver-4.jpg"
+      ],
+      "description": "The pencil-shaving spiral in silver â€” cool ribbon, continuous coil.",
+      "story": "Silver that turns once, then again.",
+      "details": [
+        "S925 silver",
+        "Spiral ribbon form",
+        "Statement band",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Pencil Shaving Ring â€” Silver | Velvet Shell",
+      "metaDescription": "The pencil-shaving spiral in silver â€” cool ribbon, continuous coil.",
+      "createdAt": "2026-09-12T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-24",
+      "slug": "phalaenopsis-flower-ring",
+      "name": "Phalaenopsis Flower Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 4380,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/phalaenopsis-flower-ring-hero.jpg",
+      "hoverImage": "/rings/phalaenopsis-flower-ring-2.jpg",
+      "gallery": [
+        "/rings/phalaenopsis-flower-ring-hero.jpg",
+        "/rings/phalaenopsis-flower-ring-2.jpg",
+        "/rings/phalaenopsis-flower-ring-3.jpg",
+        "/rings/phalaenopsis-flower-ring-4.jpg",
+        "/rings/phalaenopsis-flower-ring-5.jpg",
+        "/rings/phalaenopsis-flower-ring-6.jpg"
+      ],
+      "description": "An orchid bloom ring â€” broad phalaenopsis petals, fine centre, botanical silver work.",
+      "story": "Orchid stillness, worn.",
+      "details": [
+        "Phalaenopsis motif",
+        "Detailed petals",
+        "Adjustable",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 19,
+      "outOfStock": false,
+      "metaTitle": "Phalaenopsis Flower Ring | Velvet Shell",
+      "metaDescription": "An orchid bloom ring â€” broad phalaenopsis petals, fine centre, botanical silver work.",
+      "createdAt": "2026-09-11T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-25",
+      "slug": "phalaenopsis-flower-ring-silver",
+      "name": "Phalaenopsis Flower Ring â€” Silver",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 4280,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/phalaenopsis-flower-ring-silver-hero.jpg",
+      "hoverImage": "/rings/phalaenopsis-flower-ring-silver-hero.jpg",
+      "gallery": [
+        "/rings/phalaenopsis-flower-ring-silver-hero.jpg"
+      ],
+      "description": "The phalaenopsis orchid ring in full silver â€” cool petals, precise veins.",
+      "story": "Silver orchid for quieter rooms.",
+      "details": [
+        "S925 silver",
+        "Orchid motif",
+        "Adjustable",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 8,
+      "outOfStock": false,
+      "metaTitle": "Phalaenopsis Flower Ring â€” Silver | Velvet Shell",
+      "metaDescription": "The phalaenopsis orchid ring in full silver â€” cool petals, precise veins.",
+      "createdAt": "2026-09-10T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-26",
+      "slug": "pink-gems-stone-ring",
+      "name": "Pink Gems Stone Ring",
+      "collection": "pearls-of-nacre",
+      "category": "rings",
+      "price": 3920,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Stone",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/pink-gems-stone-ring-hero.jpg",
+      "hoverImage": "/rings/pink-gems-stone-ring-2.jpg",
+      "gallery": [
+        "/rings/pink-gems-stone-ring-hero.jpg",
+        "/rings/pink-gems-stone-ring-2.jpg",
+        "/rings/pink-gems-stone-ring-3.jpg",
+        "/rings/pink-gems-stone-ring-4.jpg",
+        "/rings/pink-gems-stone-ring-5.jpg",
+        "/rings/pink-gems-stone-ring-gold-hero.jpg"
+      ],
+      "description": "A silver setting holding soft pink gemstones â€” luminous, feminine, made for stacking or alone.",
+      "story": "Pink light, held in silver.",
+      "details": [
+        "Pink gemstones",
+        "S925 silver",
+        "Everyday luxury",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 9,
+      "outOfStock": false,
+      "metaTitle": "Pink Gems Stone Ring | Velvet Shell",
+      "metaDescription": "A silver setting holding soft pink gemstones â€” luminous, feminine, made for stacking or alone.",
+      "createdAt": "2026-09-09T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-27",
+      "slug": "pomegranate-branch-ring",
+      "name": "Pomegranate Branch Ring",
+      "collection": "private-atelier",
+      "category": "rings",
+      "price": 4680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Adjustable"
+      ],
+      "image": "/rings/pomegranate-branch-ring-hero.jpg",
+      "hoverImage": "/rings/pomegranate-branch-ring-2.jpg",
+      "gallery": [
+        "/rings/pomegranate-branch-ring-hero.jpg",
+        "/rings/pomegranate-branch-ring-2.jpg",
+        "/rings/pomegranate-branch-ring-3.jpg",
+        "/rings/pomegranate-branch-ring-4.jpg",
+        "/rings/pomegranate-branch-ring-5.jpg",
+        "/rings/pomegranate-branch-ring-6.jpg",
+        "/rings/pomegranate-branch-ring-7.jpg",
+        "/rings/pomegranate-branch-ring-8.jpg"
+      ],
+      "description": "Pomegranate fruit and leaves on a branch band â€” ripe form, fine leaf work, botanical weight.",
+      "story": "Fruit of the branch, worn as a seal.",
+      "details": [
+        "Pomegranate motif",
+        "Leaf and branch detail",
+        "Adjustable",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store alone in the pouch.",
+      "status": "active",
+      "stock": 10,
+      "outOfStock": false,
+      "metaTitle": "Pomegranate Branch Ring | Velvet Shell",
+      "metaDescription": "Pomegranate fruit and leaves on a branch band â€” ripe form, fine leaf work, botanical weight.",
+      "createdAt": "2026-09-08T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-28",
+      "slug": "autumn-tree-branch-earrings",
+      "name": "Autumn Tree Branch Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3280,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/autumn-tree-branch-earrings-hero.jpg",
+      "hoverImage": "/earrings/autumn-tree-branch-earrings-2.jpg",
+      "gallery": [
+        "/earrings/autumn-tree-branch-earrings-hero.jpg",
+        "/earrings/autumn-tree-branch-earrings-2.jpg",
+        "/earrings/autumn-tree-branch-earrings-3.jpg",
+        "/earrings/autumn-tree-branch-earrings-4.jpg",
+        "/earrings/autumn-tree-branch-earrings-5.jpg",
+        "/earrings/autumn-tree-branch-earrings-6.jpg"
+      ],
+      "description": "Silver branch earrings drawn like late autumn wood — organic line, quiet weight at the ear.",
+      "story": "A tree held small enough for everyday.",
+      "details": [
+        "S925 silver",
+        "Branch motif",
+        "Lightweight drop",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 11,
+      "outOfStock": false,
+      "metaTitle": "Autumn Tree Branch Earrings | Velvet Shell",
+      "metaDescription": "Silver branch earrings drawn like late autumn wood — organic line, quiet weight at the ear.",
+      "createdAt": "2026-09-07T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-29",
+      "slug": "chrysanthemum-dangle-earrings",
+      "name": "Chrysanthemum Dangle Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4580,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/chrysanthemum-dangle-earrings-hero.jpg",
+      "hoverImage": "/earrings/chrysanthemum-dangle-earrings-2.jpg",
+      "gallery": [
+        "/earrings/chrysanthemum-dangle-earrings-hero.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-2.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-3.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-4.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-5.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-6.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-7.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-8.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-9.jpg",
+        "/earrings/chrysanthemum-dangle-earrings-10.jpg"
+      ],
+      "description": "Long chrysanthemum drops — silver outer petals, gold centres, French hooks.",
+      "story": "A bloom that falls with intention.",
+      "details": [
+        "Two-tone floral",
+        "Long dangle",
+        "French hooks",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 12,
+      "outOfStock": false,
+      "metaTitle": "Chrysanthemum Dangle Earrings | Velvet Shell",
+      "metaDescription": "Long chrysanthemum drops — silver outer petals, gold centres, French hooks.",
+      "createdAt": "2026-09-06T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-30",
+      "slug": "dragonfly-baroque-pearl-earrings",
+      "name": "Dragonfly Baroque Pearl Earrings",
+      "collection": "pearls-of-nacre",
+      "category": "earrings",
+      "price": 4880,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Pearl",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/dragonfly-baroque-pearl-earrings-hero.jpg",
+      "hoverImage": "/earrings/dragonfly-baroque-pearl-earrings-2.jpg",
+      "gallery": [
+        "/earrings/dragonfly-baroque-pearl-earrings-hero.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-2.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-3.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-4.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-5.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-6.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-7.jpg",
+        "/earrings/dragonfly-baroque-pearl-earrings-8.jpg"
+      ],
+      "description": "Removable dragonfly forms with baroque pearls — assembleable, luminous, quietly dramatic.",
+      "story": "Wings and pearl, worn as a private sky.",
+      "details": [
+        "Baroque pearl",
+        "Dragonfly motif",
+        "Removable assembleable",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 13,
+      "outOfStock": false,
+      "metaTitle": "Dragonfly Baroque Pearl Earrings | Velvet Shell",
+      "metaDescription": "Removable dragonfly forms with baroque pearls — assembleable, luminous, quietly dramatic.",
+      "createdAt": "2026-09-05T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-31",
+      "slug": "dripping-honey-bee-earrings",
+      "name": "Dripping Honey & Bee Earrings",
+      "collection": "the-shell-edit",
+      "category": "earrings",
+      "price": 3680,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/dripping-honey-bee-earrings-hero.jpg",
+      "hoverImage": "/earrings/dripping-honey-bee-earrings-2.jpg",
+      "gallery": [
+        "/earrings/dripping-honey-bee-earrings-hero.jpg",
+        "/earrings/dripping-honey-bee-earrings-2.jpg",
+        "/earrings/dripping-honey-bee-earrings-3.jpg",
+        "/earrings/dripping-honey-bee-earrings-4.jpg",
+        "/earrings/dripping-honey-bee-earrings-5.jpg"
+      ],
+      "description": "Honey-drip forms with a tiny bee — warm gold, playful precision.",
+      "story": "Sweetness, drawn in metal.",
+      "details": [
+        "Gold-toned metal",
+        "Bee and honey motif",
+        "Drop form",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 14,
+      "outOfStock": false,
+      "metaTitle": "Dripping Honey & Bee Earrings | Velvet Shell",
+      "metaDescription": "Honey-drip forms with a tiny bee — warm gold, playful precision.",
+      "createdAt": "2026-09-04T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-32",
+      "slug": "epipremnum-dangle-earrings",
+      "name": "Epipremnum Dangle Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3380,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/epipremnum-dangle-earrings-hero.jpg",
+      "hoverImage": "/earrings/epipremnum-dangle-earrings-2.png",
+      "gallery": [
+        "/earrings/epipremnum-dangle-earrings-hero.jpg",
+        "/earrings/epipremnum-dangle-earrings-2.png",
+        "/earrings/epipremnum-dangle-earrings-3.png",
+        "/earrings/epipremnum-dangle-earrings-4.png"
+      ],
+      "description": "Trailing epipremnum leaf drops — botanical silver, soft movement.",
+      "story": "A houseplant, made elegant.",
+      "details": [
+        "Leaf motif",
+        "Dangle drop",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 15,
+      "outOfStock": false,
+      "metaTitle": "Epipremnum Dangle Earrings | Velvet Shell",
+      "metaDescription": "Trailing epipremnum leaf drops — botanical silver, soft movement.",
+      "createdAt": "2026-09-03T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-33",
+      "slug": "flower-design-dangle-earrings",
+      "name": "Flower Design Dangle Earrings",
+      "collection": "pearls-of-nacre",
+      "category": "earrings",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/flower-design-dangle-earrings-hero.jpg",
+      "hoverImage": "/earrings/flower-design-dangle-earrings-2.png",
+      "gallery": [
+        "/earrings/flower-design-dangle-earrings-hero.jpg",
+        "/earrings/flower-design-dangle-earrings-2.png",
+        "/earrings/flower-design-dangle-earrings-3.png",
+        "/earrings/flower-design-dangle-earrings-4.png"
+      ],
+      "description": "Sculpted flower dangles — clean petals, everyday silver light.",
+      "story": "A flower that learned to hang.",
+      "details": [
+        "Floral dangle",
+        "S925 silver",
+        "Everyday weight",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 16,
+      "outOfStock": false,
+      "metaTitle": "Flower Design Dangle Earrings | Velvet Shell",
+      "metaDescription": "Sculpted flower dangles — clean petals, everyday silver light.",
+      "createdAt": "2026-09-02T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-34",
+      "slug": "gold-flower-dangle-earrings",
+      "name": "Gold Flower Dangle Earrings",
+      "collection": "gilded-tide",
+      "category": "earrings",
+      "price": 3380,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/gold-flower-dangle-earrings-hero.png",
+      "hoverImage": "/earrings/gold-flower-dangle-earrings-2.png",
+      "gallery": [
+        "/earrings/gold-flower-dangle-earrings-hero.png",
+        "/earrings/gold-flower-dangle-earrings-2.png"
+      ],
+      "description": "Gold-plated flower dangles — warmer light, same botanical line.",
+      "story": "Gold for softer evenings.",
+      "details": [
+        "Gold-plated finish",
+        "Floral dangle",
+        "Lightweight",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Gold Flower Dangle Earrings | Velvet Shell",
+      "metaDescription": "Gold-plated flower dangles — warmer light, same botanical line.",
+      "createdAt": "2026-09-01T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-35",
+      "slug": "flower-earring-gold",
+      "name": "Flower Earrings — Gold",
+      "collection": "gilded-tide",
+      "category": "earrings",
+      "price": 2980,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/flower-earring-gold-hero.jpg",
+      "hoverImage": "/earrings/flower-earring-gold-2.jpg",
+      "gallery": [
+        "/earrings/flower-earring-gold-hero.jpg",
+        "/earrings/flower-earring-gold-2.jpg"
+      ],
+      "description": "Compact gold flower earrings — soft petals, warm polish.",
+      "story": "A bloom that stays close to the ear.",
+      "details": [
+        "Gold-toned",
+        "Floral form",
+        "Stud or drop",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "draft",
+      "stock": 18,
+      "outOfStock": false,
+      "metaTitle": "Flower Earrings — Gold | Velvet Shell",
+      "metaDescription": "Compact gold flower earrings — soft petals, warm polish.",
+      "createdAt": "2026-08-31T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-36",
+      "slug": "flower-earring-silver",
+      "name": "Flower Earrings — Silver",
+      "collection": "pearls-of-nacre",
+      "category": "earrings",
+      "price": 2880,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/flower-earring-silver-hero.jpg",
+      "hoverImage": "/earrings/flower-earring-silver-2.jpg",
+      "gallery": [
+        "/earrings/flower-earring-silver-hero.jpg",
+        "/earrings/flower-earring-silver-2.jpg",
+        "/earrings/flower-earring-silver-3.jpg",
+        "/earrings/flower-earring-silver-4.jpg",
+        "/earrings/flower-earring-silver-5.jpg",
+        "/earrings/flower-earring-silver-6.jpg",
+        "/earrings/flower-earring-silver-7.jpg"
+      ],
+      "description": "Silver flower earrings — cool petals, quiet shine.",
+      "story": "Silver bloom for daylight.",
+      "details": [
+        "S925 silver",
+        "Floral form",
+        "Everyday",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 19,
+      "outOfStock": false,
+      "metaTitle": "Flower Earrings — Silver | Velvet Shell",
+      "metaDescription": "Silver flower earrings — cool petals, quiet shine.",
+      "createdAt": "2026-08-30T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-37",
+      "slug": "forget-me-not-hoop-earrings",
+      "name": "Forget-Me-Not Flower Hoops",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3980,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/forget-me-not-hoop-earrings-hero.jpg",
+      "hoverImage": "/earrings/forget-me-not-hoop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/forget-me-not-hoop-earrings-hero.jpg",
+        "/earrings/forget-me-not-hoop-earrings-2.jpg",
+        "/earrings/forget-me-not-hoop-earrings-3.jpg",
+        "/earrings/forget-me-not-hoop-earrings-4.jpg",
+        "/earrings/forget-me-not-hoop-earrings-5.jpg",
+        "/earrings/forget-me-not-hoop-earrings-6.jpg",
+        "/earrings/forget-me-not-hoop-earrings-7.jpg"
+      ],
+      "description": "Curved gold hoops clustered with forget-me-not blooms — textured petals, soft curve.",
+      "story": "A garden along the ear.",
+      "details": [
+        "Gold-toned",
+        "Floral hoop",
+        "Organic texture",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 8,
+      "outOfStock": false,
+      "metaTitle": "Forget-Me-Not Flower Hoops | Velvet Shell",
+      "metaDescription": "Curved gold hoops clustered with forget-me-not blooms — textured petals, soft curve.",
+      "createdAt": "2026-08-29T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-38",
+      "slug": "forget-me-not-flower-earrings",
+      "name": "Forget-Me-Not Flower Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3480,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/forget-me-not-flower-earrings-hero.jpg",
+      "hoverImage": "/earrings/forget-me-not-flower-earrings-2.jpg",
+      "gallery": [
+        "/earrings/forget-me-not-flower-earrings-hero.jpg",
+        "/earrings/forget-me-not-flower-earrings-2.jpg",
+        "/earrings/forget-me-not-flower-earrings-3.jpg",
+        "/earrings/forget-me-not-flower-earrings-4.jpg",
+        "/earrings/forget-me-not-flower-earrings-5.jpg",
+        "/earrings/forget-me-not-flower-earrings-6.jpg",
+        "/earrings/forget-me-not-flower-earrings-7.jpg",
+        "/earrings/forget-me-not-flower-earrings-8.jpg"
+      ],
+      "description": "Forget-me-not blooms as earrings — delicate petals, botanical detail.",
+      "story": "Small flowers, serious craft.",
+      "details": [
+        "Forget-me-not motif",
+        "Lightweight",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 9,
+      "outOfStock": false,
+      "metaTitle": "Forget-Me-Not Flower Earrings | Velvet Shell",
+      "metaDescription": "Forget-me-not blooms as earrings — delicate petals, botanical detail.",
+      "createdAt": "2026-08-28T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-39",
+      "slug": "french-iris-long-drop-earrings",
+      "name": "French Iris Long Drop Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4280,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/french-iris-long-drop-earrings-hero.jpg",
+      "hoverImage": "/earrings/french-iris-long-drop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/french-iris-long-drop-earrings-hero.jpg",
+        "/earrings/french-iris-long-drop-earrings-2.jpg"
+      ],
+      "description": "French-style iris long drops — elongated bloom, refined fall.",
+      "story": "Iris, drawn for evening.",
+      "details": [
+        "Iris motif",
+        "Long drop",
+        "French style",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 10,
+      "outOfStock": false,
+      "metaTitle": "French Iris Long Drop Earrings | Velvet Shell",
+      "metaDescription": "French-style iris long drops — elongated bloom, refined fall.",
+      "createdAt": "2026-08-27T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-40",
+      "slug": "clover-pearl-dangle-earrings",
+      "name": "Four-Leaf Clover Pearl Drops",
+      "collection": "pearls-of-nacre",
+      "category": "earrings",
+      "price": 4680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Pearl",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/clover-pearl-dangle-earrings-hero.jpg",
+      "hoverImage": "/earrings/clover-pearl-dangle-earrings-2.jpg",
+      "gallery": [
+        "/earrings/clover-pearl-dangle-earrings-hero.jpg",
+        "/earrings/clover-pearl-dangle-earrings-2.jpg",
+        "/earrings/clover-pearl-dangle-earrings-3.png",
+        "/earrings/clover-pearl-dangle-earrings-4.png",
+        "/earrings/clover-pearl-dangle-earrings-5.png",
+        "/earrings/clover-pearl-dangle-earrings-6.png",
+        "/earrings/clover-pearl-dangle-earrings-7.png",
+        "/earrings/clover-pearl-dangle-earrings-8.png",
+        "/earrings/clover-pearl-dangle-earrings-9.png"
+      ],
+      "description": "Classic four-leaf clover drops with freshwater pearls — luminous, lucky, light.",
+      "story": "Pearl and clover, held as light.",
+      "details": [
+        "Freshwater pearl",
+        "Clover motif",
+        "Dangle drop",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 11,
+      "outOfStock": false,
+      "metaTitle": "Four-Leaf Clover Pearl Drops | Velvet Shell",
+      "metaDescription": "Classic four-leaf clover drops with freshwater pearls — luminous, lucky, light.",
+      "createdAt": "2026-08-26T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-41",
+      "slug": "honeybee-stud-earrings",
+      "name": "Honeybee Stud Earrings",
+      "collection": "the-shell-edit",
+      "category": "earrings",
+      "price": 2680,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/honeybee-stud-earrings-hero.jpg",
+      "hoverImage": "/earrings/honeybee-stud-earrings-2.jpg",
+      "gallery": [
+        "/earrings/honeybee-stud-earrings-hero.jpg",
+        "/earrings/honeybee-stud-earrings-2.jpg",
+        "/earrings/honeybee-stud-earrings-3.jpg"
+      ],
+      "description": "Tiny honeybee studs — polished wings, frosted abdomen, everyday charm.",
+      "story": "A garden detail for every day.",
+      "details": [
+        "Bee stud",
+        "Gold-toned",
+        "Post and butterfly",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 12,
+      "outOfStock": false,
+      "metaTitle": "Honeybee Stud Earrings | Velvet Shell",
+      "metaDescription": "Tiny honeybee studs — polished wings, frosted abdomen, everyday charm.",
+      "createdAt": "2026-08-25T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-42",
+      "slug": "honeybee-drop-earrings",
+      "name": "Honeybee Drop Earrings",
+      "collection": "the-shell-edit",
+      "category": "earrings",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "18K Gold plated",
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/honeybee-drop-earrings-hero.jpg",
+      "hoverImage": "/earrings/honeybee-drop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/honeybee-drop-earrings-hero.jpg",
+        "/earrings/honeybee-drop-earrings-2.jpg",
+        "/earrings/honeybee-drop-earrings-3.jpg",
+        "/earrings/honeybee-drop-earrings-4.jpg",
+        "/earrings/honeybee-drop-earrings-5.jpg"
+      ],
+      "description": "Honeybee drop earrings — golden bees with quiet movement at the ear.",
+      "story": "Flight, paused.",
+      "details": [
+        "Bee motif",
+        "Drop form",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 13,
+      "outOfStock": false,
+      "metaTitle": "Honeybee Drop Earrings | Velvet Shell",
+      "metaDescription": "Honeybee drop earrings — golden bees with quiet movement at the ear.",
+      "createdAt": "2026-08-24T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-43",
+      "slug": "iris-flower-dangle-earrings",
+      "name": "Iris Flower Dangle Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4180,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/iris-flower-dangle-earrings-hero.jpg",
+      "hoverImage": "/earrings/iris-flower-dangle-earrings-2.jpg",
+      "gallery": [
+        "/earrings/iris-flower-dangle-earrings-hero.jpg",
+        "/earrings/iris-flower-dangle-earrings-2.jpg",
+        "/earrings/iris-flower-dangle-earrings-3.jpg",
+        "/earrings/iris-flower-dangle-earrings-4.jpg",
+        "/earrings/iris-flower-dangle-earrings-5.jpg",
+        "/earrings/iris-flower-dangle-earrings-6.jpg",
+        "/earrings/iris-flower-dangle-earrings-7.jpg",
+        "/earrings/iris-flower-dangle-earrings-8.jpg"
+      ],
+      "description": "Iris flower dangles — layered petals, soft fall, botanical silver work.",
+      "story": "Iris light for the ear.",
+      "details": [
+        "Iris motif",
+        "Dangle",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 14,
+      "outOfStock": false,
+      "metaTitle": "Iris Flower Dangle Earrings | Velvet Shell",
+      "metaDescription": "Iris flower dangles — layered petals, soft fall, botanical silver work.",
+      "createdAt": "2026-08-23T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-44",
+      "slug": "iris-flower-earrings",
+      "name": "Iris Flower Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3480,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/iris-flower-earrings-hero.jpg",
+      "hoverImage": "/earrings/iris-flower-earrings-2.jpg",
+      "gallery": [
+        "/earrings/iris-flower-earrings-hero.jpg",
+        "/earrings/iris-flower-earrings-2.jpg",
+        "/earrings/iris-flower-earrings-3.jpg",
+        "/earrings/iris-flower-earrings-4.jpg",
+        "/earrings/iris-flower-earrings-5.jpg",
+        "/earrings/iris-flower-earrings-6.jpg"
+      ],
+      "description": "Iris blooms as earrings — sculpted petals, cool silver.",
+      "story": "A single iris, twice.",
+      "details": [
+        "Iris motif",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 15,
+      "outOfStock": false,
+      "metaTitle": "Iris Flower Earrings | Velvet Shell",
+      "metaDescription": "Iris blooms as earrings — sculpted petals, cool silver.",
+      "createdAt": "2026-08-22T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-45",
+      "slug": "iris-long-drop-earrings",
+      "name": "Iris Flower Long Drop Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4380,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/iris-long-drop-earrings-hero.jpg",
+      "hoverImage": "/earrings/iris-long-drop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/iris-long-drop-earrings-hero.jpg",
+        "/earrings/iris-long-drop-earrings-2.jpg",
+        "/earrings/iris-long-drop-earrings-3.jpg",
+        "/earrings/iris-long-drop-earrings-4.jpg",
+        "/earrings/iris-long-drop-earrings-5.jpg",
+        "/earrings/iris-long-drop-earrings-6.jpg",
+        "/earrings/iris-long-drop-earrings-7.jpg",
+        "/earrings/iris-long-drop-earrings-8.jpg",
+        "/earrings/iris-long-drop-earrings-9.jpg"
+      ],
+      "description": "Long iris drops — elongated bloom and leaf, made to move.",
+      "story": "Length is the luxury.",
+      "details": [
+        "Long drop",
+        "Iris motif",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Iris Flower Long Drop Earrings | Velvet Shell",
+      "metaDescription": "Long iris drops — elongated bloom and leaf, made to move.",
+      "createdAt": "2026-08-21T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-46",
+      "slug": "leaf-hoop-earrings",
+      "name": "Leaf Hoop Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3580,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/leaf-hoop-earrings-hero.jpg",
+      "hoverImage": "/earrings/leaf-hoop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/leaf-hoop-earrings-hero.jpg",
+        "/earrings/leaf-hoop-earrings-2.jpg",
+        "/earrings/leaf-hoop-earrings-3.jpg",
+        "/earrings/leaf-hoop-earrings-4.jpg",
+        "/earrings/leaf-hoop-earrings-5.jpg",
+        "/earrings/leaf-hoop-earrings-6.jpg",
+        "/earrings/leaf-hoop-earrings-7.jpg",
+        "/earrings/leaf-hoop-earrings-8.jpg",
+        "/earrings/leaf-hoop-earrings-9.jpg",
+        "/earrings/leaf-hoop-earrings-10.jpg",
+        "/earrings/leaf-hoop-earrings-11.jpg"
+      ],
+      "description": "Leaf-wrapped hoops — botanical silver, open circle, soft shine.",
+      "story": "A leaf that learned the shape of a hoop.",
+      "details": [
+        "Leaf hoop",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 17,
+      "outOfStock": false,
+      "metaTitle": "Leaf Hoop Earrings | Velvet Shell",
+      "metaDescription": "Leaf-wrapped hoops — botanical silver, open circle, soft shine.",
+      "createdAt": "2026-08-20T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-47",
+      "slug": "lilac-designer-drop-earrings",
+      "name": "Lilac Flower Designer Drops",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4480,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/lilac-designer-drop-earrings-hero.jpg",
+      "hoverImage": "/earrings/lilac-designer-drop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/lilac-designer-drop-earrings-hero.jpg",
+        "/earrings/lilac-designer-drop-earrings-2.jpg",
+        "/earrings/lilac-designer-drop-earrings-3.jpg",
+        "/earrings/lilac-designer-drop-earrings-4.jpg",
+        "/earrings/lilac-designer-drop-earrings-5.jpg",
+        "/earrings/lilac-designer-drop-earrings-6.jpg",
+        "/earrings/lilac-designer-drop-earrings-7.jpg",
+        "/earrings/lilac-designer-drop-earrings-8.jpg"
+      ],
+      "description": "Designer lilac drops — clustered blooms, refined fall.",
+      "story": "Lilac, held as architecture.",
+      "details": [
+        "Lilac motif",
+        "Designer drop",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 18,
+      "outOfStock": false,
+      "metaTitle": "Lilac Flower Designer Drops | Velvet Shell",
+      "metaDescription": "Designer lilac drops — clustered blooms, refined fall.",
+      "createdAt": "2026-08-19T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-48",
+      "slug": "pearl-leaf-stud-earrings",
+      "name": "Pearl & Crystal Leaf Studs",
+      "collection": "pearls-of-nacre",
+      "category": "earrings",
+      "price": 2780,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Pearl",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/pearl-leaf-stud-earrings-hero.jpg",
+      "hoverImage": "/earrings/pearl-leaf-stud-earrings-2.jpg",
+      "gallery": [
+        "/earrings/pearl-leaf-stud-earrings-hero.jpg",
+        "/earrings/pearl-leaf-stud-earrings-2.jpg",
+        "/earrings/pearl-leaf-stud-earrings-3.jpg",
+        "/earrings/pearl-leaf-stud-earrings-4.jpg",
+        "/earrings/pearl-leaf-stud-earrings-5.jpg"
+      ],
+      "description": "Minimalist pearl studs with crystal rhinestone leaf accents — light, luminous, precise.",
+      "story": "Pearl with a leaf of light.",
+      "details": [
+        "Pearl stud",
+        "Crystal leaf accent",
+        "Minimalist",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 19,
+      "outOfStock": false,
+      "metaTitle": "Pearl & Crystal Leaf Studs | Velvet Shell",
+      "metaDescription": "Minimalist pearl studs with crystal rhinestone leaf accents — light, luminous, precise.",
+      "createdAt": "2026-08-18T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-49",
+      "slug": "olive-leaf-earrings",
+      "name": "Olive Leaf Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 2980,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/olive-leaf-earrings-hero.jpg",
+      "hoverImage": "/earrings/olive-leaf-earrings-2.jpg",
+      "gallery": [
+        "/earrings/olive-leaf-earrings-hero.jpg",
+        "/earrings/olive-leaf-earrings-2.jpg",
+        "/earrings/olive-leaf-earrings-3.jpg"
+      ],
+      "description": "Olive leaves in silver — slender, Mediterranean, quietly classic.",
+      "story": "A leaf of peace, worn twice.",
+      "details": [
+        "Olive leaf motif",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 8,
+      "outOfStock": false,
+      "metaTitle": "Olive Leaf Earrings | Velvet Shell",
+      "metaDescription": "Olive leaves in silver — slender, Mediterranean, quietly classic.",
+      "createdAt": "2026-08-17T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-50",
+      "slug": "phalaenopsis-hoop-earrings",
+      "name": "Phalaenopsis Flower Hoops",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/phalaenopsis-hoop-earrings-hero.jpg",
+      "hoverImage": "/earrings/phalaenopsis-hoop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/phalaenopsis-hoop-earrings-hero.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-2.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-3.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-4.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-5.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-6.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-7.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-8.jpg",
+        "/earrings/phalaenopsis-hoop-earrings-9.jpg"
+      ],
+      "description": "Orchid blooms on silver hoops — phalaenopsis petals, open circle.",
+      "story": "Orchid stillness, circling the ear.",
+      "details": [
+        "Phalaenopsis motif",
+        "Hoop form",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 9,
+      "outOfStock": false,
+      "metaTitle": "Phalaenopsis Flower Hoops | Velvet Shell",
+      "metaDescription": "Orchid blooms on silver hoops — phalaenopsis petals, open circle.",
+      "createdAt": "2026-08-16T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-51",
+      "slug": "retro-circle-drop-earrings",
+      "name": "Retro Circle Drop Earrings",
+      "collection": "gilded-tide",
+      "category": "earrings",
+      "price": 3280,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Vintage",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/retro-circle-drop-earrings-hero.jpg",
+      "hoverImage": "/earrings/retro-circle-drop-earrings-2.jpg",
+      "gallery": [
+        "/earrings/retro-circle-drop-earrings-hero.jpg",
+        "/earrings/retro-circle-drop-earrings-2.jpg",
+        "/earrings/retro-circle-drop-earrings-3.jpg",
+        "/earrings/retro-circle-drop-earrings-4.jpg",
+        "/earrings/retro-circle-drop-earrings-5.jpg",
+        "/earrings/retro-circle-drop-earrings-6.jpg"
+      ],
+      "description": "Retro French vintage circle drops — simple geometry, soft shine.",
+      "story": "A circle that remembers Paris.",
+      "details": [
+        "Circle drop",
+        "Vintage inspired",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 10,
+      "outOfStock": false,
+      "metaTitle": "Retro Circle Drop Earrings | Velvet Shell",
+      "metaDescription": "Retro French vintage circle drops — simple geometry, soft shine.",
+      "createdAt": "2026-08-15T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-52",
+      "slug": "tulip-blossom-dangle-earrings",
+      "name": "Tulip Blossom Long Leaf Dangles",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 4080,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/tulip-blossom-dangle-earrings-hero.jpg",
+      "hoverImage": "/earrings/tulip-blossom-dangle-earrings-2.jpg",
+      "gallery": [
+        "/earrings/tulip-blossom-dangle-earrings-hero.jpg",
+        "/earrings/tulip-blossom-dangle-earrings-2.jpg",
+        "/earrings/tulip-blossom-dangle-earrings-3.jpg",
+        "/earrings/tulip-blossom-dangle-earrings-4.jpg",
+        "/earrings/tulip-blossom-dangle-earrings-5.jpg",
+        "/earrings/tulip-blossom-dangle-earrings-6.jpg"
+      ],
+      "description": "Tulip blossoms with long leaf dangles — spring form, elongated line.",
+      "story": "Tulip and leaf, falling together.",
+      "details": [
+        "Tulip motif",
+        "Long leaf dangle",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "draft",
+      "stock": 11,
+      "outOfStock": false,
+      "metaTitle": "Tulip Blossom Long Leaf Dangles | Velvet Shell",
+      "metaDescription": "Tulip blossoms with long leaf dangles — spring form, elongated line.",
+      "createdAt": "2026-08-14T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-53",
+      "slug": "curved-branch-asymmetric-earrings",
+      "name": "Curved Branch Asymmetric Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3880,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/curved-branch-asymmetric-earrings-hero.jpg",
+      "hoverImage": "/earrings/curved-branch-asymmetric-earrings-2.jpg",
+      "gallery": [
+        "/earrings/curved-branch-asymmetric-earrings-hero.jpg",
+        "/earrings/curved-branch-asymmetric-earrings-2.jpg",
+        "/earrings/curved-branch-asymmetric-earrings-3.jpg",
+        "/earrings/curved-branch-asymmetric-earrings-4.jpg",
+        "/earrings/curved-branch-asymmetric-earrings-5.jpg",
+        "/earrings/curved-branch-asymmetric-earrings-6.jpg",
+        "/earrings/curved-branch-asymmetric-earrings-7.jpg"
+      ],
+      "description": "Asymmetric curved branches and leaves — two different falls, one language.",
+      "story": "Not a pair that mirrors — a pair that converses.",
+      "details": [
+        "Asymmetric pair",
+        "Branch and leaf",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 12,
+      "outOfStock": false,
+      "metaTitle": "Curved Branch Asymmetric Earrings | Velvet Shell",
+      "metaDescription": "Asymmetric curved branches and leaves — two different falls, one language.",
+      "createdAt": "2026-08-13T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-54",
+      "slug": "wild-rose-stud-earrings",
+      "name": "Wild Rose Flower Studs",
+      "collection": "pearls-of-nacre",
+      "category": "earrings",
+      "price": 2580,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/wild-rose-stud-earrings-hero.jpg",
+      "hoverImage": "/earrings/wild-rose-stud-earrings-2.jpg",
+      "gallery": [
+        "/earrings/wild-rose-stud-earrings-hero.jpg",
+        "/earrings/wild-rose-stud-earrings-2.jpg"
+      ],
+      "description": "Wild rose studs — open petals, soft centre, everyday bloom.",
+      "story": "A rose that stays.",
+      "details": [
+        "Rose stud",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 13,
+      "outOfStock": false,
+      "metaTitle": "Wild Rose Flower Studs | Velvet Shell",
+      "metaDescription": "Wild rose studs — open petals, soft centre, everyday bloom.",
+      "createdAt": "2026-08-12T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-55",
+      "slug": "atelier-lfja-earrings",
+      "name": "Atelier LFJA Earrings",
+      "collection": "private-atelier",
+      "category": "earrings",
+      "price": 3680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Atelier",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/earrings/atelier-lfja-earrings-hero.jpg",
+      "hoverImage": "/earrings/atelier-lfja-earrings-2.jpg",
+      "gallery": [
+        "/earrings/atelier-lfja-earrings-hero.jpg",
+        "/earrings/atelier-lfja-earrings-2.jpg",
+        "/earrings/atelier-lfja-earrings-3.jpg",
+        "/earrings/atelier-lfja-earrings-4.jpg"
+      ],
+      "description": "Private atelier earring edits from the LFJA study — refined form, catalog light.",
+      "story": "A number that became a piece.",
+      "details": [
+        "Atelier edit",
+        "Limited angles",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Remove before bathing. Wipe dry after wear. Store hanging or lying flat.",
+      "status": "active",
+      "stock": 14,
+      "outOfStock": false,
+      "metaTitle": "Atelier LFJA Earrings | Velvet Shell",
+      "metaDescription": "Private atelier earring edits from the LFJA study — refined form, catalog light.",
+      "createdAt": "2026-08-11T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-56",
+      "slug": "bamboo-charm-necklace",
+      "name": "Bamboo Charm Necklace",
+      "collection": "private-atelier",
+      "category": "necklaces",
+      "price": 3180,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/bamboo-charm-necklace-hero.jpg",
+      "hoverImage": "/necklace/bamboo-charm-necklace-2.jpg",
+      "gallery": [
+        "/necklace/bamboo-charm-necklace-hero.jpg",
+        "/necklace/bamboo-charm-necklace-2.jpg",
+        "/necklace/bamboo-charm-necklace-3.jpg"
+      ],
+      "description": "A fine chain with a bamboo charm — slender segments, quiet green memory in metal.",
+      "story": "Bamboo that never breaks the line.",
+      "details": [
+        "Bamboo charm",
+        "Fine chain",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Bamboo Charm Necklace | Velvet Shell",
+      "metaDescription": "A fine chain with a bamboo charm — slender segments, quiet green memory in metal.",
+      "createdAt": "2026-08-10T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-57",
+      "slug": "bamboo-charm-necklace-gold",
+      "name": "Bamboo Charm Necklace — Gold",
+      "collection": "gilded-tide",
+      "category": "necklaces",
+      "price": 3380,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/bamboo-charm-necklace-gold-hero.jpg",
+      "hoverImage": "/necklace/bamboo-charm-necklace-gold-2.jpg",
+      "gallery": [
+        "/necklace/bamboo-charm-necklace-gold-hero.jpg",
+        "/necklace/bamboo-charm-necklace-gold-2.jpg",
+        "/necklace/bamboo-charm-necklace-gold-3.jpg"
+      ],
+      "description": "The bamboo charm necklace in warm gold — same slender segments, richer light.",
+      "story": "Gold for quieter evenings.",
+      "details": [
+        "Gold-toned charm",
+        "Fine chain",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 16,
+      "outOfStock": false,
+      "metaTitle": "Bamboo Charm Necklace — Gold | Velvet Shell",
+      "metaDescription": "The bamboo charm necklace in warm gold — same slender segments, richer light.",
+      "createdAt": "2026-08-09T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-58",
+      "slug": "bamboo-charm-necklace-silver",
+      "name": "Bamboo Charm Necklace — Silver",
+      "collection": "pearls-of-nacre",
+      "category": "necklaces",
+      "price": 3280,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/bamboo-charm-necklace-silver-hero.jpg",
+      "hoverImage": "/necklace/bamboo-charm-necklace-silver-hero.jpg",
+      "gallery": [
+        "/necklace/bamboo-charm-necklace-silver-hero.jpg"
+      ],
+      "description": "The bamboo charm in cool silver — crisp segments, everyday light.",
+      "story": "Silver bamboo for daylight.",
+      "details": [
+        "S925 silver",
+        "Bamboo charm",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 17,
+      "outOfStock": false,
+      "metaTitle": "Bamboo Charm Necklace — Silver | Velvet Shell",
+      "metaDescription": "The bamboo charm in cool silver — crisp segments, everyday light.",
+      "createdAt": "2026-08-08T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-59",
+      "slug": "flower-in-the-rain-necklace-pink",
+      "name": "Flower In The Rain Necklace — Pink",
+      "collection": "pearls-of-nacre",
+      "category": "necklaces",
+      "price": 4280,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/flower-in-the-rain-necklace-pink-hero.jpg",
+      "hoverImage": "/necklace/flower-in-the-rain-necklace-pink-2.jpg",
+      "gallery": [
+        "/necklace/flower-in-the-rain-necklace-pink-hero.jpg",
+        "/necklace/flower-in-the-rain-necklace-pink-2.jpg",
+        "/necklace/flower-in-the-rain-necklace-pink-3.jpg",
+        "/necklace/flower-in-the-rain-necklace-pink-4.jpg"
+      ],
+      "description": "A silver branch pendant holding a translucent pink bloom — carved petals, tiny stamens, two fine leaves.",
+      "story": "A flower caught after rain, worn close to the collarbone.",
+      "details": [
+        "Translucent pink flower",
+        "Branch pendant",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 18,
+      "outOfStock": false,
+      "metaTitle": "Flower In The Rain Necklace — Pink | Velvet Shell",
+      "metaDescription": "A silver branch pendant holding a translucent pink bloom — carved petals, tiny stamens, two fine leaves.",
+      "createdAt": "2026-08-07T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-60",
+      "slug": "flower-in-the-rain-necklace-white",
+      "name": "Flower In The Rain Necklace — White",
+      "collection": "pearls-of-nacre",
+      "category": "necklaces",
+      "price": 4280,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/flower-in-the-rain-necklace-white-hero.jpg",
+      "hoverImage": "/necklace/flower-in-the-rain-necklace-white-2.jpg",
+      "gallery": [
+        "/necklace/flower-in-the-rain-necklace-white-hero.jpg",
+        "/necklace/flower-in-the-rain-necklace-white-2.jpg",
+        "/necklace/flower-in-the-rain-necklace-white-3.jpg",
+        "/necklace/flower-in-the-rain-necklace-white-4.jpg",
+        "/necklace/flower-in-the-rain-necklace-white-5.jpg",
+        "/necklace/flower-in-the-rain-necklace-white-6.jpg"
+      ],
+      "description": "The same branch motif with a frosted white flower — cool, luminous, quietly botanical.",
+      "story": "White bloom after rain.",
+      "details": [
+        "Frosted white flower",
+        "Branch pendant",
+        "S925 silver",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 19,
+      "outOfStock": false,
+      "metaTitle": "Flower In The Rain Necklace — White | Velvet Shell",
+      "metaDescription": "The same branch motif with a frosted white flower — cool, luminous, quietly botanical.",
+      "createdAt": "2026-08-06T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-61",
+      "slug": "fresh-redbud-bell-necklace",
+      "name": "Fresh Redbud Bell Necklace",
+      "collection": "private-atelier",
+      "category": "necklaces",
+      "price": 4680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Floral",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/fresh-redbud-bell-necklace-hero.jpg",
+      "hoverImage": "/necklace/fresh-redbud-bell-necklace-2.jpg",
+      "gallery": [
+        "/necklace/fresh-redbud-bell-necklace-hero.jpg",
+        "/necklace/fresh-redbud-bell-necklace-2.jpg",
+        "/necklace/fresh-redbud-bell-necklace-3.jpg",
+        "/necklace/fresh-redbud-bell-necklace-4.jpg",
+        "/necklace/fresh-redbud-bell-necklace-5.jpg",
+        "/necklace/fresh-redbud-bell-necklace-6.jpg",
+        "/necklace/fresh-redbud-bell-necklace-7.jpg",
+        "/necklace/fresh-redbud-bell-necklace-8.png",
+        "/necklace/fresh-redbud-bell-necklace-9.png",
+        "/necklace/fresh-redbud-bell-necklace-10.png",
+        "/necklace/fresh-redbud-bell-necklace-11.png"
+      ],
+      "description": "Redbud bell blooms on a fine chain — soft petals, botanical fall at the chest.",
+      "story": "Spring bells, held still.",
+      "details": [
+        "Redbud bell motif",
+        "Fine chain",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 8,
+      "outOfStock": false,
+      "metaTitle": "Fresh Redbud Bell Necklace | Velvet Shell",
+      "metaDescription": "Redbud bell blooms on a fine chain — soft petals, botanical fall at the chest.",
+      "createdAt": "2026-08-05T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-62",
+      "slug": "hollow-butterfly-pendant-gold",
+      "name": "Hollow Butterfly Pendant — Gold",
+      "collection": "gilded-tide",
+      "category": "necklaces",
+      "price": 3980,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/hollow-butterfly-pendant-gold-hero.jpg",
+      "hoverImage": "/necklace/hollow-butterfly-pendant-gold-2.jpg",
+      "gallery": [
+        "/necklace/hollow-butterfly-pendant-gold-hero.jpg",
+        "/necklace/hollow-butterfly-pendant-gold-2.jpg",
+        "/necklace/hollow-butterfly-pendant-gold-3.jpg"
+      ],
+      "description": "A hollow-out butterfly pendant in gold — open wings, light moving through filigree.",
+      "story": "Wings drawn as architecture.",
+      "details": [
+        "Hollow butterfly",
+        "Gold-toned",
+        "Fine chain",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 9,
+      "outOfStock": false,
+      "metaTitle": "Hollow Butterfly Pendant — Gold | Velvet Shell",
+      "metaDescription": "A hollow-out butterfly pendant in gold — open wings, light moving through filigree.",
+      "createdAt": "2026-08-04T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-63",
+      "slug": "hollow-butterfly-pendant-silver",
+      "name": "Hollow Butterfly Pendant — Silver",
+      "collection": "private-atelier",
+      "category": "necklaces",
+      "price": 3780,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Nature",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/necklace/hollow-butterfly-pendant-silver-hero.jpg",
+      "hoverImage": "/necklace/hollow-butterfly-pendant-silver-2.jpg",
+      "gallery": [
+        "/necklace/hollow-butterfly-pendant-silver-hero.jpg",
+        "/necklace/hollow-butterfly-pendant-silver-2.jpg",
+        "/necklace/hollow-butterfly-pendant-silver-3.jpg",
+        "/necklace/hollow-butterfly-pendant-silver-4.jpg"
+      ],
+      "description": "A hollow-out butterfly pendant in silver — open wings, cool filigree light.",
+      "story": "Silver wings for quieter rooms.",
+      "details": [
+        "Hollow butterfly",
+        "S925 silver",
+        "Fine chain",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Wipe dry after wear. Keep away from perfume and water. Store alone in the pouch.",
+      "status": "active",
+      "stock": 10,
+      "outOfStock": false,
+      "metaTitle": "Hollow Butterfly Pendant — Silver | Velvet Shell",
+      "metaDescription": "A hollow-out butterfly pendant in silver — open wings, cool filigree light.",
+      "createdAt": "2026-08-03T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-64",
+      "slug": "calla-lily-brooch-gold",
+      "name": "Calla Lily Brooch — Gold",
+      "collection": "gilded-tide",
+      "category": "cuffs",
+      "price": 2480,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Brooch",
+      "metal": [
+        "18K Gold plated"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/brooch/calla-lily-brooch-gold-hero.jpg",
+      "hoverImage": "/brooch/calla-lily-brooch-gold-2.jpg",
+      "gallery": [
+        "/brooch/calla-lily-brooch-gold-hero.jpg",
+        "/brooch/calla-lily-brooch-gold-2.jpg",
+        "/brooch/calla-lily-brooch-gold-3.jpg"
+      ],
+      "description": "A slender calla lily pin in gold — matte petal within, polished stem without, warm stamen detail.",
+      "story": "A single bloom, pinned with intention.",
+      "details": [
+        "Gold-toned finish",
+        "Lapel / hat pin",
+        "Matte and polish contrast",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Pin through fabric gently. Store alone in the pouch.",
+      "status": "active",
+      "stock": 11,
+      "outOfStock": false,
+      "metaTitle": "Calla Lily Brooch — Gold | Velvet Shell",
+      "metaDescription": "A slender calla lily pin in gold — matte petal within, polished stem without, warm stamen detail.",
+      "createdAt": "2026-08-02T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-65",
+      "slug": "calla-lily-brooch-silver",
+      "name": "Calla Lily Brooch — Silver",
+      "collection": "private-atelier",
+      "category": "cuffs",
+      "price": 2380,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Brooch",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/brooch/calla-lily-brooch-silver-hero.jpg",
+      "hoverImage": "/brooch/calla-lily-brooch-silver-2.jpg",
+      "gallery": [
+        "/brooch/calla-lily-brooch-silver-hero.jpg",
+        "/brooch/calla-lily-brooch-silver-2.jpg"
+      ],
+      "description": "A slender calla lily pin in silver — cool petal, polished stem, quiet botanical line.",
+      "story": "Silver calla for quieter cloth.",
+      "details": [
+        "S925 silver",
+        "Lapel / hat pin",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Pin through fabric gently. Store alone in the pouch.",
+      "status": "active",
+      "stock": 12,
+      "outOfStock": false,
+      "metaTitle": "Calla Lily Brooch — Silver | Velvet Shell",
+      "metaDescription": "A slender calla lily pin in silver — cool petal, polished stem, quiet botanical line.",
+      "createdAt": "2026-08-01T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-66",
+      "slug": "calla-lily-brooch",
+      "name": "Calla Lily Brooch",
+      "collection": "private-atelier",
+      "category": "cuffs",
+      "price": 2280,
+      "limited": false,
+      "madeToOrder": false,
+      "badge": "Brooch",
+      "metal": [
+        "S925 Silver",
+        "18K Gold accents"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/brooch/calla-lily-brooch-hero.jpg",
+      "hoverImage": "/brooch/calla-lily-brooch-2.jpg",
+      "gallery": [
+        "/brooch/calla-lily-brooch-hero.jpg",
+        "/brooch/calla-lily-brooch-2.jpg",
+        "/brooch/calla-lily-brooch-3.jpg",
+        "/brooch/calla-lily-brooch-4.jpg"
+      ],
+      "description": "The calla lily pin — sculptural bloom and stem, made to sit lightly on lapel or scarf.",
+      "story": "One flower, held still.",
+      "details": [
+        "Calla lily form",
+        "Lapel / hat pin",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Pin through fabric gently. Store alone in the pouch.",
+      "status": "active",
+      "stock": 13,
+      "outOfStock": false,
+      "metaTitle": "Calla Lily Brooch | Velvet Shell",
+      "metaDescription": "The calla lily pin — sculptural bloom and stem, made to sit lightly on lapel or scarf.",
+      "createdAt": "2026-07-31T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-67",
+      "slug": "nandina-flower-brooch",
+      "name": "Nandina Flower Brooch",
+      "collection": "private-atelier",
+      "category": "cuffs",
+      "price": 2680,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Brooch",
+      "metal": [
+        "S925 Silver"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/brooch/nandina-flower-brooch-hero.png",
+      "hoverImage": "/brooch/nandina-flower-brooch-2.png",
+      "gallery": [
+        "/brooch/nandina-flower-brooch-hero.png",
+        "/brooch/nandina-flower-brooch-2.png",
+        "/brooch/nandina-flower-brooch-3.png",
+        "/brooch/nandina-flower-brooch-4.png"
+      ],
+      "description": "A nandina bloom pin — layered petals, botanical silver, light enough for everyday cloth.",
+      "story": "Heavenly bamboo, worn as a flower.",
+      "details": [
+        "Nandina motif",
+        "Brooch pin",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Pin through fabric gently. Store alone in the pouch.",
+      "status": "active",
+      "stock": 2,
+      "outOfStock": false,
+      "metaTitle": "Nandina Flower Brooch | Velvet Shell",
+      "metaDescription": "A nandina bloom pin — layered petals, botanical silver, light enough for everyday cloth.",
+      "createdAt": "2026-07-30T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    },
+    {
+      "id": "prod-68",
+      "slug": "sacred-bamboo-flower-brooch",
+      "name": "Sacred Bamboo Flower Brooch",
+      "collection": "private-atelier",
+      "category": "cuffs",
+      "price": 2780,
+      "limited": true,
+      "madeToOrder": false,
+      "badge": "Brooch",
+      "metal": [
+        "S925 Silver",
+        "Gold accent"
+      ],
+      "sizes": [
+        "One size"
+      ],
+      "image": "/brooch/sacred-bamboo-flower-brooch-hero.png",
+      "hoverImage": "/brooch/sacred-bamboo-flower-brooch-2.png",
+      "gallery": [
+        "/brooch/sacred-bamboo-flower-brooch-hero.png",
+        "/brooch/sacred-bamboo-flower-brooch-2.png",
+        "/brooch/sacred-bamboo-flower-brooch-3.png",
+        "/brooch/sacred-bamboo-flower-brooch-4.png"
+      ],
+      "description": "Sacred bamboo flower pin — delicate bloom, fine stem, quiet presence on the lapel.",
+      "story": "Bamboo light, pinned once.",
+      "details": [
+        "Sacred bamboo flower",
+        "Brooch pin",
+        "Handmade",
+        "Handmade in Jaipur"
+      ],
+      "care": "Pin through fabric gently. Store alone in the pouch.",
+      "status": "active",
+      "stock": 15,
+      "outOfStock": false,
+      "metaTitle": "Sacred Bamboo Flower Brooch | Velvet Shell",
+      "metaDescription": "Sacred bamboo flower pin — delicate bloom, fine stem, quiet presence on the lapel.",
+      "createdAt": "2026-07-29T13:17:36.392Z",
+      "updatedAt": "2026-10-04T13:17:36.392Z"
+    }
+  ],
+  "blogs": [
+    {
+      "slug": "nacre-remembers-light",
+      "title": "How nacre remembers light",
+      "eyebrow": "Material",
+      "excerpt": "A pearl is not a stone. It is a slow architecture of light, laid down in silence, one season at a time.",
+      "body": "Nacre is built the way a day is built — in layers too thin to notice until there are thousands of them. What we call iridescence is only memory. The shell is recalling every angle of sun it has ever held.\n\nAt Velvet Shell we do not round pearls into obedience. We look for the ones that kept their weather. A ridge, a blush, a refusal to sit still. These are not flaws. They are the record.\n\nGold, beside nacre, should behave like a quiet room. We brush it, then polish only the places where a thumb might rest. The pearl remains the one that speaks.",
+      "image": "/images/category-banner-necklaces.jpg",
+      "status": "live",
+      "publishedAt": "August 2026",
+      "read": "4 min"
+    },
+    {
+      "slug": "week-in-jaipur",
+      "title": "A week in the Jaipur atelier",
+      "eyebrow": "House",
+      "excerpt": "Before a clasp is a clasp it is a conversation. The goldsmiths work in daylight, and they do not hurry the metal.",
+      "body": "The atelier sits behind a limewashed wall in the old city. There is no sign. There is a bowl of pearls on the windowsill and a kettle that is never quite empty.\n\nMonday is for looking. We lay out nacre on linen and wait to see which pieces want to live together. Matching is a factory idea. We wait for kinship instead.\n\nBy Thursday the gold has been drawn, cut, and quietly persuaded into architecture. The last two days are for setting — the slow work of making a pearl feel as if it grew there.",
+      "image": "/images/gifting-selection.jpg",
+      "status": "live",
+      "publishedAt": "June 2026",
+      "read": "6 min"
+    },
+    {
+      "slug": "wearing-less",
+      "title": "On wearing less, better",
+      "eyebrow": "Notes",
+      "excerpt": "A single true piece will do more than a tray of almosts. Jewelry should feel like a decision, not a decoration.",
+      "body": "We make fewer things than a house of this size is supposed to. That is not a marketing sentence. It is the only way the work stays awake.\n\nWear the collar with a white shirt. Wear the studs to sleep. Wear the chain until you forget the clasp is gold. The point is not to be seen collecting jewelry. The point is to be changed, slightly, by one object.\n\nIf you already own something you love, we would rather you keep it. Velvet Shell is for the space that is still empty, and honest about it.",
+      "image": "/images/look-ear-wrist.jpg",
+      "status": "live",
+      "publishedAt": "March 2026",
+      "read": "3 min"
+    },
+    {
+      "slug": "architecture-of-a-shell",
+      "title": "The architecture of a shell",
+      "eyebrow": "Form",
+      "excerpt": "Every piece begins as a section through a chamber — not as a sketch of jewelry, but as a drawing of space.",
+      "body": "A nautilus does not decorate itself. It builds a room, then another, then another, each one a little larger, each one still the same idea. That is the only brief we give the goldsmiths.\n\nThe Velvet Cuff is a wall. The Nacre Collar is a threshold. The ear cuff is a staircase that happens to fit an ear.\n\nWhen a piece is finished we ask only one question: would a shell recognise itself. If the answer is no, it does not leave the atelier.",
+      "image": "/images/look-collar-lapel.jpg",
+      "status": "draft",
+      "publishedAt": "January 2026",
+      "read": "5 min"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "ananya",
+      "name": "Ananya Mehra",
+      "place": "Jaipur",
+      "image": "/images/testimonials/testimonial-ananya.jpg",
+      "image2": "",
+      "quote": "I ordered the Flower In The Rain bracelet for my sister’s birthday. The box arrived looking like a gift from a private atelier.",
+      "piece": "Flower In The Rain Bracelet",
+      "active": true
+    },
+    {
+      "id": "meera",
+      "name": "Meera Kapoor",
+      "place": "Mumbai",
+      "image": "/images/testimonials/testimonial-meera.jpg",
+      "image2": "",
+      "quote": "I wear the phalaenopsis hoops almost every day now.",
+      "piece": "Phalaenopsis Flower Hoops",
+      "active": true
+    },
+    {
+      "id": "arjun",
+      "name": "Arjun Desai",
+      "place": "Bengaluru",
+      "image": "/images/testimonials/testimonial-arjun.jpg",
+      "image2": "",
+      "quote": "Bought the calla lily brooch for my mother.",
+      "piece": "Calla Lily Brooch",
+      "active": true
+    },
+    {
+      "id": "isha",
+      "name": "Isha Nair",
+      "place": "Kochi",
+      "image": "/images/testimonials/testimonial-isha.jpg",
+      "image2": "",
+      "quote": "The aquamarine butterfly ring looks exactly like the photos.",
+      "piece": "Aquamarine Butterfly Ring",
+      "active": true
+    },
+    {
+      "id": "priya",
+      "name": "Priya Shah",
+      "place": "Ahmedabad",
+      "image": "/images/testimonials/testimonial-priya.jpg",
+      "image2": "",
+      "quote": "I stacked the lotus whisper with a simple chain and it felt like my own edit.",
+      "piece": "Lotus Whisper Bracelet",
+      "active": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-1000",
+      "orderNumber": "VS240100",
+      "status": "pending",
+      "email": "ananya@email.com",
+      "customer": {
+        "firstName": "Ananya",
+        "lastName": "Mehra",
+        "phone": "9876500001"
+      },
+      "items": [
+        {
+          "slug": "flower-in-the-rain-pink",
+          "name": "Flower In The Rain",
+          "image": "/bracelets/flower-rain-pink-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3180,
+          "lineTotal": 3180
+        },
+        {
+          "slug": "forget-me-not-bangles",
+          "name": "Forget-Me-Not Bangles",
+          "image": "/bracelets/forget-me-not-bangles-hero.jpg",
+          "size": "Open cuff",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 4250,
+          "lineTotal": 4250
+        }
+      ],
+      "total": 7430,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_0",
+      "createdAt": "2026-10-04T13:17:36.393Z",
+      "updatedAt": "2026-10-04T13:17:36.393Z"
+    },
+    {
+      "id": "ord-1001",
+      "orderNumber": "VS240101",
+      "status": "accepted",
+      "email": "meera@email.com",
+      "customer": {
+        "firstName": "Meera",
+        "lastName": "Kapoor",
+        "phone": "9876500002"
+      },
+      "items": [
+        {
+          "slug": "flower-in-the-rain-white",
+          "name": "Flower In The Rain Ã¢â‚¬â€ White",
+          "image": "/bracelets/flower-rain-white-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3180,
+          "lineTotal": 3180
+        }
+      ],
+      "total": 3180,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_1",
+      "createdAt": "2026-10-02T01:17:36.393Z",
+      "updatedAt": "2026-10-02T01:17:36.393Z"
+    },
+    {
+      "id": "ord-1002",
+      "orderNumber": "VS240102",
+      "status": "packed",
+      "email": "arjun@email.com",
+      "customer": {
+        "firstName": "Arjun",
+        "lastName": "Desai",
+        "phone": "9876500003"
+      },
+      "items": [
+        {
+          "slug": "flower-in-the-rain-edit",
+          "name": "Flower In The Rain Ã¢â‚¬â€ Edit",
+          "image": "/bracelets/flower-rain-pair-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 5980,
+          "lineTotal": 5980
+        }
+      ],
+      "total": 5980,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_2",
+      "createdAt": "2026-09-29T13:17:36.393Z",
+      "updatedAt": "2026-09-29T13:17:36.393Z"
+    },
+    {
+      "id": "ord-1003",
+      "orderNumber": "VS240103",
+      "status": "dispatched",
+      "email": "isha@email.com",
+      "customer": {
+        "firstName": "Isha",
+        "lastName": "Nair",
+        "phone": "9876500004"
+      },
+      "items": [
+        {
+          "slug": "forget-me-not-bangles",
+          "name": "Forget-Me-Not Bangles",
+          "image": "/bracelets/forget-me-not-bangles-hero.jpg",
+          "size": "Open cuff",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 4250,
+          "lineTotal": 4250
+        },
+        {
+          "slug": "lotus-whisper-green",
+          "name": "Lotus Whisper Ã¢â‚¬â€ Green",
+          "image": "/bracelets/lotus-whisper-green-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3560,
+          "lineTotal": 3560
+        }
+      ],
+      "total": 7810,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_3",
+      "createdAt": "2026-09-27T01:17:36.393Z",
+      "updatedAt": "2026-09-27T01:17:36.393Z"
+    },
+    {
+      "id": "ord-1004",
+      "orderNumber": "VS240104",
+      "status": "delivered",
+      "email": "priya@email.com",
+      "customer": {
+        "firstName": "Priya",
+        "lastName": "Shah",
+        "phone": "9876500005"
+      },
+      "items": [
+        {
+          "slug": "forget-me-not-cuff",
+          "name": "Forget-Me-Not Cuff",
+          "image": "/bracelets/forget-me-not-cuff-hero.jpg",
+          "size": "Open cuff",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 4680,
+          "lineTotal": 4680
+        }
+      ],
+      "total": 4680,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_4",
+      "createdAt": "2026-09-24T13:17:36.393Z",
+      "updatedAt": "2026-09-24T13:17:36.393Z"
+    },
+    {
+      "id": "ord-1005",
+      "orderNumber": "VS240105",
+      "status": "pending",
+      "email": "rohan@email.com",
+      "customer": {
+        "firstName": "Rohan",
+        "lastName": "Malik",
+        "phone": "9876500006"
+      },
+      "items": [
+        {
+          "slug": "lotus-whisper-pink",
+          "name": "Lotus Whisper Ã¢â‚¬â€ Pink",
+          "image": "/bracelets/lotus-whisper-pink-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3560,
+          "lineTotal": 3560
+        }
+      ],
+      "total": 3560,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_5",
+      "createdAt": "2026-09-22T01:17:36.393Z",
+      "updatedAt": "2026-09-22T01:17:36.393Z"
+    },
+    {
+      "id": "ord-1006",
+      "orderNumber": "VS240106",
+      "status": "accepted",
+      "email": "kavya@email.com",
+      "customer": {
+        "firstName": "Kavya",
+        "lastName": "Iyer",
+        "phone": "9876500007"
+      },
+      "items": [
+        {
+          "slug": "lotus-whisper-green",
+          "name": "Lotus Whisper Ã¢â‚¬â€ Green",
+          "image": "/bracelets/lotus-whisper-green-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3560,
+          "lineTotal": 3560
+        },
+        {
+          "slug": "lotus-whisper-bangle-green",
+          "name": "Lotus Whisper Bangle Ã¢â‚¬â€ Green",
+          "image": "/bracelets/lotus-bangle-green-hero.jpg",
+          "size": "Open bangle",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3890,
+          "lineTotal": 3890
+        }
+      ],
+      "total": 7450,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_6",
+      "createdAt": "2026-09-19T13:17:36.393Z",
+      "updatedAt": "2026-09-19T13:17:36.393Z"
+    },
+    {
+      "id": "ord-1007",
+      "orderNumber": "VS240107",
+      "status": "delivered",
+      "email": "dev@email.com",
+      "customer": {
+        "firstName": "Dev",
+        "lastName": "Singh",
+        "phone": "9876500008"
+      },
+      "items": [
+        {
+          "slug": "lotus-whisper-edit",
+          "name": "Lotus Whisper Ã¢â‚¬â€ Edit",
+          "image": "/bracelets/lotus-whisper-pair-hero.jpg",
+          "size": "Adjustable",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 6780,
+          "lineTotal": 6780
+        }
+      ],
+      "total": 6780,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_7",
+      "createdAt": "2026-09-17T01:17:36.393Z",
+      "updatedAt": "2026-09-17T01:17:36.393Z"
+    },
+    {
+      "id": "ord-1008",
+      "orderNumber": "VS240108",
+      "status": "pending",
+      "email": "ananya@email.com",
+      "customer": {
+        "firstName": "Ananya",
+        "lastName": "Mehra",
+        "phone": "9876500001"
+      },
+      "items": [
+        {
+          "slug": "lotus-whisper-bangle-pink",
+          "name": "Lotus Whisper Bangle Ã¢â‚¬â€ Pink",
+          "image": "/bracelets/lotus-bangle-pink-hero.jpg",
+          "size": "Open bangle",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3890,
+          "lineTotal": 3890
+        }
+      ],
+      "total": 3890,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_8",
+      "createdAt": "2026-09-14T13:17:36.393Z",
+      "updatedAt": "2026-09-14T13:17:36.393Z"
+    },
+    {
+      "id": "ord-1009",
+      "orderNumber": "VS240109",
+      "status": "delivered",
+      "email": "meera@email.com",
+      "customer": {
+        "firstName": "Meera",
+        "lastName": "Kapoor",
+        "phone": "9876500002"
+      },
+      "items": [
+        {
+          "slug": "lotus-whisper-bangle-green",
+          "name": "Lotus Whisper Bangle Ã¢â‚¬â€ Green",
+          "image": "/bracelets/lotus-bangle-green-hero.jpg",
+          "size": "Open bangle",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3890,
+          "lineTotal": 3890
+        },
+        {
+          "slug": "bees-kissing-roses-ring",
+          "name": "Bees Kissing Roses Ring",
+          "image": "/rings/bees-kissing-roses-ring-hero.jpg",
+          "size": "5",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 3980,
+          "lineTotal": 3980
+        }
+      ],
+      "total": 7870,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_9",
+      "createdAt": "2026-09-12T01:17:36.393Z",
+      "updatedAt": "2026-09-12T01:17:36.393Z"
+    },
+    {
+      "id": "ord-1010",
+      "orderNumber": "VS240110",
+      "status": "packed",
+      "email": "arjun@email.com",
+      "customer": {
+        "firstName": "Arjun",
+        "lastName": "Desai",
+        "phone": "9876500003"
+      },
+      "items": [
+        {
+          "slug": "agate-bee-honey-ring",
+          "name": "Agate Bee & Honey Ring",
+          "image": "/rings/agate-bee-honey-ring-hero.jpg",
+          "size": "5",
+          "metal": "18K Gold plated",
+          "qty": 1,
+          "unitPrice": 3480,
+          "lineTotal": 3480
+        }
+      ],
+      "total": 3480,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_10",
+      "createdAt": "2026-09-09T13:17:36.394Z",
+      "updatedAt": "2026-09-09T13:17:36.394Z"
+    },
+    {
+      "id": "ord-1011",
+      "orderNumber": "VS240111",
+      "status": "delivered",
+      "email": "isha@email.com",
+      "customer": {
+        "firstName": "Isha",
+        "lastName": "Nair",
+        "phone": "9876500004"
+      },
+      "items": [
+        {
+          "slug": "aquamarine-butterfly-ring",
+          "name": "Aquamarine Butterfly Ring",
+          "image": "/rings/aquamarine-butterfly-ring-hero.jpg",
+          "size": "5",
+          "metal": "S925 Silver",
+          "qty": 1,
+          "unitPrice": 4280,
+          "lineTotal": 4280
+        }
+      ],
+      "total": 4280,
+      "shipping": {
+        "address": "12 Atelier Lane",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postal": "302001",
+        "country": "India"
+      },
+      "paymentMethod": "Razorpay",
+      "paymentId": "pay_demo_11",
+      "createdAt": "2026-09-07T01:17:36.394Z",
+      "updatedAt": "2026-09-07T01:17:36.394Z"
+    }
+  ],
+  "looks": [
+    {
+      "id": "ear-wrist-edit",
+      "title": "The Soft Bloom Edit",
+      "line": "Earrings, bracelet and ring — one quiet language.",
+      "image": "/images/look-ear-wrist.jpg",
+      "alt": "Indian model wearing phalaenopsis earrings, flower bracelet and floral ring",
+      "hotspots": [
+        {
+          "id": "earrings",
+          "productSlug": "phalaenopsis-hoop-earrings",
+          "x": 24,
+          "y": 44
+        },
+        {
+          "id": "ring",
+          "productSlug": "flower-adjustable-ring-silver",
+          "x": 58,
+          "y": 50
+        },
+        {
+          "id": "bracelet",
+          "productSlug": "flower-in-the-rain-pink",
+          "x": 60,
+          "y": 82
+        }
+      ]
+    },
+    {
+      "id": "collar-lapel-edit",
+      "title": "The Collar & Lapel Edit",
+      "line": "Necklace, brooch and ring — worn as one thought.",
+      "image": "/images/look-collar-lapel.jpg",
+      "alt": "Indian model wearing pink flower necklace, calla lily brooch and floral ring",
+      "hotspots": [
+        {
+          "id": "necklace",
+          "productSlug": "flower-in-the-rain-necklace-pink",
+          "x": 50,
+          "y": 52
+        },
+        {
+          "id": "brooch",
+          "productSlug": "calla-lily-brooch-gold",
+          "x": 70,
+          "y": 58
+        },
+        {
+          "id": "ring",
+          "productSlug": "flower-adjustable-ring",
+          "x": 78,
+          "y": 70
+        }
+      ]
+    }
+  ]
+}
