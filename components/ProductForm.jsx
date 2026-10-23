@@ -177,6 +177,7 @@ export default function ProductForm({
   const [sizeTagDraft, setSizeTagDraft] = useState('');
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(null); // { current, total }
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [leaveOpen, setLeaveOpen] = useState(false);
@@ -319,27 +320,49 @@ export default function ProductForm({
     };
   }
 
+  async function uploadMany(files, { onProgress } = {}) {
+    const uploaded = [];
+    const total = files.length;
+    for (let i = 0; i < files.length; i += 1) {
+      onProgress?.({ current: i + 1, total });
+      uploaded.push(await uploadFile(files[i]));
+    }
+    return uploaded;
+  }
+
   async function onHeroFileSelected(event) {
-    const file = event.target.files?.[0];
+    const files = Array.from(event.target.files || []);
     event.target.value = '';
-    if (!file) return;
+    if (!files.length) return;
     setError('');
     setNotice('');
     setUploadingHero(true);
+    setUploadProgress({ current: 0, total: files.length });
     try {
-      const item = await uploadFile(file);
+      const uploaded = await uploadMany(files, { onProgress: setUploadProgress });
+      const [hero, ...rest] = uploaded;
       const idx = form.activeVariantIndex;
       const gallery = [...(variant.gallery || [])];
       const withoutOldHero = gallery.filter((g) => g.url !== variant.heroUrl);
+      const nextGallery = [
+        hero,
+        ...withoutOldHero.filter((g) => g.url !== hero.url),
+        ...rest.filter((item) => item.url !== hero.url),
+      ];
       patchVariant(idx, {
-        heroUrl: item.url,
-        gallery: [item, ...withoutOldHero.filter((g) => g.url !== item.url)],
+        heroUrl: hero.url,
+        gallery: nextGallery,
       });
-      setNotice('Hero image uploaded.');
+      setNotice(
+        files.length === 1
+          ? 'Hero image uploaded.'
+          : `Hero set · ${rest.length} more added to gallery.`
+      );
     } catch (err) {
       setError(err.message);
     } finally {
       setUploadingHero(false);
+      setUploadProgress(null);
     }
   }
 
@@ -350,24 +373,30 @@ export default function ProductForm({
     setError('');
     setNotice('');
     setUploadingGallery(true);
+    setUploadProgress({ current: 0, total: files.length });
     try {
-      const uploaded = [];
-      for (const file of files) {
-        uploaded.push(await uploadFile(file));
-      }
+      const uploaded = await uploadMany(files, { onProgress: setUploadProgress });
       const idx = form.activeVariantIndex;
+      const existing = variant.gallery || [];
+      const seen = new Set(existing.map((g) => g.url));
+      const fresh = uploaded.filter((item) => {
+        if (seen.has(item.url)) return false;
+        seen.add(item.url);
+        return true;
+      });
       patchVariant(idx, {
-        gallery: [...(variant.gallery || []), ...uploaded],
+        gallery: [...existing, ...fresh],
       });
       setNotice(
-        uploaded.length === 1
+        fresh.length === 1
           ? 'Gallery image uploaded.'
-          : `${uploaded.length} gallery images uploaded.`
+          : `${fresh.length} gallery images uploaded.`
       );
     } catch (err) {
       setError(err.message);
     } finally {
       setUploadingGallery(false);
+      setUploadProgress(null);
     }
   }
 
@@ -973,7 +1002,7 @@ export default function ProductForm({
             <p className="mt-1 text-sm font-light text-[#7a736c]">
               {form.hasColorVariants
                 ? `Hero and gallery below belong only to ${colorLabel}. Switch colour tabs above to manage other colours — images are never mixed.`
-                : 'Upload a hero image and optional gallery. Files go to Cloudflare R2.'}
+                : 'Upload a hero and gallery — you can select multiple images at once. Files go to Cloudflare R2.'}
             </p>
           </div>
           {form.hasColorVariants ? (
@@ -1048,7 +1077,9 @@ export default function ProductForm({
                   className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[#5e062a]/20 border-t-[#5e062a]"
                   aria-hidden
                 />
-                Uploading hero…
+                {uploadProgress?.total > 1
+                  ? `Uploading ${uploadProgress.current} of ${uploadProgress.total}…`
+                  : 'Uploading hero…'}
               </span>
             )}
           </div>
@@ -1067,7 +1098,9 @@ export default function ProductForm({
                       className="h-4 w-4 animate-spin rounded-full border-2 border-[#5e062a]/20 border-t-[#5e062a]"
                       aria-hidden
                     />
-                    Uploading…
+                    {uploadProgress?.total > 1
+                      ? `${uploadProgress.current}/${uploadProgress.total}`
+                      : 'Uploading…'}
                   </span>
                 </div>
               ) : null}
@@ -1104,10 +1137,14 @@ export default function ProductForm({
               className="hidden"
               type="file"
               accept="image/*,video/*"
+              multiple
               disabled={mediaBusy || saving}
               onChange={onHeroFileSelected}
             />
           </label>
+          <p className="text-[11px] text-[#7a736c]">
+            You can select multiple files — first becomes hero, the rest join the gallery.
+          </p>
         </div>
 
         <div className="space-y-3 rounded-2xl border border-[#2d2b2b]/8 p-4">
@@ -1124,7 +1161,9 @@ export default function ProductForm({
                   className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[#5e062a]/20 border-t-[#5e062a]"
                   aria-hidden
                 />
-                Uploading gallery…
+                {uploadProgress?.total > 1
+                  ? `Uploading ${uploadProgress.current} of ${uploadProgress.total}…`
+                  : 'Uploading gallery…'}
               </span>
             )}
           </div>
@@ -1136,7 +1175,9 @@ export default function ProductForm({
                     className="h-4 w-4 animate-spin rounded-full border-2 border-[#5e062a]/20 border-t-[#5e062a]"
                     aria-hidden
                   />
-                  Uploading images…
+                  {uploadProgress?.total > 1
+                    ? `Uploading ${uploadProgress.current} of ${uploadProgress.total}…`
+                    : 'Uploading images…'}
                 </span>
               </div>
             ) : null}
@@ -1177,8 +1218,8 @@ export default function ProductForm({
             className={`btn-ghost inline-flex cursor-pointer ${mediaBusy || saving ? 'pointer-events-none opacity-50' : ''}`}
           >
             {form.hasColorVariants
-              ? `Upload ${variant.colorLabel} gallery`
-              : 'Upload gallery images'}
+              ? `Add ${variant.colorLabel} gallery images`
+              : 'Add gallery images'}
             <input
               className="hidden"
               type="file"
@@ -1188,6 +1229,9 @@ export default function ProductForm({
               onChange={onGalleryFilesSelected}
             />
           </label>
+          <p className="text-[11px] text-[#7a736c]">
+            Select multiple images in the file picker to upload them all at once.
+          </p>
         </div>
       </section>
 
