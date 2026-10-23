@@ -89,6 +89,14 @@ export default function EditProductPage() {
           setSaving(true);
           setError('');
           try {
+            console.log(
+              '[edit product] saving media',
+              (next?.variants || []).map((v) => ({
+                color: v.colorLabel,
+                hero: v.heroUrl || '(empty)',
+                gallery: Array.isArray(v.gallery) ? v.gallery.length : 0,
+              })),
+            );
             const res = await fetch(`/api/catalog/products/${product.id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
@@ -96,6 +104,14 @@ export default function EditProductPage() {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Save failed');
+            console.log(
+              '[edit product] saved media',
+              (data.product?.variants || []).map((v) => ({
+                color: v.colorLabel,
+                hero: v.heroUrl || '(empty)',
+                gallery: Array.isArray(v.gallery) ? v.gallery.length : 0,
+              })),
+            );
             setProduct(data.product);
             return data.product;
           } catch (err) {

@@ -26,9 +26,30 @@ export async function PUT(request, { params }) {
   try {
     const { id } = await params;
     const body = await request.json();
+    console.log(
+      '[api PUT product] media in body',
+      (body?.variants || []).map((v) => ({
+        id: v.id,
+        color: v.colorLabel,
+        heroUrl: v.heroUrl || v.hero_url || '(empty)',
+        gallery: Array.isArray(v.gallery) ? v.gallery.length : 0,
+        sample: Array.isArray(v.gallery)
+          ? v.gallery.slice(0, 2).map((g) => (typeof g === 'string' ? g : g?.url))
+          : [],
+      })),
+    );
     const product = await upsertFamily({ ...body, id });
+    console.log(
+      '[api PUT product] media after save',
+      (product?.variants || []).map((v) => ({
+        slug: v.slug,
+        heroUrl: v.heroUrl || '(empty)',
+        gallery: Array.isArray(v.gallery) ? v.gallery.length : 0,
+      })),
+    );
     return NextResponse.json({ ok: true, product });
   } catch (err) {
+    console.error('[api PUT product] failed', err);
     return NextResponse.json(
       { error: err.message || 'Could not update' },
       { status: err.status || 500 }

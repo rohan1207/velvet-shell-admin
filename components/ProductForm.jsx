@@ -201,6 +201,11 @@ export default function ProductForm({
   const [leaveSaving, setLeaveSaving] = useState(false);
   const baselineRef = useRef(null);
   const allowLeaveRef = useRef(false);
+  /** Always-current form snapshot — Save/upload must not rely on stale closures. */
+  const formRef = useRef(form);
+  formRef.current = form;
+  const featuresTextRef = useRef(featuresText);
+  featuresTextRef.current = featuresText;
   const mediaBusy = uploadingHero || uploadingGallery;
 
   if (baselineRef.current === null) {
@@ -261,49 +266,51 @@ export default function ProductForm({
   }, [isDirty, leaveOpen]);
 
   function patchForm(patch) {
-    setForm((f) => ({ ...f, ...patch }));
+    const next = { ...formRef.current, ...patch };
+    formRef.current = next;
+    setForm(next);
   }
 
   function patchVariant(index, patch) {
-    setForm((f) => {
-      const variants = f.variants.map((v, i) => (i === index ? { ...v, ...patch } : v));
-      return { ...f, variants };
-    });
+    const f = formRef.current;
+    const variants = f.variants.map((v, i) => (i === index ? { ...v, ...patch } : v));
+    const next = { ...f, variants };
+    formRef.current = next;
+    setForm(next);
   }
 
   function switchVariant(index) {
-    let label = '';
-    setForm((f) => {
-      const variants = f.variants.map((v, i) =>
-        i === f.activeVariantIndex ? { ...v, features: textToFeatures(featuresText) } : v,
-      );
-      label = variants[index]?.colorLabel || 'colour';
-      // Defer features text update so we read the committed variant
-      queueMicrotask(() => {
-        setFeaturesText(featuresToText(variants[index]?.features));
-      });
-      return { ...f, variants, activeVariantIndex: index };
-    });
+    const f = formRef.current;
+    const variants = f.variants.map((v, i) =>
+      i === f.activeVariantIndex
+        ? { ...v, features: textToFeatures(featuresTextRef.current) }
+        : v,
+    );
+    const next = { ...f, variants, activeVariantIndex: index };
+    formRef.current = next;
+    setForm(next);
+    setFeaturesText(featuresToText(variants[index]?.features));
     setSizeTagDraft('');
     setNotice(
-      form.hasColorVariants
-        ? `Editing ${label} — hero & gallery below are only for this colour.`
+      next.hasColorVariants
+        ? `Editing ${variants[index]?.colorLabel || 'colour'} — hero & gallery below are only for this colour.`
         : '',
     );
   }
 
   function addColor(preset) {
-    const next = newVariant(preset.label, preset.swatch, false);
-    next.material = materialForColor(preset.label);
-    setForm((f) => {
-      const variants = [...f.variants, next];
-      return {
-        ...f,
-        hasColorVariants: true,
-        variants,
-        activeVariantIndex: variants.length - 1,
-      };
-    });
+    const colour = newVariant(preset.label, preset.swatch, false);
+    colour.material = materialForColor(preset.label);
+    const f = formRef.current;
+    const variants = [...f.variants, colour];
+    const next = {
+      ...f,
+      hasColorVariants: true,
+      variants,
+      activeVariantIndex: variants.length - 1,
+    };
+    formRef.current = next;
+    setForm(next);
     setFeaturesText('');
     setNotice(
       `Added ${preset.label}. Upload only ${preset.label} photos on this colour tab — do not mix metals in one gallery.`,
@@ -353,135 +360,42 @@ export default function ProductForm({
     return uploaded;
   }
 
-  /** Merge media into the latest form state (avoids stale closure wiping uploads). */
+  /** Merge media into formRef + state synchronously (safe after await upload). */
   function applyVariantMedia(mutator) {
-    let nextSnapshot = null;
-    setForm((f) => {
-      const idx = f.activeVariantIndex;
-      const current = f.variants[idx] || f.variants[0];
-      if (!current) return f;
-      const patch = mutator(current, idx, f) || {};
-      const variants = f.variants.map((v, i) => (i === idx ? { ...v, ...patch } : v));
-      nextSnapshot = { ...f, variants };
-      return nextSnapshot;
-    });
+    const f = formRef.current;
+    const idx = f.activeVariantIndex;
+    const current = f.variants[idx] || f.variants[0];
+    if (!current) return f;
+    const patch = mutator(current, idx, f) || {};
+    const variants = f.variants.map((v, i) => (i === idx ? { ...v, ...patch } : v));
+    const nextSnapshot = { ...f, variants };
+    formRef.current = nextSnapshot;
+    setForm(nextSnapshot);
     return nextSnapshot;
   }
 
-  async function onHeroFileSelected(event) {
-    const files = sortFilesByName(Array.from(event.target.files || []));
-    event.target.value = '';
-    if (!files.length) return;
-    setError('');
-    setNotice('');
-    setUploadingHero(true);
-    setUploadProgress({ current: 0, total: files.length });
-    try {
-      const uploaded = await uploadMany(files, { onProgress: setUploadProgress });
-      const [hero, ...rest] = uploaded;
-      const snapshot = applyVariantMedia((current) => {
-        const gallery = [...(current.gallery || [])];
-        const withoutOldHero = gallery.filter((g) => g.url !== current.heroUrl);
-        return {
-          heroUrl: hero.url,
-          gallery: [
-            hero,
-            ...withoutOldHero.filter((g) => g.url !== hero.url),
-            ...rest.filter((item) => item.url !== hero.url),
-          ],
-        };
-      });
-      await persistMediaIfPossible(
-        snapshot,
-        files.length === 1
-          ? 'Hero uploaded.'
-          : `Hero set · ${rest.length} more added to gallery.`,
-      );
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setUploadingHero(false);
-      setUploadProgress(null);
-    }
-  }
-
-  async function onGalleryFilesSelected(event) {
-    const files = sortFilesByName(Array.from(event.target.files || []));
-    event.target.value = '';
-    if (!files.length) return;
-    setError('');
-    setNotice('');
-    setUploadingGallery(true);
-    setUploadProgress({ current: 0, total: files.length });
-    try {
-      const uploaded = await uploadMany(files, { onProgress: setUploadProgress });
-      const snapshot = applyVariantMedia((current) => {
-        const existing = current.gallery || [];
-        const seen = new Set(existing.map((g) => g.url));
-        const fresh = uploaded.filter((item) => {
-          if (seen.has(item.url)) return false;
-          seen.add(item.url);
-          return true;
-        });
-        const gallery = [...existing, ...fresh];
-        return {
-          gallery,
-          heroUrl: current.heroUrl || gallery[0]?.url || '',
-        };
-      });
-      await persistMediaIfPossible(
-        snapshot,
-        uploaded.length === 1
-          ? 'Gallery image uploaded.'
-          : `${uploaded.length} gallery images uploaded.`,
-      );
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setUploadingGallery(false);
-      setUploadProgress(null);
-    }
-  }
-
-  function reorderGallery(fromIndex, toIndex) {
-    const snapshot = applyVariantMedia((current) => {
-      const list = galleryOrdered(current);
-      if (
-        fromIndex == null ||
-        toIndex == null ||
-        fromIndex === toIndex ||
-        fromIndex < 0 ||
-        toIndex < 0 ||
-        fromIndex >= list.length ||
-        toIndex >= list.length
-      ) {
-        return {};
-      }
-      const next = [...list];
-      const [moved] = next.splice(fromIndex, 1);
-      next.splice(toIndex, 0, moved);
-      return {
-        gallery: next,
-        heroUrl: next[0]?.url || '',
-      };
-    });
-    void persistMediaIfPossible(
-      snapshot,
-      'Gallery order updated. First image is the hero.',
-    );
-  }
-
-  function buildPayload(fromForm = form) {
+  function buildPayload(fromForm = formRef.current) {
+    const featuresNow = featuresTextRef.current;
     const resolvedSlug = lockSlug
       ? fromForm.slug || slugify(fromForm.name)
       : slugify(fromForm.name);
-    const variants = fromForm.variants.map((v, i) => {
+    const variants = (fromForm.variants || []).map((v, i) => {
       const features =
-        i === fromForm.activeVariantIndex ? textToFeatures(featuresText) : v.features || [];
+        i === fromForm.activeVariantIndex ? textToFeatures(featuresNow) : v.features || [];
       const sizeTags = Array.isArray(v.sizeTags)
         ? v.sizeTags.map((t) => String(t || '').trim()).filter(Boolean)
         : [];
       const length = sizeTags[0] || String(v.length || '').trim();
+      const gallery = Array.isArray(v.gallery)
+        ? v.gallery
+            .map((g) => {
+              if (typeof g === 'string') return { url: g, kind: 'image' };
+              if (g?.url) return { url: g.url, kind: g.kind || 'image', alt: g.alt || '' };
+              return null;
+            })
+            .filter(Boolean)
+        : [];
+      const heroUrl = String(v.heroUrl || gallery[0]?.url || '').trim();
       return {
         ...v,
         features,
@@ -489,6 +403,8 @@ export default function ProductForm({
         length,
         price: Number(v.price) || 0,
         stock: Number(v.stock) || 0,
+        heroUrl,
+        gallery,
       };
     });
 
@@ -521,38 +437,179 @@ export default function ProductForm({
     };
   }
 
-  function markClean(fromForm = form) {
-    baselineRef.current = serializeFormState(fromForm, featuresText);
+  function markClean(fromForm = formRef.current) {
+    baselineRef.current = serializeFormState(fromForm, featuresTextRef.current);
   }
 
   async function persist(fromForm) {
     setError('');
-    // Prefer an explicit snapshot (e.g. right after upload); else read latest state.
-    let latest = fromForm || null;
-    if (!latest) {
-      setForm((f) => {
-        latest = f;
-        return f;
-      });
+    const latest = fromForm || formRef.current;
+    const payload = buildPayload(latest);
+    console.log(
+      '[ProductForm persist] media payload',
+      payload.variants.map((v) => ({
+        id: v.id,
+        color: v.colorLabel,
+        heroUrl: v.heroUrl || '(empty)',
+        gallery: (v.gallery || []).length,
+        urls: (v.gallery || []).slice(0, 3).map((g) => g.url),
+      })),
+    );
+    const saved = await onSave(payload);
+    // Keep local form aligned with what the API actually stored
+    if (saved?.variants) {
+      const synced = {
+        ...latest,
+        id: saved.id || latest.id,
+        slug: saved.slug || latest.slug,
+        variants: (saved.variants || []).map((sv, i) => {
+          const prev = latest.variants?.[i] || latest.variants?.find((x) => x.id === sv.id) || {};
+          return {
+            ...prev,
+            ...sv,
+            heroUrl: sv.heroUrl || '',
+            gallery: Array.isArray(sv.gallery) ? sv.gallery : [],
+          };
+        }),
+        activeVariantIndex: Math.min(
+          latest.activeVariantIndex || 0,
+          Math.max(0, (saved.variants || []).length - 1),
+        ),
+      };
+      formRef.current = synced;
+      setForm(synced);
+      markClean(synced);
+    } else {
+      markClean(latest);
     }
-    const payload = buildPayload(latest || form);
-    await onSave(payload);
-    markClean(latest || form);
+    return saved;
   }
 
   /** For existing products, save media to DB immediately so the storefront updates. */
   async function persistMediaIfPossible(snapshot, successNotice) {
-    if (!snapshot?.id) {
-      setNotice(successNotice);
+    const latest = snapshot || formRef.current;
+    if (!latest?.id) {
+      setNotice(`${successNotice} Click Save to keep images.`);
       return;
     }
     try {
-      await persist(snapshot);
-      setNotice(`${successNotice} Published to storefront.`);
+      await persist(latest);
+      setNotice(`${successNotice} Saved.`);
     } catch (err) {
-      setNotice(`${successNotice} Click Save to publish.`);
+      setNotice(`${successNotice} Click Save — auto-save failed.`);
       setError(err.message || 'Could not auto-save images');
+      console.error('[ProductForm] auto-save media failed', err);
     }
+  }
+
+  async function onHeroFileSelected(event) {
+    const files = sortFilesByName(Array.from(event.target.files || []));
+    event.target.value = '';
+    if (!files.length) return;
+    setError('');
+    setNotice('');
+    setUploadingHero(true);
+    setUploadProgress({ current: 0, total: files.length });
+    try {
+      const uploaded = await uploadMany(files, { onProgress: setUploadProgress });
+      const [hero, ...rest] = uploaded;
+      console.log(
+        '[ProductForm] hero upload ok',
+        uploaded.map((u) => u.url),
+      );
+      const snapshot = applyVariantMedia((current) => {
+        const gallery = [...(current.gallery || [])];
+        const withoutOldHero = gallery.filter((g) => g.url !== current.heroUrl);
+        return {
+          heroUrl: hero.url,
+          gallery: [
+            hero,
+            ...withoutOldHero.filter((g) => g.url !== hero.url),
+            ...rest.filter((item) => item.url !== hero.url),
+          ],
+        };
+      });
+      await persistMediaIfPossible(
+        snapshot,
+        files.length === 1
+          ? 'Hero uploaded.'
+          : `Hero set · ${rest.length} more added to gallery.`,
+      );
+    } catch (err) {
+      setError(err.message);
+      console.error('[ProductForm] hero upload failed', err);
+    } finally {
+      setUploadingHero(false);
+      setUploadProgress(null);
+    }
+  }
+
+  async function onGalleryFilesSelected(event) {
+    const files = sortFilesByName(Array.from(event.target.files || []));
+    event.target.value = '';
+    if (!files.length) return;
+    setError('');
+    setNotice('');
+    setUploadingGallery(true);
+    setUploadProgress({ current: 0, total: files.length });
+    try {
+      const uploaded = await uploadMany(files, { onProgress: setUploadProgress });
+      console.log(
+        '[ProductForm] gallery upload ok',
+        uploaded.map((u) => u.url),
+      );
+      const snapshot = applyVariantMedia((current) => {
+        const existing = current.gallery || [];
+        const seen = new Set(existing.map((g) => g?.url).filter(Boolean));
+        const fresh = uploaded.filter((item) => {
+          if (seen.has(item.url)) return false;
+          seen.add(item.url);
+          return true;
+        });
+        const gallery = [...existing, ...fresh];
+        return {
+          gallery,
+          heroUrl: current.heroUrl || gallery[0]?.url || '',
+        };
+      });
+      await persistMediaIfPossible(
+        snapshot,
+        uploaded.length === 1
+          ? 'Gallery image uploaded.'
+          : `${uploaded.length} gallery images uploaded.`,
+      );
+    } catch (err) {
+      setError(err.message);
+      console.error('[ProductForm] gallery upload failed', err);
+    } finally {
+      setUploadingGallery(false);
+      setUploadProgress(null);
+    }
+  }
+
+  function reorderGallery(fromIndex, toIndex) {
+    const snapshot = applyVariantMedia((current) => {
+      const list = galleryOrdered(current);
+      if (
+        fromIndex == null ||
+        toIndex == null ||
+        fromIndex === toIndex ||
+        fromIndex < 0 ||
+        toIndex < 0 ||
+        fromIndex >= list.length ||
+        toIndex >= list.length
+      ) {
+        return {};
+      }
+      const next = [...list];
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      return {
+        gallery: next,
+        heroUrl: next[0]?.url || '',
+      };
+    });
+    void persistMediaIfPossible(snapshot, 'Gallery order updated. First image is the hero.');
   }
 
   async function submit(event) {
