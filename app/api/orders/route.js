@@ -41,12 +41,17 @@ function mapOrder(row) {
     items: items.map((it) => ({
       slug: it.product_slug,
       name: it.product_name,
+      image: it.image_url,
       qty: it.qty,
       price: it.unit_price,
       size: it.size,
       metal: it.metal,
+      customization: Array.isArray(it.customization) ? it.customization : [],
     })),
     itemCount: items.reduce((s, it) => s + (it.qty || 0), 0),
+    hasCustomization: items.some(
+      (it) => Array.isArray(it.customization) && it.customization.length > 0,
+    ),
     razorpayOrderId: row.razorpay_order_id,
   };
 }

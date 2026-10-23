@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { money } from '@/lib/format';
+import { LoadingBlock } from '@/components/LoadingSpinner';
 
 function Kpi({ label, value, hint, href }) {
   const inner = (
@@ -46,7 +47,7 @@ export default function DashboardPage() {
   }
 
   if (!stats) {
-    return <p className="text-sm text-[#7a736c]">Loading dashboard…</p>;
+    return <LoadingBlock label="Loading dashboard…" />;
   }
 
   const c = stats.catalog || {};

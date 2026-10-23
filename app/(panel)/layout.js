@@ -45,8 +45,8 @@ export default function PanelLayout({ children }) {
         collapsed={collapsed}
         onToggleCollapse={toggleCollapse}
       />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-[#2d2b2b]/8 bg-[#f4f2ef]/90 px-4 backdrop-blur-md md:px-6">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b border-[#2d2b2b]/8 bg-[#f4f2ef]/90 px-4 backdrop-blur-md md:px-6">
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#2d2b2b]/10 bg-white text-[#2d2b2b] lg:hidden"

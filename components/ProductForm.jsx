@@ -271,9 +271,51 @@ export default function ProductForm({
       badge: form.badge,
       status: form.status,
       hasColorVariants: form.hasColorVariants,
+      customizationEnabled: !!form.customizationEnabled,
+      customizationFields: form.customizationEnabled
+        ? (form.customizationFields || [])
+            .map((field, index) => ({
+              id: field.id || `field_${index + 1}`,
+              label: String(field.label || '').trim(),
+              inputType: ['text', 'number', 'textarea'].includes(field.inputType)
+                ? field.inputType
+                : 'text',
+              required: !!field.required,
+              placeholder: String(field.placeholder || '').trim(),
+            }))
+            .filter((field) => field.label)
+        : [],
       shipping: normalizeShipping(form.shipping),
       recommendedFamilyIds: form.recommendedFamilyIds,
       variants,
+    });
+  }
+
+  function addCustomizationField() {
+    patchForm({
+      customizationFields: [
+        ...(form.customizationFields || []),
+        {
+          id: `field_${Math.random().toString(36).slice(2, 8)}`,
+          label: '',
+          inputType: 'text',
+          required: false,
+          placeholder: '',
+        },
+      ],
+    });
+  }
+
+  function patchCustomizationField(index, patch) {
+    const next = (form.customizationFields || []).map((field, i) =>
+      i === index ? { ...field, ...patch } : field,
+    );
+    patchForm({ customizationFields: next });
+  }
+
+  function removeCustomizationField(index) {
+    patchForm({
+      customizationFields: (form.customizationFields || []).filter((_, i) => i !== index),
     });
   }
 
@@ -481,6 +523,107 @@ export default function ProductForm({
             <p className="text-sm text-[#7a736c]">Save more products first to recommend them.</p>
           )}
         </div>
+      </section>
+
+      {/* Customization */}
+      <section className="card space-y-4 p-6">
+        <div>
+          <p className="font-label text-[10px] text-[#7a736c]">Customization</p>
+          <p className="mt-1 text-sm text-[#7a736c]">
+            Let shoppers answer free-form prompts for this piece (length, message, initials…).
+          </p>
+        </div>
+        <label className="flex items-center gap-3 text-sm">
+          <input
+            type="checkbox"
+            checked={!!form.customizationEnabled}
+            onChange={(e) => {
+              const on = e.target.checked;
+              patchForm({
+                customizationEnabled: on,
+                customizationFields:
+                  on && !(form.customizationFields || []).length
+                    ? [
+                        {
+                          id: `field_${Math.random().toString(36).slice(2, 8)}`,
+                          label: 'Specify the dangles length',
+                          inputType: 'text',
+                          required: false,
+                          placeholder: 'e.g. 2.5 inches',
+                        },
+                      ]
+                    : form.customizationFields || [],
+              });
+            }}
+          />
+          Customization available?
+        </label>
+
+        {form.customizationEnabled ? (
+          <div className="space-y-3">
+            {(form.customizationFields || []).map((field, index) => (
+              <div
+                key={field.id || index}
+                className="grid gap-3 rounded-xl border border-[#2d2b2b]/8 bg-[#faf7f2]/70 p-4 md:grid-cols-[minmax(0,1.4fr)_140px_minmax(0,1fr)_auto]"
+              >
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Prompt shown to shopper</span>
+                  <input
+                    className="input mt-1"
+                    value={field.label}
+                    placeholder="e.g. Specify the dangles length"
+                    onChange={(e) => patchCustomizationField(index, { label: e.target.value })}
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Input type</span>
+                  <select
+                    className="input mt-1"
+                    value={field.inputType || 'text'}
+                    onChange={(e) => patchCustomizationField(index, { inputType: e.target.value })}
+                  >
+                    <option value="text">Text</option>
+                    <option value="number">Number</option>
+                    <option value="textarea">Long text</option>
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Placeholder</span>
+                  <input
+                    className="input mt-1"
+                    value={field.placeholder || ''}
+                    placeholder="Optional hint"
+                    onChange={(e) =>
+                      patchCustomizationField(index, { placeholder: e.target.value })
+                    }
+                  />
+                </label>
+                <div className="flex items-end gap-2 pb-1">
+                  <label className="flex items-center gap-2 text-xs text-[#7a736c]">
+                    <input
+                      type="checkbox"
+                      checked={!!field.required}
+                      onChange={(e) =>
+                        patchCustomizationField(index, { required: e.target.checked })
+                      }
+                    />
+                    Required
+                  </label>
+                  <button
+                    type="button"
+                    className="text-xs text-[#5e062a] hover:underline"
+                    onClick={() => removeCustomizationField(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+            <button type="button" className="btn-ghost" onClick={addCustomizationField}>
+              + Add prompt
+            </button>
+          </div>
+        ) : null}
       </section>
 
       {/* Color variants toggle */}
@@ -859,6 +1002,17 @@ export default function ProductForm({
                 alt=""
                 className="max-h-56 w-full rounded-xl object-cover"
               />
+              {uploadingHero ? (
+                <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-white/60 backdrop-blur-[1px]">
+                  <span className="inline-flex items-center gap-2 text-sm text-[#7a736c]">
+                    <span
+                      className="h-4 w-4 animate-spin rounded-full border-2 border-[#5e062a]/20 border-t-[#5e062a]"
+                      aria-hidden
+                    />
+                    Uploading…
+                  </span>
+                </div>
+              ) : null}
               <button
                 type="button"
                 disabled={mediaBusy || saving}
@@ -874,14 +1028,16 @@ export default function ProductForm({
               </button>
             </div>
           ) : (
-            <p className="text-sm text-[#7a736c]">No hero image yet.</p>
+            <p className="text-sm text-[#7a736c]">
+              {uploadingHero ? 'Uploading hero…' : 'No hero image yet.'}
+            </p>
           )}
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">
-              {variant.heroUrl ? 'Replace hero' : 'Upload hero'}
-            </span>
+          <label
+            className={`btn-ghost inline-flex cursor-pointer ${mediaBusy || saving ? 'pointer-events-none opacity-50' : ''}`}
+          >
+            {variant.heroUrl ? 'Replace hero' : 'Upload hero'}
             <input
-              className="mt-2 block w-full text-sm disabled:opacity-50"
+              className="hidden"
               type="file"
               accept="image/*,video/*"
               disabled={mediaBusy || saving}
@@ -903,7 +1059,18 @@ export default function ProductForm({
               </span>
             )}
           </div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="relative grid gap-3 sm:grid-cols-3">
+            {uploadingGallery ? (
+              <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-white/60 backdrop-blur-[1px] sm:col-span-3">
+                <span className="inline-flex items-center gap-2 text-sm text-[#7a736c]">
+                  <span
+                    className="h-4 w-4 animate-spin rounded-full border-2 border-[#5e062a]/20 border-t-[#5e062a]"
+                    aria-hidden
+                  />
+                  Uploading images…
+                </span>
+              </div>
+            ) : null}
             {(variant.gallery || [])
               .filter((item) => item.url !== variant.heroUrl)
               .map((item, i) => (
@@ -935,10 +1102,12 @@ export default function ProductForm({
           {!(variant.gallery || []).some((g) => g.url !== variant.heroUrl) && (
             <p className="text-sm text-[#7a736c]">No gallery images yet.</p>
           )}
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Upload gallery (one or more files)</span>
+          <label
+            className={`btn-ghost inline-flex cursor-pointer ${mediaBusy || saving ? 'pointer-events-none opacity-50' : ''}`}
+          >
+            Upload gallery images
             <input
-              className="mt-2 block w-full text-sm disabled:opacity-50"
+              className="hidden"
               type="file"
               accept="image/*,video/*"
               multiple
@@ -961,4 +1130,12 @@ export default function ProductForm({
               aria-hidden
             />
           )}
-          {saving ? '
+          {saving ? 'Saving product…' : mediaBusy ? 'Wait for upload…' : 'Save product'}
+        </button>
+        {saving && (
+          <span className="text-xs text-[#7a736c]">Product is being saved — please wait.</span>
+        )}
+      </div>
+    </form>
+  );
+}

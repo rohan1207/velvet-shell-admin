@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { getBlog, saveBlog } from '@/lib/repository';
 import { slugify } from '@/lib/format';
+import ImageUploadField from '@/components/ImageUploadField';
+import { LoadingBlock } from '@/components/LoadingSpinner';
 
 export default function BlogEditPage() {
   const { slug } = useParams();
@@ -31,7 +33,7 @@ export default function BlogEditPage() {
     }
   }, [slug, isNew]);
 
-  if (!form) return <p className="text-sm text-[#7a736c]">Loading…</p>;
+  if (!form) return <LoadingBlock label="Loading blog…" />;
   if (form.missing) {
     return (
       <p className="text-sm text-[#7a736c]">
@@ -114,14 +116,12 @@ export default function BlogEditPage() {
             onChange={(e) => setForm({ ...form, eyebrow: e.target.value })}
           />
         </label>
-        <label className="block">
-          <span className="text-xs text-[#7a736c]">Cover image URL</span>
-          <input
-            className="input mt-1"
-            value={form.image || ''}
-            onChange={(e) => setForm({ ...form, image: e.target.value })}
-          />
-        </label>
+        <ImageUploadField
+          label="Cover image"
+          folder="blogs"
+          value={form.image || ''}
+          onChange={(url) => setForm({ ...form, image: url })}
+        />
         <label className="block">
           <span className="text-xs text-[#7a736c]">Excerpt</span>
           <textarea

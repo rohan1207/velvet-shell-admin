@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { listTestimonials, saveTestimonial } from '@/lib/repository';
+import ImageUploadField from '@/components/ImageUploadField';
 
 const blank = {
   id: '',
@@ -115,17 +116,18 @@ export default function TestimonialsPage() {
                 value={form.quote}
                 onChange={(e) => setForm({ ...form, quote: e.target.value })}
               />
-              <input
-                className="input"
-                placeholder="Image 1 URL"
+              <ImageUploadField
+                label="Portrait image"
+                folder="testimonials"
                 value={form.image}
-                onChange={(e) => setForm({ ...form, image: e.target.value })}
+                onChange={(url) => setForm({ ...form, image: url })}
+                previewClassName="mx-auto h-28 w-28 rounded-full object-cover"
               />
-              <input
-                className="input"
-                placeholder="Image 2 URL (optional)"
+              <ImageUploadField
+                label="Second image (optional)"
+                folder="testimonials"
                 value={form.image2 || ''}
-                onChange={(e) => setForm({ ...form, image2: e.target.value })}
+                onChange={(url) => setForm({ ...form, image2: url })}
               />
               <label className="flex items-center gap-2 text-sm">
                 <input

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { saveBlog } from '@/lib/repository';
 import { slugify } from '@/lib/format';
+import ImageUploadField from '@/components/ImageUploadField';
 
 export default function NewBlogPage() {
   const router = useRouter();
@@ -60,14 +61,12 @@ export default function NewBlogPage() {
             <option value="draft">Draft</option>
           </select>
         </label>
-        <label className="block">
-          <span className="text-xs text-[#7a736c]">Cover image URL</span>
-          <input
-            className="input mt-1"
-            value={form.image}
-            onChange={(e) => setForm({ ...form, image: e.target.value })}
-          />
-        </label>
+        <ImageUploadField
+          label="Cover image"
+          folder="blogs"
+          value={form.image}
+          onChange={(url) => setForm({ ...form, image: url })}
+        />
         <label className="block">
           <span className="text-xs text-[#7a736c]">Excerpt</span>
           <textarea

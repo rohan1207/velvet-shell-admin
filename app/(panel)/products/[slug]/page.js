@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ProductForm from '@/components/ProductForm';
 import { getMeta } from '@/lib/repository';
+import { LoadingBlock } from '@/components/LoadingSpinner';
 
 export default function EditProductPage() {
   const { slug } = useParams();
@@ -41,7 +42,7 @@ export default function EditProductPage() {
   }, [slug]);
 
   if (loading) {
-    return <p className="text-sm text-[#7a736c]">Loading product…</p>;
+    return <LoadingBlock label="Loading product…" />;
   }
 
   if (!product) {

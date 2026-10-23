@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { getMeta } from '@/lib/repository';
 import { labelCategory, labelCollection, money } from '@/lib/format';
+import { LoadingBlock } from '@/components/LoadingSpinner';
 
 function toRow(family) {
   const primary =
@@ -37,36 +38,41 @@ function ProductsInner() {
   const [rows, setRows] = useState([]);
   const [source, setSource] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMeta(getMeta());
-    fetch('/api/catalog/products')
-      .then((r) => r.json())
-      .then((d) => {
-        setRows((d.products || []).map(toRow));
-        setSource(d.source || '');
-        if (d.error) setError(d.error);
+    let cancelled = false;
+    setLoading(true);
+    Promise.all([
+      fetch('/api/catalog/products').then((r) => r.json()),
+      fetch('/api/catalog/categories').then((r) => r.json()).catch(() => ({})),
+      fetch('/api/catalog/collections').then((r) => r.json()).catch(() => ({})),
+    ])
+      .then(([productsData, categoriesData, collectionsData]) => {
+        if (cancelled) return;
+        setRows((productsData.products || []).map(toRow));
+        setSource(productsData.source || '');
+        if (productsData.error) setError(productsData.error);
+        setMeta((m) => ({
+          ...m,
+          categories: categoriesData.categories?.length
+            ? categoriesData.categories.map((c) => ({ slug: c.slug, name: c.name }))
+            : m.categories,
+          collections: collectionsData.collections?.length
+            ? collectionsData.collections
+            : m.collections,
+        }));
       })
-      .catch((err) => setError(err.message));
-    fetch('/api/catalog/categories')
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.categories?.length) {
-          setMeta((m) => ({
-            ...m,
-            categories: d.categories.map((c) => ({ slug: c.slug, name: c.name })),
-          }));
-        }
+      .catch((err) => {
+        if (!cancelled) setError(err.message);
       })
-      .catch(() => {});
-    fetch('/api/catalog/collections')
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.collections?.length) {
-          setMeta((m) => ({ ...m, collections: d.collections }));
-        }
-      })
-      .catch(() => {});
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const filtered = useMemo(() => {
@@ -97,8 +103,7 @@ function ProductsInner() {
           <p className="font-label text-[10px] text-[#d4af64]">Catalogue</p>
           <h1 className="font-display mt-2 text-4xl">Products</h1>
           <p className="font-num mt-1 text-sm text-[#7a736c]">
-            {filtered.length} families
-            {source ? ` · ${source}` : ''}
+            {loading ? 'Fetching catalogue…' : `${filtered.length} families${source ? ` · ${source}` : ''}`}
           </p>
           {error && (
             <p className="mt-2 max-w-xl text-sm text-[#5e062a]">
@@ -168,7 +173,9 @@ function ProductsInner() {
         </label>
       </div>
 
-      <div className="table-wrap">
+      {loading ? <LoadingBlock label="Loading products…" /> : null}
+
+      <div className={`table-wrap ${loading ? 'hidden' : ''}`}>
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-[#2d2b2b]/8 bg-[#faf7f2] text-[10px] tracking-[0.14em] text-[#7a736c] uppercase">
             <tr>
@@ -242,7 +249,7 @@ function ProductsInner() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<p className="text-sm text-[#7a736c]">Loading…</p>}>
+    <Suspense fallback={<LoadingBlock label="Loading products…" />}>
       <ProductsInner />
     </Suspense>
   );

@@ -1,18 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { LoadingBlock } from '@/components/LoadingSpinner';
 
 export default function CategoriesPage() {
   const [rows, setRows] = useState([]);
   const [form, setForm] = useState({ name: '', slug: '', line: '' });
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [loading, setLoading] = useState(true);
 
   async function load() {
-    const res = await fetch('/api/catalog/categories');
-    const data = await res.json();
-    setRows(data.categories || []);
-    if (!res.ok) setError(data.error || 'Could not load categories');
+    setLoading(true);
+    try {
+      const res = await fetch('/api/catalog/categories');
+      const data = await res.json();
+      setRows(data.categories || []);
+      if (!res.ok) setError(data.error || 'Could not load categories');
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -87,22 +94,26 @@ export default function CategoriesPage() {
         </button>
       </form>
 
-      <ul className="divide-y divide-[#2d2b2b]/8 rounded-[1.5rem] border border-[#2d2b2b]/8 bg-white">
-        {rows.map((c) => (
-          <li key={c.slug} className="flex items-start justify-between gap-4 px-5 py-4">
-            <div>
-              <p className="font-medium text-[#2d2b2b]">{c.name}</p>
-              <p className="text-xs text-[#7a736c]">{c.slug}</p>
-              {c.line && <p className="mt-1 text-sm font-light text-[#7a736c]">{c.line}</p>}
-            </div>
-          </li>
-        ))}
-        {!rows.length && (
-          <li className="px-5 py-8 text-sm text-[#7a736c]">
-            No categories yet — run migration 003 or add one above.
-          </li>
-        )}
-      </ul>
+      {loading ? (
+        <LoadingBlock label="Loading categories…" />
+      ) : (
+        <ul className="divide-y divide-[#2d2b2b]/8 rounded-[1.5rem] border border-[#2d2b2b]/8 bg-white">
+          {rows.map((c) => (
+            <li key={c.slug} className="flex items-start justify-between gap-4 px-5 py-4">
+              <div>
+                <p className="font-medium text-[#2d2b2b]">{c.name}</p>
+                <p className="text-xs text-[#7a736c]">{c.slug}</p>
+                {c.line && <p className="mt-1 text-sm font-light text-[#7a736c]">{c.line}</p>}
+              </div>
+            </li>
+          ))}
+          {!rows.length && (
+            <li className="px-5 py-8 text-sm text-[#7a736c]">
+              No categories yet — run migration 003 or add one above.
+            </li>
+          )}
+        </ul>
+      )}
     </div>
   );
 }

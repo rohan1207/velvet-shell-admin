@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { listProducts } from '@/lib/repository';
 import { money } from '@/lib/format';
+import ImageUploadField from '@/components/ImageUploadField';
 
 function ProductPicker({ onPick, onClose }) {
   const [q, setQ] = useState('');
@@ -73,15 +74,6 @@ export default function LookEditor({ look, onSave }) {
 
   function update(patch) {
     setForm((prev) => ({ ...prev, ...patch }));
-  }
-
-  function readFile(file) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      update({ image: String(reader.result || '') });
-    };
-    reader.readAsDataURL(file);
   }
 
   function onImageClick(e) {
@@ -169,32 +161,21 @@ export default function LookEditor({ look, onSave }) {
         />
       </label>
 
-      <div className="flex flex-wrap items-end gap-3">
-        <label className="block min-w-[200px] flex-1">
-          <span className="text-xs text-[#7a736c]">Image URL</span>
-          <input
-            className="input mt-1"
-            value={form.image?.startsWith('data:') ? '' : form.image || ''}
-            placeholder={form.image?.startsWith('data:') ? 'Uploaded file (data URL)' : '/images/look-….jpg'}
-            onChange={(e) => update({ image: e.target.value })}
-          />
-        </label>
-        <label className="btn-ghost cursor-pointer">
-          Upload image
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => readFile(e.target.files?.[0])}
-          />
-        </label>
+      <ImageUploadField
+        label="Look image"
+        folder="looks"
+        value={form.image || ''}
+        onChange={(url) => update({ image: url, hotspots: [] })}
+        previewClassName="max-h-48 w-full rounded-xl object-contain"
+      />
+      <div className="flex flex-wrap gap-2">
         <button
           type="button"
           className={marking ? 'btn-primary' : 'btn-ghost'}
           disabled={!form.image}
           onClick={() => setMarking((v) => !v)}
         >
-          {marking ? 'Marking… click image' : 'Mark'}
+          {marking ? 'Marking… click image' : 'Mark hotspots'}
         </button>
       </div>
 

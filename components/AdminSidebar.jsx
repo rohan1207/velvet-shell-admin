@@ -103,6 +103,22 @@ function NavIcon({ name, className = 'h-[18px] w-[18px]' }) {
   }
 }
 
+function IconHamburger({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden>
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconClose({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden>
+      <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function AdminSidebar({ open, onClose, collapsed, onToggleCollapse }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -123,6 +139,8 @@ export default function AdminSidebar({ open, onClose, collapsed, onToggleCollaps
     router.refresh();
   }
 
+  const desktopCollapsed = collapsed;
+
   return (
     <>
       <div
@@ -131,24 +149,64 @@ export default function AdminSidebar({ open, onClose, collapsed, onToggleCollaps
         }`}
         onClick={onClose}
       />
+
+      {/* Fixed sidebar — does not scroll with page content */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-white/8 bg-[#141217] text-[#f5eee8] transition-[width,transform] duration-300 ease-out lg:static lg:translate-x-0 ${
-          open ? 'translate-x-0' : '-translate-x-full'
-        } ${collapsed ? 'lg:w-[72px]' : 'lg:w-[248px]'} w-[248px]`}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[248px] flex-col border-r border-white/8 bg-[#141217] text-[#f5eee8] transition-[width,transform] duration-300 ease-out ${
+          open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        } ${desktopCollapsed ? 'lg:w-[72px]' : 'lg:w-[248px]'}`}
       >
-        <div className={`flex items-center gap-3 border-b border-white/8 ${collapsed ? 'justify-center px-2 py-5' : 'px-4 py-5'}`}>
+        {/* Expanded / mobile: brand + close/collapse (X) top-right */}
+        <div
+          className={`shrink-0 items-center gap-3 border-b border-white/8 px-4 py-4 ${
+            desktopCollapsed ? 'flex lg:hidden' : 'flex'
+          }`}
+        >
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#5e062a] text-[11px] font-semibold tracking-wide text-white">
             VS
           </div>
-          {!collapsed && (
-            <div className="min-w-0">
-              <p className="truncate text-[13px] font-medium text-white">Velvet Shell</p>
-              <p className="truncate text-[11px] text-white/45">Admin</p>
-            </div>
-          )}
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[13px] font-medium text-white">Velvet Shell</p>
+            <p className="truncate text-[11px] text-white/45">Admin</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches) {
+                onClose?.();
+                return;
+              }
+              onToggleCollapse?.();
+            }}
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-white/55 transition hover:bg-white/10 hover:text-white"
+            aria-label="Close or collapse sidebar"
+            title="Collapse"
+          >
+            <IconClose />
+          </button>
         </div>
 
-        <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
+        {/* Collapsed desktop: hamburger to reopen */}
+        <div
+          className={`shrink-0 flex-col items-center gap-2 border-b border-white/8 py-3 ${
+            desktopCollapsed ? 'hidden lg:flex' : 'hidden'
+          }`}
+        >
+          <button
+            type="button"
+            onClick={onToggleCollapse}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-white/55 transition hover:bg-white/10 hover:text-white"
+            aria-label="Expand sidebar"
+            title="Expand"
+          >
+            <IconHamburger />
+          </button>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#5e062a] text-[10px] font-semibold text-white">
+            VS
+          </div>
+        </div>
+
+        <nav className="min-h-0 flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
           {links.map((link) => {
             const active =
               link.href === '/'
@@ -160,57 +218,42 @@ export default function AdminSidebar({ open, onClose, collapsed, onToggleCollaps
                 href={link.href}
                 title={collapsed ? link.label : undefined}
                 onClick={onClose}
-                className={`group flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-[13px] transition ${
+                className={`group relative flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-[13px] transition ${
                   active
                     ? 'bg-white/10 text-white'
                     : 'text-white/55 hover:bg-white/5 hover:text-white/90'
-                } ${collapsed ? 'justify-center' : ''}`}
+                } ${desktopCollapsed ? 'lg:justify-center' : ''}`}
               >
                 <span className={`shrink-0 ${active ? 'text-[#d4af64]' : 'text-white/45 group-hover:text-white/70'}`}>
                   <NavIcon name={link.icon} />
                 </span>
-                {!collapsed && (
-                  <>
-                    <span className="min-w-0 flex-1 truncate">{link.label}</span>
-                    {link.badge && pending > 0 ? (
-                      <span className="font-num flex h-5 min-w-5 items-center justify-center rounded-full bg-[#d4af64] px-1.5 text-[10px] font-semibold text-[#141217]">
-                        {pending}
-                      </span>
-                    ) : null}
-                  </>
-                )}
-                {collapsed && link.badge && pending > 0 ? (
-                  <span className="absolute right-2 top-1.5 h-1.5 w-1.5 rounded-full bg-[#d4af64]" />
+                <span className={`min-w-0 flex-1 truncate ${desktopCollapsed ? 'lg:hidden' : ''}`}>
+                  {link.label}
+                </span>
+                {link.badge && pending > 0 ? (
+                  <span
+                    className={`font-num flex h-5 min-w-5 items-center justify-center rounded-full bg-[#d4af64] px-1.5 text-[10px] font-semibold text-[#141217] ${
+                      desktopCollapsed ? 'lg:hidden' : ''
+                    }`}
+                  >
+                    {pending}
+                  </span>
+                ) : null}
+                {desktopCollapsed && link.badge && pending > 0 ? (
+                  <span className="absolute right-2 top-1.5 hidden h-1.5 w-1.5 rounded-full bg-[#d4af64] lg:block" />
                 ) : null}
               </Link>
             );
           })}
         </nav>
 
-        <div className={`border-t border-white/8 p-2 ${collapsed ? 'space-y-2' : 'space-y-1'}`}>
-          <button
-            type="button"
-            onClick={onToggleCollapse}
-            className="hidden w-full items-center justify-center gap-2 rounded-lg px-2.5 py-2.5 text-[12px] text-white/45 transition hover:bg-white/5 hover:text-white/80 lg:flex"
-            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
-              <path
-                d={collapsed ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6'}
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            {!collapsed && <span>Collapse</span>}
-          </button>
+        <div className="shrink-0 border-t border-white/8 p-2">
           <button
             type="button"
             onClick={logout}
             title="Log out"
             className={`flex w-full items-center gap-3 rounded-lg px-2.5 py-2.5 text-[13px] text-white/55 transition hover:bg-white/5 hover:text-white ${
-              collapsed ? 'justify-center' : ''
+              desktopCollapsed ? 'lg:justify-center' : ''
             }`}
           >
             <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0" fill="none" aria-hidden>
@@ -222,10 +265,18 @@ export default function AdminSidebar({ open, onClose, collapsed, onToggleCollaps
                 strokeLinejoin="round"
               />
             </svg>
-            {!collapsed && <span>Log out</span>}
+            <span className={desktopCollapsed ? 'lg:hidden' : ''}>Log out</span>
           </button>
         </div>
       </aside>
+
+      {/* Desktop spacer so main content doesn't sit under fixed sidebar */}
+      <div
+        className={`hidden shrink-0 transition-[width] duration-300 ease-out lg:block ${
+          desktopCollapsed ? 'w-[72px]' : 'w-[248px]'
+        }`}
+        aria-hidden
+      />
     </>
   );
 }
