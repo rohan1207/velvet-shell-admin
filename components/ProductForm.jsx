@@ -104,12 +104,16 @@ function serializeFormState(form, featuresText) {
   });
 }
 
+/** Simple colour presets — Gold/Silver are colours (not a separate finish axis). */
 const SWATCH_PRESETS = [
-  { label: 'Silver', swatch: '#C5C5C5' },
   { label: 'Gold', swatch: '#D4AF64' },
+  { label: 'Silver', swatch: '#C5C5C5' },
+  { label: 'Green', swatch: '#2F6B4F' },
+  { label: 'Blue', swatch: '#4A7BA7' },
   { label: 'Pink', swatch: '#E8B4C4' },
-  { label: 'White', swatch: '#F2F0EC' },
-  { label: 'Green', swatch: '#7A9E7E' },
+  { label: 'White', swatch: '#F5F5F5' },
+  { label: 'Purple', swatch: '#6B3FA0' },
+  { label: 'Clear', swatch: '#E8EEF2' },
 ];
 
 export default function ProductForm({
@@ -587,222 +591,15 @@ export default function ProductForm({
         </div>
       </section>
 
-      {/* Shipping */}
-      <section className="overflow-hidden rounded-[1.5rem] border border-[#2d2b2b]/10 bg-white">
-        <div className="border-b border-[#2d2b2b]/8 bg-[#faf7f2] px-6 py-5">
-          <p className="font-label text-[10px] tracking-[0.2em] text-[#7a736c]">SHIPPING</p>
-          <p className="mt-2 text-sm font-light text-[#5a534c]">
-            Prefills India-only delivery (5–7 working days). Edit freely if needed.
-          </p>
-        </div>
-        <div className="space-y-5 px-6 py-6">
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Intro</span>
-            <textarea
-              className="input mt-1 min-h-20 rounded-2xl"
-              value={form.shipping.intro}
-              onChange={(e) =>
-                patchForm({ shipping: { ...form.shipping, intro: e.target.value } })
-              }
-            />
-          </label>
-          <div className="overflow-hidden rounded-xl border border-[#2d2b2b]/10">
-            <div className="grid grid-cols-2 border-b border-[#2d2b2b]/10 bg-[#faf7f2] px-4 py-3 text-xs font-medium text-[#2d2b2b]">
-              <span>Location</span>
-              <span>Estimated shipping time</span>
-            </div>
-            {(form.shipping.regions || []).map((row, i) => (
-              <div
-                key={i}
-                className="grid grid-cols-2 gap-3 border-b border-[#2d2b2b]/8 px-4 py-3 last:border-b-0"
-              >
-                <input
-                  className="input"
-                  value={row.location}
-                  onChange={(e) => {
-                    const regions = [...form.shipping.regions];
-                    regions[i] = { ...regions[i], location: e.target.value };
-                    patchForm({ shipping: { ...form.shipping, regions } });
-                  }}
-                />
-                <input
-                  className="input"
-                  value={row.eta}
-                  onChange={(e) => {
-                    const regions = [...form.shipping.regions];
-                    regions[i] = { ...regions[i], eta: e.target.value };
-                    patchForm({ shipping: { ...form.shipping, regions } });
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-          <p className="text-xs italic text-[#7a736c]">
-            Default: India · 5–7 working days (crafting/dispatch may add time).
-          </p>
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Shipping & delivery note</span>
-            <textarea
-              className="input mt-1 min-h-20 rounded-2xl"
-              value={form.shipping.note}
-              onChange={(e) =>
-                patchForm({ shipping: { ...form.shipping, note: e.target.value } })
-              }
-            />
-          </label>
-          <label className="block">
-            <span className="text-xs text-[#7a736c]">Delayed or lost shipments</span>
-            <textarea
-              className="input mt-1 min-h-20 rounded-2xl"
-              value={form.shipping.delayed}
-              onChange={(e) =>
-                patchForm({ shipping: { ...form.shipping, delayed: e.target.value } })
-              }
-            />
-          </label>
-        </div>
-      </section>
-
-      {/* Recommendations */}
-      <section className="card space-y-4 p-6">
-        <p className="font-label text-[10px] text-[#7a736c]">Recommendations</p>
-        <p className="text-sm font-light text-[#7a736c]">
-          Select other products to show as “You may also like”.
-        </p>
-        <div className="max-h-56 space-y-2 overflow-y-auto rounded-2xl border border-[#2d2b2b]/8 p-3">
-          {allProducts
-            .filter((p) => p.id !== form.id)
-            .map((p) => {
-              const checked = form.recommendedFamilyIds.includes(p.id);
-              return (
-                <label key={p.id} className="flex items-center gap-3 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={(e) => {
-                      const next = e.target.checked
-                        ? [...form.recommendedFamilyIds, p.id]
-                        : form.recommendedFamilyIds.filter((id) => id !== p.id);
-                      patchForm({ recommendedFamilyIds: next });
-                    }}
-                  />
-                  <span>
-                    {p.name}
-                    <span className="text-[#7a736c]"> · {p.category}</span>
-                  </span>
-                </label>
-              );
-            })}
-          {!allProducts.length && (
-            <p className="text-sm text-[#7a736c]">Save more products first to recommend them.</p>
-          )}
-        </div>
-      </section>
-
-      {/* Customization */}
+      {/* Colour variants — Gold / Silver / stone colours */}
       <section className="card space-y-4 p-6">
         <div>
-          <p className="font-label text-[10px] text-[#7a736c]">Customization</p>
+          <p className="font-label text-[10px] text-[#7a736c]">Colour variants</p>
           <p className="mt-1 text-sm text-[#7a736c]">
-            Let shoppers answer free-form prompts for this piece (length, message, initials…).
+            Add colours like Gold, Silver, Green, Blue… Each colour has its own price, stock, and
+            images. Keep the product name and description exactly as provided.
           </p>
         </div>
-        <label className="flex items-center gap-3 text-sm">
-          <input
-            type="checkbox"
-            checked={!!form.customizationEnabled}
-            onChange={(e) => {
-              const on = e.target.checked;
-              patchForm({
-                customizationEnabled: on,
-                customizationFields:
-                  on && !(form.customizationFields || []).length
-                    ? [
-                        {
-                          id: `field_${Math.random().toString(36).slice(2, 8)}`,
-                          label: 'Specify the dangles length',
-                          inputType: 'text',
-                          required: false,
-                          placeholder: 'e.g. 2.5 inches',
-                        },
-                      ]
-                    : form.customizationFields || [],
-              });
-            }}
-          />
-          Customization available?
-        </label>
-
-        {form.customizationEnabled ? (
-          <div className="space-y-3">
-            {(form.customizationFields || []).map((field, index) => (
-              <div
-                key={field.id || index}
-                className="grid gap-3 rounded-xl border border-[#2d2b2b]/8 bg-[#faf7f2]/70 p-4 md:grid-cols-[minmax(0,1.4fr)_140px_minmax(0,1fr)_auto]"
-              >
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Prompt shown to shopper</span>
-                  <input
-                    className="input mt-1"
-                    value={field.label}
-                    placeholder="e.g. Specify the dangles length"
-                    onChange={(e) => patchCustomizationField(index, { label: e.target.value })}
-                  />
-                </label>
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Input type</span>
-                  <select
-                    className="input mt-1"
-                    value={field.inputType || 'text'}
-                    onChange={(e) => patchCustomizationField(index, { inputType: e.target.value })}
-                  >
-                    <option value="text">Text</option>
-                    <option value="number">Number</option>
-                    <option value="textarea">Long text</option>
-                  </select>
-                </label>
-                <label className="block">
-                  <span className="text-xs text-[#7a736c]">Placeholder</span>
-                  <input
-                    className="input mt-1"
-                    value={field.placeholder || ''}
-                    placeholder="Optional hint"
-                    onChange={(e) =>
-                      patchCustomizationField(index, { placeholder: e.target.value })
-                    }
-                  />
-                </label>
-                <div className="flex items-end gap-2 pb-1">
-                  <label className="flex items-center gap-2 text-xs text-[#7a736c]">
-                    <input
-                      type="checkbox"
-                      checked={!!field.required}
-                      onChange={(e) =>
-                        patchCustomizationField(index, { required: e.target.checked })
-                      }
-                    />
-                    Required
-                  </label>
-                  <button
-                    type="button"
-                    className="text-xs text-[#5e062a] hover:underline"
-                    onClick={() => removeCustomizationField(index)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-            <button type="button" className="btn-ghost" onClick={addCustomizationField}>
-              + Add prompt
-            </button>
-          </div>
-        ) : null}
-      </section>
-
-      {/* Color variants toggle */}
-      <section className="card space-y-4 p-6">
-        <p className="font-label text-[10px] text-[#7a736c]">Color variants</p>
         <label className="flex items-center gap-3 text-sm">
           <input
             type="checkbox"
@@ -821,14 +618,14 @@ export default function ProductForm({
               }
             }}
           />
-          Does this product have color variants?
+          This product has more than one colour?
         </label>
 
         {form.hasColorVariants && (
           <div className="space-y-3">
             <p className="text-sm text-[#7a736c]">
-              Each colour has its own hero + gallery. Select a colour tab, then upload images only
-              for that colour — they are never shared.
+              Select a colour tab below, set price/stock, then upload that colour&apos;s hero and
+              gallery. Images stay with that colour only.
             </p>
             <div className="flex flex-wrap gap-2">
               {form.variants.map((v, i) => {
@@ -1389,6 +1186,219 @@ export default function ProductForm({
               multiple
               disabled={mediaBusy || saving}
               onChange={onGalleryFilesSelected}
+            />
+          </label>
+        </div>
+      </section>
+
+      {/* Customization */}
+      <section className="card space-y-4 p-6">
+        <div>
+          <p className="font-label text-[10px] text-[#7a736c]">Customization</p>
+          <p className="mt-1 text-sm text-[#7a736c]">
+            Let shoppers answer free-form prompts for this piece (length, message, initials…).
+          </p>
+        </div>
+        <label className="flex items-center gap-3 text-sm">
+          <input
+            type="checkbox"
+            checked={!!form.customizationEnabled}
+            onChange={(e) => {
+              const on = e.target.checked;
+              patchForm({
+                customizationEnabled: on,
+                customizationFields:
+                  on && !(form.customizationFields || []).length
+                    ? [
+                        {
+                          id: `field_${Math.random().toString(36).slice(2, 8)}`,
+                          label: 'Specify the dangles length',
+                          inputType: 'text',
+                          required: false,
+                          placeholder: 'e.g. 2.5 inches',
+                        },
+                      ]
+                    : form.customizationFields || [],
+              });
+            }}
+          />
+          Customization available?
+        </label>
+
+        {form.customizationEnabled ? (
+          <div className="space-y-3">
+            {(form.customizationFields || []).map((field, index) => (
+              <div
+                key={field.id || index}
+                className="grid gap-3 rounded-xl border border-[#2d2b2b]/8 bg-[#faf7f2]/70 p-4 md:grid-cols-[minmax(0,1.4fr)_140px_minmax(0,1fr)_auto]"
+              >
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Prompt shown to shopper</span>
+                  <input
+                    className="input mt-1"
+                    value={field.label}
+                    placeholder="e.g. Specify the dangles length"
+                    onChange={(e) => patchCustomizationField(index, { label: e.target.value })}
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Input type</span>
+                  <select
+                    className="input mt-1"
+                    value={field.inputType || 'text'}
+                    onChange={(e) => patchCustomizationField(index, { inputType: e.target.value })}
+                  >
+                    <option value="text">Text</option>
+                    <option value="number">Number</option>
+                    <option value="textarea">Long text</option>
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="text-xs text-[#7a736c]">Placeholder</span>
+                  <input
+                    className="input mt-1"
+                    value={field.placeholder || ''}
+                    placeholder="Optional hint"
+                    onChange={(e) =>
+                      patchCustomizationField(index, { placeholder: e.target.value })
+                    }
+                  />
+                </label>
+                <div className="flex items-end gap-2 pb-1">
+                  <label className="flex items-center gap-2 text-xs text-[#7a736c]">
+                    <input
+                      type="checkbox"
+                      checked={!!field.required}
+                      onChange={(e) =>
+                        patchCustomizationField(index, { required: e.target.checked })
+                      }
+                    />
+                    Required
+                  </label>
+                  <button
+                    type="button"
+                    className="text-xs text-[#5e062a] hover:underline"
+                    onClick={() => removeCustomizationField(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+            <button type="button" className="btn-ghost" onClick={addCustomizationField}>
+              + Add prompt
+            </button>
+          </div>
+        ) : null}
+      </section>
+
+      {/* Recommendations */}
+      <section className="card space-y-4 p-6">
+        <p className="font-label text-[10px] text-[#7a736c]">Recommendations</p>
+        <p className="text-sm font-light text-[#7a736c]">
+          Select other products to show as “You may also like”.
+        </p>
+        <div className="max-h-56 space-y-2 overflow-y-auto rounded-2xl border border-[#2d2b2b]/8 p-3">
+          {allProducts
+            .filter((p) => p.id !== form.id)
+            .map((p) => {
+              const checked = form.recommendedFamilyIds.includes(p.id);
+              return (
+                <label key={p.id} className="flex items-center gap-3 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={(e) => {
+                      const next = e.target.checked
+                        ? [...form.recommendedFamilyIds, p.id]
+                        : form.recommendedFamilyIds.filter((id) => id !== p.id);
+                      patchForm({ recommendedFamilyIds: next });
+                    }}
+                  />
+                  <span>
+                    {p.name}
+                    <span className="text-[#7a736c]"> · {p.category}</span>
+                  </span>
+                </label>
+              );
+            })}
+          {!allProducts.length && (
+            <p className="text-sm text-[#7a736c]">Save more products first to recommend them.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Shipping */}
+      <section className="overflow-hidden rounded-[1.5rem] border border-[#2d2b2b]/10 bg-white">
+        <div className="border-b border-[#2d2b2b]/8 bg-[#faf7f2] px-6 py-5">
+          <p className="font-label text-[10px] tracking-[0.2em] text-[#7a736c]">SHIPPING</p>
+          <p className="mt-2 text-sm font-light text-[#5a534c]">
+            Prefills India-only delivery (5–7 working days). Edit freely if needed.
+          </p>
+        </div>
+        <div className="space-y-5 px-6 py-6">
+          <label className="block">
+            <span className="text-xs text-[#7a736c]">Intro</span>
+            <textarea
+              className="input mt-1 min-h-20 rounded-2xl"
+              value={form.shipping.intro}
+              onChange={(e) =>
+                patchForm({ shipping: { ...form.shipping, intro: e.target.value } })
+              }
+            />
+          </label>
+          <div className="overflow-hidden rounded-xl border border-[#2d2b2b]/10">
+            <div className="grid grid-cols-2 border-b border-[#2d2b2b]/10 bg-[#faf7f2] px-4 py-3 text-xs font-medium text-[#2d2b2b]">
+              <span>Location</span>
+              <span>Estimated shipping time</span>
+            </div>
+            {(form.shipping.regions || []).map((row, i) => (
+              <div
+                key={i}
+                className="grid grid-cols-2 gap-3 border-b border-[#2d2b2b]/8 px-4 py-3 last:border-b-0"
+              >
+                <input
+                  className="input"
+                  value={row.location}
+                  onChange={(e) => {
+                    const regions = [...form.shipping.regions];
+                    regions[i] = { ...regions[i], location: e.target.value };
+                    patchForm({ shipping: { ...form.shipping, regions } });
+                  }}
+                />
+                <input
+                  className="input"
+                  value={row.eta}
+                  onChange={(e) => {
+                    const regions = [...form.shipping.regions];
+                    regions[i] = { ...regions[i], eta: e.target.value };
+                    patchForm({ shipping: { ...form.shipping, regions } });
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+          <p className="text-xs italic text-[#7a736c]">
+            Default: India · 5–7 working days (crafting/dispatch may add time).
+          </p>
+          <label className="block">
+            <span className="text-xs text-[#7a736c]">Shipping & delivery note</span>
+            <textarea
+              className="input mt-1 min-h-20 rounded-2xl"
+              value={form.shipping.note}
+              onChange={(e) =>
+                patchForm({ shipping: { ...form.shipping, note: e.target.value } })
+              }
+            />
+          </label>
+          <label className="block">
+            <span className="text-xs text-[#7a736c]">Delayed or lost shipments</span>
+            <textarea
+              className="input mt-1 min-h-20 rounded-2xl"
+              value={form.shipping.delayed}
+              onChange={(e) =>
+                patchForm({ shipping: { ...form.shipping, delayed: e.target.value } })
+              }
             />
           </label>
         </div>

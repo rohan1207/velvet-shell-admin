@@ -115,24 +115,26 @@ async function upsertProduct(product) {
     const variantSlug = v.sku ? slugify(v.sku) : `${familySlug}-${i + 1}`;
     const features = Array.isArray(v.features) ? [...v.features] : [];
     if (finish && !features.includes(finish)) features.push(finish);
-    // When finish_label column is missing, encode metal in color_label for dual-finish SKUs
-    let colorLabel = v.colorLabel || 'Default';
-    if (hasFinish && (!colorLabel || colorLabel === 'Default')) {
-      colorLabel = finish === '18K Gold-Plated' ? 'Gold' : 'Silver';
+    // Use JSON colour as-is (exact export). Dual-finish already uses Gold/Silver labels.
+    const colorLabel = v.colorLabel || 'Default';
+    if (
+      colorLabel &&
+      colorLabel !== 'Default' &&
+      colorLabel !== 'Gold' &&
+      colorLabel !== 'Silver' &&
+      !features.some((f) => String(f).toLowerCase().includes('stone') || String(f) === colorLabel)
+    ) {
+      features.push(`Stone: ${colorLabel}`);
     }
 
     const variantRow = {
       family_id: family.id,
       slug: variantSlug,
       color_label: colorLabel,
-      color_swatch:
-        colorLabel === 'Gold'
-          ? '#D4AF64'
-          : colorLabel === 'Silver'
-            ? '#C5C5C5'
-            : v.colorSwatch || '#C5C5C5',
+      color_swatch: v.colorSwatch || '#C5C5C5',
       is_primary: !!v.isPrimary,
       price: Math.max(0, Number(v.price) || 0),
+      // Exact sheet description — never rewritten
       description: v.description || '',
       features,
       material: finish,
