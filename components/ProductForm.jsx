@@ -194,6 +194,9 @@ export default function ProductForm({
   const [uploadProgress, setUploadProgress] = useState(null); // { current, total }
   const [dragGalleryIndex, setDragGalleryIndex] = useState(null);
   const [dragOverGalleryIndex, setDragOverGalleryIndex] = useState(null);
+  /** { fromVariantIndex, imageIndex } when dragging a gallery tile */
+  const [dragMedia, setDragMedia] = useState(null);
+  const [dragOverVariantIndex, setDragOverVariantIndex] = useState(null);
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [leaveOpen, setLeaveOpen] = useState(false);
@@ -463,10 +466,21 @@ export default function ProductForm({
         id: saved.id || latest.id,
         slug: saved.slug || latest.slug,
         variants: (saved.variants || []).map((sv, i) => {
-          const prev = latest.variants?.[i] || latest.variants?.find((x) => x.id === sv.id) || {};
+          const prev =
+            latest.variants?.find((x) => x.id && x.id === sv.id) ||
+            latest.variants?.find((x) => x.slug && x.slug === sv.slug) ||
+            latest.variants?.find(
+              (x) =>
+                String(x.colorLabel || '').toLowerCase() ===
+                String(sv.colorLabel || '').toLowerCase(),
+            ) ||
+            latest.variants?.[i] ||
+            {};
           return {
             ...prev,
             ...sv,
+            id: sv.id || prev.id,
+            slug: sv.slug || prev.slug,
             heroUrl: sv.heroUrl || '',
             gallery: Array.isArray(sv.gallery) ? sv.gallery : [],
           };
@@ -610,6 +624,62 @@ export default function ProductForm({
       };
     });
     void persistMediaIfPossible(snapshot, 'Gallery order updated. First image is the hero.');
+  }
+
+  /** Move (or copy) one gallery image from one colour tab to another. */
+  function moveImageBetweenVariants(fromVariantIndex, imageIndex, toVariantIndex, { copy = false } = {}) {
+    const f = formRef.current;
+    if (
+      fromVariantIndex == null ||
+      toVariantIndex == null ||
+      fromVariantIndex === toVariantIndex ||
+      imageIndex == null
+    ) {
+      return;
+    }
+    const from = f.variants[fromVariantIndex];
+    const to = f.variants[toVariantIndex];
+    if (!from || !to) return;
+
+    const fromGallery = galleryOrdered(from);
+    const item = fromGallery[imageIndex];
+    if (!item?.url) return;
+
+    let nextFromGallery = fromGallery;
+    if (!copy) {
+      nextFromGallery = fromGallery.filter((_, i) => i !== imageIndex);
+    }
+    const toGallery = galleryOrdered(to);
+    const already = toGallery.some((g) => g.url === item.url);
+    const nextToGallery = already ? toGallery : [...toGallery, item];
+
+    const variants = f.variants.map((v, i) => {
+      if (i === fromVariantIndex) {
+        const heroUrl =
+          !copy && v.heroUrl === item.url
+            ? nextFromGallery[0]?.url || ''
+            : v.heroUrl || nextFromGallery[0]?.url || '';
+        return { ...v, gallery: nextFromGallery, heroUrl };
+      }
+      if (i === toVariantIndex) {
+        return {
+          ...v,
+          gallery: nextToGallery,
+          heroUrl: v.heroUrl || nextToGallery[0]?.url || '',
+        };
+      }
+      return v;
+    });
+
+    const next = { ...f, variants };
+    formRef.current = next;
+    setForm(next);
+    void persistMediaIfPossible(
+      next,
+      copy
+        ? `Copied image to ${to.colorLabel}.`
+        : `Moved image to ${to.colorLabel}.`,
+    );
   }
 
   async function submit(event) {
@@ -1178,43 +1248,85 @@ export default function ProductForm({
         </div>
 
         {form.hasColorVariants && form.variants.length > 1 ? (
-          <div className="grid gap-2 sm:grid-cols-2">
-            {form.variants.map((v, i) => {
-              const media = mediaSummary(v);
-              const selected = i === form.activeVariantIndex;
-              return (
-                <button
-                  key={`media-card-${v.id}`}
-                  type="button"
-                  onClick={() => switchVariant(i)}
-                  className={`rounded-xl border px-3 py-3 text-left transition-colors ${
-                    selected
-                      ? 'border-[#5e062a] bg-[#5e062a]/5'
-                      : 'border-[#2d2b2b]/8 bg-white hover:border-[#2d2b2b]/20'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 text-sm font-medium text-[#2d2b2b]">
-                    <span
-                      className="h-3.5 w-3.5 rounded-full border border-black/10"
-                      style={{ background: v.colorSwatch }}
-                    />
-                    {v.colorLabel}
-                    {selected ? (
-                      <span className="text-[10px] uppercase tracking-wider text-[#5e062a]">
-                        editing
-                      </span>
-                    ) : null}
-                  </div>
-                  <p className="mt-1 text-[11px] text-[#7a736c]">
-                    {media.hasHero ? 'Hero ✓' : 'Hero missing'}
-                    {' · '}
-                    {media.galleryCount
-                      ? `${media.galleryCount} gallery image${media.galleryCount === 1 ? '' : 's'}`
-                      : 'No gallery yet'}
-                  </p>
-                </button>
-              );
-            })}
+          <div className="space-y-2">
+            <p className="text-[11px] text-[#7a736c]">
+              Drag a gallery image onto another colour card to move it. Hold Alt while dropping to
+              copy instead.
+            </p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {form.variants.map((v, i) => {
+                const media = mediaSummary(v);
+                const selected = i === form.activeVariantIndex;
+                const dropTarget =
+                  dragMedia != null &&
+                  dragMedia.fromVariantIndex !== i &&
+                  dragOverVariantIndex === i;
+                return (
+                  <button
+                    key={`media-card-${v.id}`}
+                    type="button"
+                    onClick={() => switchVariant(i)}
+                    onDragOver={(e) => {
+                      if (dragMedia == null) return;
+                      e.preventDefault();
+                      e.dataTransfer.dropEffect = e.altKey ? 'copy' : 'move';
+                      if (dragOverVariantIndex !== i) setDragOverVariantIndex(i);
+                    }}
+                    onDragLeave={() => {
+                      if (dragOverVariantIndex === i) setDragOverVariantIndex(null);
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const payload = dragMedia;
+                      setDragMedia(null);
+                      setDragGalleryIndex(null);
+                      setDragOverGalleryIndex(null);
+                      setDragOverVariantIndex(null);
+                      if (!payload || payload.fromVariantIndex === i) return;
+                      moveImageBetweenVariants(
+                        payload.fromVariantIndex,
+                        payload.imageIndex,
+                        i,
+                        { copy: e.altKey },
+                      );
+                    }}
+                    className={`rounded-xl border px-3 py-3 text-left transition-colors ${
+                      dropTarget
+                        ? 'border-[#5e062a] bg-[#5e062a]/10 ring-2 ring-[#5e062a]/30'
+                        : selected
+                          ? 'border-[#5e062a] bg-[#5e062a]/5'
+                          : 'border-[#2d2b2b]/8 bg-white hover:border-[#2d2b2b]/20'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 text-sm font-medium text-[#2d2b2b]">
+                      <span
+                        className="h-3.5 w-3.5 rounded-full border border-black/10"
+                        style={{ background: v.colorSwatch }}
+                      />
+                      {v.colorLabel}
+                      {selected ? (
+                        <span className="text-[10px] uppercase tracking-wider text-[#5e062a]">
+                          editing
+                        </span>
+                      ) : null}
+                      {dropTarget ? (
+                        <span className="text-[10px] uppercase tracking-wider text-[#5e062a]">
+                          drop here
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 text-[11px] text-[#7a736c]">
+                      {media.hasHero ? 'Hero ✓' : 'Hero missing'}
+                      {' · '}
+                      {media.galleryCount
+                        ? `${media.galleryCount} gallery image${media.galleryCount === 1 ? '' : 's'}`
+                        : 'No gallery yet'}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         ) : null}
 
@@ -1346,7 +1458,11 @@ export default function ProductForm({
                   draggable={!mediaBusy && !saving}
                   onDragStart={(e) => {
                     setDragGalleryIndex(i);
-                    e.dataTransfer.effectAllowed = 'move';
+                    setDragMedia({
+                      fromVariantIndex: form.activeVariantIndex,
+                      imageIndex: i,
+                    });
+                    e.dataTransfer.effectAllowed = 'copyMove';
                     try {
                       e.dataTransfer.setData('text/plain', String(i));
                     } catch {
@@ -1366,11 +1482,15 @@ export default function ProductForm({
                     const from = dragGalleryIndex;
                     setDragGalleryIndex(null);
                     setDragOverGalleryIndex(null);
+                    setDragMedia(null);
+                    setDragOverVariantIndex(null);
                     reorderGallery(from, i);
                   }}
                   onDragEnd={() => {
                     setDragGalleryIndex(null);
                     setDragOverGalleryIndex(null);
+                    setDragMedia(null);
+                    setDragOverVariantIndex(null);
                   }}
                   className={`relative cursor-grab rounded-xl border p-2 active:cursor-grabbing ${
                     isDragging

@@ -26,6 +26,8 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [booking, setBooking] = useState(false);
+  const [bookMessage, setBookMessage] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -69,6 +71,34 @@ export default function OrderDetailPage() {
       setError(err.message || 'Could not update status');
     }
   }
+
+  async function onBookShipment() {
+    if (!order?.id || booking) return;
+    setError('');
+    setBookMessage('');
+    setBooking(true);
+    try {
+      const res = await fetch(`/api/orders/${order.id}/ship`, {
+        method: 'POST',
+        credentials: 'same-origin',
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Booking failed');
+      setOrder(data.order);
+      setBookMessage(`Booked · AWB ${data.awb}`);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      setError(err.message || 'Could not book Delhivery shipment');
+    } finally {
+      setBooking(false);
+    }
+  }
+
+  const canBook =
+    order &&
+    !order.awb &&
+    ['accepted', 'packed'].includes(order.status);
 
   const flowIndex = useMemo(() => {
     if (!order) return -1;
@@ -115,8 +145,18 @@ export default function OrderDetailPage() {
             {order.updatedAt ? ` · Updated ${new Date(order.updatedAt).toLocaleString('en-IN')}` : ''}
           </p>
         </div>
-        <div className="flex items-end gap-3">
+        <div className="flex flex-wrap items-end gap-3">
           {saved && <span className="pb-2 text-sm text-emerald-700">Saved</span>}
+          {canBook ? (
+            <button
+              type="button"
+              className="btn-primary"
+              disabled={booking}
+              onClick={onBookShipment}
+            >
+              {booking ? 'Booking…' : 'Approve & book Delhivery'}
+            </button>
+          ) : null}
           <label className="block">
             <span className="text-xs text-[#7a736c]">Fulfilment status</span>
             <select
@@ -135,6 +175,45 @@ export default function OrderDetailPage() {
       </div>
 
       {error && <p className="text-sm text-[#5e062a]">{error}</p>}
+      {bookMessage && <p className="text-sm text-emerald-700">{bookMessage}</p>}
+
+      {(order.awb || order.trackingUrl || order.shipmentStatus) && (
+        <div className="card p-5">
+          <p className="font-label text-[10px] text-[#7a736c]">Shipment · Delhivery</p>
+          <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+            <p>
+              <span className="text-[#7a736c]">AWB · </span>
+              <span className="font-num font-medium">{order.awb || '—'}</span>
+            </p>
+            <p>
+              <span className="text-[#7a736c]">Carrier status · </span>
+              {order.shipmentStatus || '—'}
+            </p>
+            {order.trackingUrl ? (
+              <p className="sm:col-span-2">
+                <a
+                  href={order.trackingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[#5e062a] underline-offset-2 hover:underline"
+                >
+                  Track package
+                </a>
+              </p>
+            ) : null}
+            {order.shippedAt ? (
+              <p className="text-xs text-[#7a736c]">
+                Booked {new Date(order.shippedAt).toLocaleString('en-IN')}
+              </p>
+            ) : null}
+            {order.deliveredAt ? (
+              <p className="text-xs text-emerald-700">
+                Delivered {new Date(order.deliveredAt).toLocaleString('en-IN')}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      )}
 
       {/* Timeline */}
       <div className="card p-5">

@@ -62,6 +62,12 @@ function mapOrder(row) {
     paymentMethod: 'Razorpay',
     paymentId: null,
     razorpayOrderId: row.razorpay_order_id,
+    courier: row.courier || '',
+    awb: row.awb || '',
+    trackingUrl: row.tracking_url || '',
+    shipmentStatus: row.shipment_status || '',
+    shippedAt: row.shipped_at || null,
+    deliveredAt: row.delivered_at || null,
   };
 }
 
