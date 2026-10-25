@@ -55,6 +55,8 @@ function mapOrder(row) {
       lineTotal: it.line_total ?? (it.unit_price || 0) * (it.qty || 1),
       size: it.size,
       metal: it.metal,
+      sku: it.sku || '',
+      colorLabel: it.color_label || '',
       customization: Array.isArray(it.customization) ? it.customization : [],
     })),
     currency: row.currency || 'INR',
@@ -95,7 +97,36 @@ export async function GET(request, { params }) {
     if (!row) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
-    return NextResponse.json({ order: mapOrder(row) });
+
+    const order = mapOrder(row);
+    // Backfill SKU / colour for older lines that predate migration 011.
+    const needSku = (order.items || []).filter((it) => !it.sku && it.slug);
+    if (needSku.length) {
+      const slugs = [...new Set(needSku.map((it) => it.slug))];
+      const { data: variants } = await db
+        .from('product_color_variants')
+        .select('slug, features, color_label')
+        .in('slug', slugs);
+      const bySlug = Object.fromEntries((variants || []).map((v) => [v.slug, v]));
+      order.items = order.items.map((it) => {
+        if (it.sku) return it;
+        const v = bySlug[it.slug];
+        if (!v) return it;
+        const fromFeatures = Array.isArray(v.features)
+          ? String(v.features.find((f) => /^SKU\s/i.test(String(f))) || '').replace(
+              /^SKU\s+/i,
+              '',
+            )
+          : '';
+        return {
+          ...it,
+          sku: fromFeatures.trim() || it.sku,
+          colorLabel: it.colorLabel || v.color_label || '',
+        };
+      });
+    }
+
+    return NextResponse.json({ order });
   } catch (err) {
     return NextResponse.json({ error: err.message || 'Failed' }, { status: 500 });
   }

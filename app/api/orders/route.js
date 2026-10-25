@@ -46,6 +46,8 @@ function mapOrder(row) {
       price: it.unit_price,
       size: it.size,
       metal: it.metal,
+      sku: it.sku || '',
+      colorLabel: it.color_label || '',
       customization: Array.isArray(it.customization) ? it.customization : [],
     })),
     itemCount: items.reduce((s, it) => s + (it.qty || 0), 0),
@@ -79,12 +81,18 @@ export async function GET(request) {
     let rows = (data || []).map(mapOrder);
 
     if (q) {
-      rows = rows.filter((o) =>
-        [o.orderNumber, o.email, o.customer?.firstName, o.customer?.lastName]
+      rows = rows.filter((o) => {
+        const hay = [
+          o.orderNumber,
+          o.email,
+          o.customer?.firstName,
+          o.customer?.lastName,
+          ...(o.items || []).flatMap((it) => [it.sku, it.slug, it.name]),
+        ]
           .join(' ')
-          .toLowerCase()
-          .includes(q),
-      );
+          .toLowerCase();
+        return hay.includes(q);
+      });
     }
     if (status) {
       rows = rows.filter((o) => o.status === status || o.dbStatus === status);

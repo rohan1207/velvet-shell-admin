@@ -110,7 +110,7 @@ function OrdersInner() {
           <span className="text-xs text-[#7a736c]">Search</span>
           <input
             className="input mt-1"
-            placeholder="Order #, email, or name"
+            placeholder="Order #, email, name, or SKU"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
@@ -170,6 +170,15 @@ function OrdersInner() {
                 </td>
                 <td className="px-4 py-3.5">
                   <p className="font-num">{o.itemCount || o.items?.length || 0}</p>
+                  {(o.items || [])
+                    .map((it) => it.sku)
+                    .filter(Boolean)
+                    .slice(0, 3)
+                    .map((sku) => (
+                      <p key={sku} className="mt-0.5 font-num text-[11px] text-[#5e062a]">
+                        {sku}
+                      </p>
+                    ))}
                   {o.hasCustomization ? (
                     <p className="mt-0.5 text-[11px] text-[#d4af64]">Custom notes</p>
                   ) : null}

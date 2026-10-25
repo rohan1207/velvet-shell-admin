@@ -296,11 +296,21 @@ export default function OrderDetailPage() {
                   ) : null}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium">{item.name || item.slug}</p>
-                  <p className="mt-1 text-xs text-[#7a736c]">
-                    {item.metal} · {item.size} · Qty {item.qty}
+                  <p className="font-label text-[10px] tracking-[0.16em] text-[#5e062a]">
+                    SKU{' '}
+                    <span className="font-num text-[15px] font-semibold tracking-normal text-[#2d2b2b]">
+                      {item.sku || '—'}
+                    </span>
                   </p>
-                  <p className="mt-0.5 font-num text-[11px] text-[#7a736c]">{item.slug}</p>
+                  <p className="mt-1.5 font-medium">{item.name || item.slug}</p>
+                  <p className="mt-1 text-xs text-[#7a736c]">
+                    {[item.colorLabel, item.metal, item.size ? `Size ${item.size}` : '', `Qty ${item.qty}`]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                  {item.slug ? (
+                    <p className="mt-0.5 font-num text-[11px] text-[#7a736c]">slug · {item.slug}</p>
+                  ) : null}
                   {Array.isArray(item.customization) && item.customization.length > 0 ? (
                     <div className="mt-3 rounded-lg border border-[#d4af64]/35 bg-[#faf7f2] px-3 py-2.5">
                       <p className="font-label text-[9px] text-[#d4af64]">Customization</p>
