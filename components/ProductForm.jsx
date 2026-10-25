@@ -158,29 +158,33 @@ export default function ProductForm({
         activeVariantIndex: 0,
       };
     }
+    const variants = (initial.variants?.length ? initial.variants : [newVariant()]).map((v) => {
+      const sizeTags = Array.isArray(v.sizeTags)
+        ? v.sizeTags.map((t) => String(t || '').trim()).filter(Boolean)
+        : [];
+      const length = String(v.length || '').trim();
+      return {
+        ...newVariant(),
+        ...v,
+        active: v.active !== false,
+        features: Array.isArray(v.features) ? v.features : [],
+        reviews: v.reviews || { rating: 0, count: 0, highlights: [] },
+        gallery: Array.isArray(v.gallery) ? v.gallery : [],
+        sizeTags: sizeTags.length ? sizeTags : length ? [length] : [],
+        length: length || sizeTags[0] || '',
+      };
+    });
     return {
       ...initial,
+      // Keep colour UI on when DB already has sibling colours (flag can be stale)
+      hasColorVariants: !!initial.hasColorVariants || variants.length > 1,
       customizationEnabled: !!initial.customizationEnabled,
       customizationFields: Array.isArray(initial.customizationFields)
         ? initial.customizationFields
         : [],
       shipping: normalizeShipping(initial.shipping),
       recommendedFamilyIds: initial.recommendedFamilyIds || [],
-      variants: (initial.variants?.length ? initial.variants : [newVariant()]).map((v) => {
-        const sizeTags = Array.isArray(v.sizeTags)
-          ? v.sizeTags.map((t) => String(t || '').trim()).filter(Boolean)
-          : [];
-        const length = String(v.length || '').trim();
-        return {
-          ...newVariant(),
-          ...v,
-          features: Array.isArray(v.features) ? v.features : [],
-          reviews: v.reviews || { rating: 0, count: 0, highlights: [] },
-          gallery: Array.isArray(v.gallery) ? v.gallery : [],
-          sizeTags: sizeTags.length ? sizeTags : length ? [length] : [],
-          length: length || sizeTags[0] || '',
-        };
-      }),
+      variants,
       activeVariantIndex: 0,
     };
   });
@@ -419,7 +423,8 @@ export default function ProductForm({
       collection: fromForm.collection,
       badge: fromForm.badge,
       status: fromForm.status,
-      hasColorVariants: fromForm.hasColorVariants,
+      hasColorVariants:
+        !!fromForm.hasColorVariants || (fromForm.variants || []).length > 1,
       customizationEnabled: !!fromForm.customizationEnabled,
       customizationFields: fromForm.customizationEnabled
         ? (fromForm.customizationFields || [])
@@ -461,33 +466,39 @@ export default function ProductForm({
     const saved = await onSave(payload);
     // Keep local form aligned with what the API actually stored
     if (saved?.variants) {
+      const syncedVariants = (saved.variants || []).map((sv, i) => {
+        const prev =
+          latest.variants?.find((x) => x.id && x.id === sv.id) ||
+          latest.variants?.find((x) => x.slug && x.slug === sv.slug) ||
+          latest.variants?.find(
+            (x) =>
+              String(x.colorLabel || '').toLowerCase() ===
+              String(sv.colorLabel || '').toLowerCase(),
+          ) ||
+          latest.variants?.[i] ||
+          {};
+        return {
+          ...prev,
+          ...sv,
+          id: sv.id || prev.id,
+          slug: sv.slug || prev.slug,
+          active: sv.active !== false,
+          heroUrl: sv.heroUrl || '',
+          gallery: Array.isArray(sv.gallery) ? sv.gallery : [],
+        };
+      });
       const synced = {
         ...latest,
         id: saved.id || latest.id,
         slug: saved.slug || latest.slug,
-        variants: (saved.variants || []).map((sv, i) => {
-          const prev =
-            latest.variants?.find((x) => x.id && x.id === sv.id) ||
-            latest.variants?.find((x) => x.slug && x.slug === sv.slug) ||
-            latest.variants?.find(
-              (x) =>
-                String(x.colorLabel || '').toLowerCase() ===
-                String(sv.colorLabel || '').toLowerCase(),
-            ) ||
-            latest.variants?.[i] ||
-            {};
-          return {
-            ...prev,
-            ...sv,
-            id: sv.id || prev.id,
-            slug: sv.slug || prev.slug,
-            heroUrl: sv.heroUrl || '',
-            gallery: Array.isArray(sv.gallery) ? sv.gallery : [],
-          };
-        }),
+        hasColorVariants:
+          !!saved.hasColorVariants ||
+          !!latest.hasColorVariants ||
+          syncedVariants.length > 1,
+        variants: syncedVariants,
         activeVariantIndex: Math.min(
           latest.activeVariantIndex || 0,
-          Math.max(0, (saved.variants || []).length - 1),
+          Math.max(0, syncedVariants.length - 1),
         ),
       };
       formRef.current = synced;
