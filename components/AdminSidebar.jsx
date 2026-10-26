@@ -8,6 +8,7 @@ import { pendingOrderCount } from '@/lib/repository';
 const links = [
   { href: '/', label: 'Dashboard', icon: 'grid' },
   { href: '/products', label: 'Products', icon: 'box' },
+  { href: '/sets', label: 'Sets', icon: 'layers' },
   { href: '/categories', label: 'Categories', icon: 'tag' },
   { href: '/homepage/festive-edit', label: 'Festive Edit', icon: 'spark' },
   { href: '/homepage/best-sellers', label: 'Best sellers', icon: 'star' },
@@ -96,6 +97,17 @@ function NavIcon({ name, className = 'h-[18px] w-[18px]' }) {
       return (
         <svg {...props}>
           <path d="M8 17c-2 0-3.5-1.5-3.5-3.5S6.5 10 8 10V7C5 7 2.5 9.5 2.5 13.5 2.5 16.5 5 19 8 19v-2Zm10 0c-2 0-3.5-1.5-3.5-3.5S16.5 10 18 10V7c-3 0-5.5 2.5-5.5 6.5C12.5 16.5 15 19 18 19v-2Z" fill="currentColor" />
+        </svg>
+      );
+    case 'layers':
+      return (
+        <svg {...props}>
+          <path
+            d="m12 3 9 5-9 5-9-5 9-5Zm9 9-9 5-9-5M21 17l-9 5-9-5"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
         </svg>
       );
     default:
