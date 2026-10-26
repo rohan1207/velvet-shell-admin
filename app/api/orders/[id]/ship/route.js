@@ -3,6 +3,7 @@ import { readSessionFromRequest } from '@/lib/session';
 import { createAdminSupabase } from '@/lib/supabase';
 import { allowInsecureTlsIfConfigured } from '@/lib/tls';
 import { createShipment } from '@/lib/delivery/delhivery';
+import { sendShipmentEmails } from '@/lib/mail';
 
 const DB_TO_ADMIN = {
   pending_payment: 'pending',
@@ -62,27 +63,26 @@ function mapOrder(row) {
   };
 }
 
-async function notifyStorefront(orderId, event) {
-  const origin = String(process.env.STOREFRONT_ORIGIN || 'http://localhost:3000').replace(
-    /\/$/,
-    '',
-  );
-  const secret = process.env.ADMIN_SESSION_SECRET || '';
+async function sendBookingEmails(orderRow) {
+  const ship = orderRow.shipping || {};
+  const customerName =
+    ship.fullName ||
+    [ship.firstName, ship.lastName].filter(Boolean).join(' ') ||
+    '';
   try {
-    const res = await fetch(`${origin}/api/internal/shipment-notify`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-velvet-secret': secret,
-      },
-      body: JSON.stringify({ orderId, event }),
+    const result = await sendShipmentEmails({
+      order: orderRow,
+      items: orderRow.order_items || [],
+      event: 'shipped',
+      customerName,
     });
-    if (!res.ok) {
-      const text = await res.text();
-      console.warn('[ship] notify failed', res.status, text.slice(0, 200));
+    if (!result?.ok) {
+      console.warn('[ship] shipment emails not fully sent', result);
     }
+    return result;
   } catch (err) {
-    console.warn('[ship] notify error', err.message || err);
+    console.error('[ship] shipment email error', err.message || err);
+    return { ok: false, error: err.message };
   }
 }
 
@@ -158,13 +158,14 @@ export async function POST(request, { params }) {
 
     if (upErr) throw upErr;
 
-    await notifyStorefront(updated.id, 'shipped');
+    const mail = await sendBookingEmails(updated);
 
     return NextResponse.json({
       ok: true,
       awb: booked.awb,
       trackingUrl: booked.trackingUrl,
       order: mapOrder(updated),
+      emailSent: Boolean(mail?.ok),
     });
   } catch (err) {
     console.error('[ship]', err);

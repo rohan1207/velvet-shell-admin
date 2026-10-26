@@ -28,6 +28,7 @@ export default function OrderDetailPage() {
   const [error, setError] = useState('');
   const [booking, setBooking] = useState(false);
   const [bookMessage, setBookMessage] = useState('');
+  const [notifying, setNotifying] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,6 +56,16 @@ export default function OrderDetailPage() {
 
   async function onStatusChange(nextStatus) {
     setError('');
+    setBookMessage('');
+    if (
+      nextStatus === 'cancelled' &&
+      order.awb &&
+      !window.confirm(
+        `Cancel this order and also cancel Delhivery shipment AWB ${order.awb}?`,
+      )
+    ) {
+      return;
+    }
     try {
       const res = await fetch(`/api/orders/${order.id}`, {
         method: 'PATCH',
@@ -65,6 +76,13 @@ export default function OrderDetailPage() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || 'Update failed');
       setOrder(data.order);
+      if (data.shipmentCancelled) {
+        setBookMessage(
+          data.shipmentRemark
+            ? `Delhivery shipment cancelled · ${data.shipmentRemark}`
+            : 'Delhivery shipment cancelled',
+        );
+      }
       setSaved(true);
       setTimeout(() => setSaved(false), 1500);
     } catch (err) {
@@ -85,13 +103,45 @@ export default function OrderDetailPage() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || 'Booking failed');
       setOrder(data.order);
-      setBookMessage(`Booked · AWB ${data.awb}`);
+      setBookMessage(
+        data.emailSent
+          ? `Booked · AWB ${data.awb} · buyer & owner emailed`
+          : `Booked · AWB ${data.awb} · email may have failed — use Resend below`,
+      );
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (err) {
       setError(err.message || 'Could not book Delhivery shipment');
     } finally {
       setBooking(false);
+    }
+  }
+
+  async function onResendEmail(type) {
+    if (!order?.id || notifying) return;
+    setError('');
+    setBookMessage('');
+    setNotifying(true);
+    try {
+      const res = await fetch(`/api/orders/${order.id}/notify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ type }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Could not send email');
+      setBookMessage(
+        type === 'order'
+          ? 'Order confirmation resent to buyer + owners'
+          : type === 'shipped'
+            ? 'Shipment / tracking email resent'
+            : 'Delivered email resent',
+      );
+    } catch (err) {
+      setError(err.message || 'Could not send email');
+    } finally {
+      setNotifying(false);
     }
   }
 
@@ -155,6 +205,24 @@ export default function OrderDetailPage() {
               onClick={onBookShipment}
             >
               {booking ? 'Booking…' : 'Approve & book Delhivery'}
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className="btn-ghost"
+            disabled={notifying}
+            onClick={() => onResendEmail('order')}
+          >
+            {notifying ? 'Sending…' : 'Resend order email'}
+          </button>
+          {order.awb ? (
+            <button
+              type="button"
+              className="btn-ghost"
+              disabled={notifying}
+              onClick={() => onResendEmail('shipped')}
+            >
+              Resend tracking email
             </button>
           ) : null}
           <label className="block">

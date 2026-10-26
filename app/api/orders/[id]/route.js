@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { readSessionFromRequest } from '@/lib/session';
 import { createAdminSupabase } from '@/lib/supabase';
 import { allowInsecureTlsIfConfigured } from '@/lib/tls';
+import { cancelShipment } from '@/lib/delivery/delhivery';
 
 const ADMIN_TO_DB = {
   pending: 'pending_payment',
@@ -148,15 +149,57 @@ export async function PATCH(request, { params }) {
     }
 
     const db = createAdminSupabase();
+
+    const { data: existing, error: loadErr } = await db
+      .from('orders')
+      .select('id,status,awb,shipment_status,courier')
+      .eq('id', id)
+      .maybeSingle();
+    if (loadErr) throw loadErr;
+    if (!existing) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
+    const patch = {
+      status: dbStatus,
+      updated_at: new Date().toISOString(),
+    };
+
+    let shipmentCancel = null;
+    const becomingCancelled = dbStatus === 'cancelled';
+    const hadAwb = Boolean(String(existing.awb || '').trim());
+    const alreadyTerminal = ['cancelled', 'refunded'].includes(existing.status);
+
+    if (becomingCancelled && hadAwb && !alreadyTerminal) {
+      try {
+        shipmentCancel = await cancelShipment(existing.awb);
+        patch.shipment_status = 'Cancelled';
+      } catch (cancelErr) {
+        console.error('[orders] Delhivery cancel failed', cancelErr);
+        return NextResponse.json(
+          {
+            error:
+              cancelErr.message ||
+              'Could not cancel Delhivery shipment. Order was not cancelled.',
+          },
+          { status: 502 },
+        );
+      }
+    }
+
     const { data, error } = await db
       .from('orders')
-      .update({ status: dbStatus, updated_at: new Date().toISOString() })
+      .update(patch)
       .eq('id', id)
       .select('*, order_items(*)')
       .single();
 
     if (error) throw error;
-    return NextResponse.json({ order: mapOrder(data) });
+    return NextResponse.json({
+      order: mapOrder(data),
+      shipmentCancelled: Boolean(shipmentCancel),
+      shipmentRemark: shipmentCancel?.remark || '',
+    });
   } catch (err) {
     return NextResponse.json({ error: err.message || 'Failed' }, { status: 500 });
   }
