@@ -821,11 +821,21 @@ export default function ProductForm({
               value={form.category}
               onChange={(e) => patchForm({ category: e.target.value })}
             >
-              {categories.map((c) => (
-                <option key={c.slug} value={c.slug}>
-                  {c.name}
-                </option>
-              ))}
+              {categories.map((c) => {
+                const accessoryLabel =
+                  c.slug === 'brooches'
+                    ? 'Accessories · Brooches'
+                    : c.slug === 'chains'
+                      ? 'Accessories · Chains'
+                      : c.slug === 'chokers'
+                        ? 'Accessories · Chokers'
+                        : null;
+                return (
+                  <option key={c.slug} value={c.slug}>
+                    {accessoryLabel || c.name}
+                  </option>
+                );
+              })}
             </select>
           </label>
           <label className="block">

@@ -81,7 +81,13 @@ export default function CurationPicker({
         [p.name, p.slug, p.category, p.collection].join(' ').toLowerCase().includes(query)
       );
     }
-    if (category) list = list.filter((p) => p.category === category);
+    if (category === 'accessories') {
+      list = list.filter((p) =>
+        ['brooches', 'chains', 'chokers'].includes(p.category),
+      );
+    } else if (category) {
+      list = list.filter((p) => p.category === category);
+    }
     if (collection) list = list.filter((p) => p.collection === collection);
     return list;
   }, [products, q, category, collection]);
@@ -238,11 +244,14 @@ export default function CurationPicker({
           <span className="text-xs text-[#7a736c]">Category</span>
           <select className="input mt-1" value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="">All</option>
-            {categories.map((c) => (
-              <option key={c.slug} value={c.slug}>
-                {c.name}
-              </option>
-            ))}
+            <option value="accessories">Accessories (brooches, chains, chokers)</option>
+            {categories
+              .filter((c) => !['brooches', 'chains', 'chokers'].includes(c.slug))
+              .map((c) => (
+                <option key={c.slug} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
           </select>
         </label>
         <label className="block">

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { getMeta } from '@/lib/repository';
-import { labelCategory, labelCollection, money } from '@/lib/format';
+import { isAccessoryCategory, labelCategory, labelCollection, money } from '@/lib/format';
 import { LoadingBlock } from '@/components/LoadingSpinner';
 
 function toRow(family) {
@@ -83,7 +83,11 @@ function ProductsInner() {
         [p.name, p.slug, p.category, p.collection].join(' ').toLowerCase().includes(query)
       );
     }
-    if (category) list = list.filter((p) => p.category === category);
+    if (category === 'accessories') {
+      list = list.filter((p) => isAccessoryCategory(p.category));
+    } else if (category) {
+      list = list.filter((p) => p.category === category);
+    }
     if (collection) list = list.filter((p) => p.collection === collection);
     if (status) list = list.filter((p) => p.status === status);
     if (stock === 'low') {
@@ -132,11 +136,14 @@ function ProductsInner() {
           <span className="text-xs text-[#7a736c]">Category</span>
           <select className="input mt-1" value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="">All</option>
-            {meta.categories.map((c) => (
-              <option key={c.slug} value={c.slug}>
-                {c.name}
-              </option>
-            ))}
+            <option value="accessories">Accessories (brooches, chains, chokers)</option>
+            {meta.categories
+              .filter((c) => !isAccessoryCategory(c.slug))
+              .map((c) => (
+                <option key={c.slug} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
           </select>
         </label>
         <label className="block">
