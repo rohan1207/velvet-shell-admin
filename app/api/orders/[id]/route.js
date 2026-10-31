@@ -37,6 +37,11 @@ function mapOrder(row) {
     total: row.total,
     subtotal: row.subtotal,
     shippingFee: row.shipping_fee,
+    discountCode: row.discount_code || '',
+    discountAmount: Number(row.discount_amount) || 0,
+    giftWrap: Boolean(row.gift_wrap),
+    giftWrapFee: Number(row.gift_wrap_fee) || 0,
+    giftMessage: row.gift_message || '',
     customer: {
       firstName: ship.firstName || ship.fullName?.split(' ')[0] || '',
       lastName: ship.lastName || ship.fullName?.split(' ').slice(1).join(' ') || '',

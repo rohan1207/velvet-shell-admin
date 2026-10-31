@@ -182,6 +182,9 @@ function OrdersInner() {
                   {o.hasCustomization ? (
                     <p className="mt-0.5 text-[11px] text-[#d4af64]">Custom notes</p>
                   ) : null}
+                  {o.hasGift || o.giftWrap || o.giftMessage ? (
+                    <p className="mt-0.5 text-[11px] text-[#d4af64]">Gift</p>
+                  ) : null}
                 </td>
                 <td className="font-num px-4 py-3.5">{money(o.total)}</td>
                 <td className="px-4 py-3.5">

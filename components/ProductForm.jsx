@@ -324,6 +324,57 @@ export default function ProductForm({
     );
   }
 
+  function removeColor(index) {
+    const f = formRef.current;
+    if ((f.variants || []).length <= 1) {
+      setNotice('Keep at least one colour. Turn off “more than one colour” if this piece is single-tone.');
+      return;
+    }
+    const removing = f.variants[index];
+    const label = removing?.colorLabel || 'colour';
+    const ok = window.confirm(
+      `Remove ${label}? Its price, stock, and images for this colour will be dropped from the form (saved when you click Save).`,
+    );
+    if (!ok) return;
+
+    // Persist features text for the tab we're leaving if it's still in the list.
+    const withFeatures = f.variants.map((v, i) =>
+      i === f.activeVariantIndex
+        ? { ...v, features: textToFeatures(featuresTextRef.current) }
+        : v,
+    );
+    let variants = withFeatures.filter((_, i) => i !== index);
+    if (!variants.some((v) => v.isPrimary)) {
+      variants = variants.map((v, i) => ({ ...v, isPrimary: i === 0 }));
+    }
+    let nextIndex = f.activeVariantIndex;
+    if (index < nextIndex) nextIndex -= 1;
+    else if (index === nextIndex) nextIndex = Math.min(nextIndex, variants.length - 1);
+    nextIndex = Math.max(0, Math.min(nextIndex, variants.length - 1));
+    const next = {
+      ...f,
+      hasColorVariants: variants.length > 1,
+      variants,
+      activeVariantIndex: nextIndex,
+    };
+    if (variants.length === 1) {
+      next.variants = [
+        {
+          ...variants[0],
+          colorLabel: variants[0].colorLabel || 'Default',
+          isPrimary: true,
+        },
+      ];
+      next.hasColorVariants = false;
+      next.activeVariantIndex = 0;
+    }
+    formRef.current = next;
+    setForm(next);
+    setFeaturesText(featuresToText(next.variants[next.activeVariantIndex]?.features));
+    setSizeTagDraft('');
+    setNotice(`Removed ${label}. Save the product to apply this on the storefront.`);
+  }
+
   function importFromVariant(sourceIndex) {
     const source = form.variants[sourceIndex];
     if (!source) return;
@@ -907,35 +958,57 @@ export default function ProductForm({
                 const media = mediaSummary(v);
                 const selected = i === form.activeVariantIndex;
                 return (
-                  <button
-                    key={v.id}
-                    type="button"
-                    onClick={() => switchVariant(i)}
-                    className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs ${
+                  <div
+                    key={v.id || `${v.colorLabel}-${i}`}
+                    className={`flex items-center overflow-hidden rounded-full border text-xs ${
                       selected
                         ? 'border-[#5e062a] bg-[#5e062a] text-white'
                         : 'border-[#2d2b2b]/15 bg-white text-[#2d2b2b]'
                     }`}
                   >
-                    <span
-                      className="h-3 w-3 rounded-full border border-black/10"
-                      style={{ background: v.colorSwatch }}
-                    />
-                    {v.colorLabel}
-                    {v.isPrimary ? ' · primary' : ''}
-                    <span
-                      className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-wider ${
-                        selected ? 'bg-white/20 text-white' : 'bg-[#faf7f2] text-[#7a736c]'
-                      }`}
+                    <button
+                      type="button"
+                      onClick={() => switchVariant(i)}
+                      className="flex items-center gap-2 px-3 py-1.5"
                     >
-                      {media.hasHero ? 'hero' : 'no hero'}
-                      {media.galleryCount ? ` · ${media.galleryCount}` : ''}
-                    </span>
-                  </button>
+                      <span
+                        className="h-3 w-3 rounded-full border border-black/10"
+                        style={{ background: v.colorSwatch }}
+                      />
+                      {v.colorLabel}
+                      {v.isPrimary ? ' · primary' : ''}
+                      <span
+                        className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[9px] uppercase tracking-wider ${
+                          selected ? 'bg-white/20 text-white' : 'bg-[#faf7f2] text-[#7a736c]'
+                        }`}
+                      >
+                        {media.hasHero ? 'hero' : 'no hero'}
+                        {media.galleryCount ? ` · ${media.galleryCount}` : ''}
+                      </span>
+                    </button>
+                    {form.variants.length > 1 ? (
+                      <button
+                        type="button"
+                        title={`Remove ${v.colorLabel}`}
+                        aria-label={`Remove ${v.colorLabel}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeColor(i);
+                        }}
+                        className={`border-l px-2 py-1.5 text-[11px] font-semibold leading-none transition ${
+                          selected
+                            ? 'border-white/25 text-white/90 hover:bg-white/15'
+                            : 'border-[#2d2b2b]/10 text-[#5e062a] hover:bg-[#5e062a]/5'
+                        }`}
+                      >
+                        ×
+                      </button>
+                    ) : null}
+                  </div>
                 );
               })}
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {SWATCH_PRESETS.map((preset) => (
                 <button
                   key={preset.label}
@@ -953,6 +1026,15 @@ export default function ProductForm({
               >
                 + Custom color
               </button>
+              {form.variants.length > 1 ? (
+                <button
+                  type="button"
+                  className="rounded-full border border-[#5e062a]/25 px-3 py-1 text-[11px] text-[#5e062a]"
+                  onClick={() => removeColor(form.activeVariantIndex)}
+                >
+                  Remove this colour
+                </button>
+              ) : null}
             </div>
             {form.variants.length > 1 && (
               <label className="block max-w-xs">

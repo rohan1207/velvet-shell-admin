@@ -9,6 +9,14 @@ import { getMeta } from '@/lib/repository';
 import { isAccessoryCategory, labelCategory, labelCollection, money } from '@/lib/format';
 import { LoadingBlock } from '@/components/LoadingSpinner';
 
+const BULK_ACTIONS = [
+  { id: 'active', label: 'Set active' },
+  { id: 'draft', label: 'Set draft' },
+  { id: 'in_stock', label: 'In stock' },
+  { id: 'out_of_stock', label: 'Out of stock' },
+  { id: 'remove', label: 'Remove', danger: true },
+];
+
 function toRow(family) {
   const primary =
     family.variants?.find((v) => v.isPrimary) || family.variants?.[0] || {};
@@ -39,6 +47,37 @@ function ProductsInner() {
   const [source, setSource] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState(() => new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkMsg, setBulkMsg] = useState('');
+
+  async function loadProducts() {
+    setLoading(true);
+    setError('');
+    try {
+      const [productsData, categoriesData, collectionsData] = await Promise.all([
+        fetch('/api/catalog/products').then((r) => r.json()),
+        fetch('/api/catalog/categories').then((r) => r.json()).catch(() => ({})),
+        fetch('/api/catalog/collections').then((r) => r.json()).catch(() => ({})),
+      ]);
+      setRows((productsData.products || []).map(toRow));
+      setSource(productsData.source || '');
+      if (productsData.error) setError(productsData.error);
+      setMeta((m) => ({
+        ...m,
+        categories: categoriesData.categories?.length
+          ? categoriesData.categories.map((c) => ({ slug: c.slug, name: c.name }))
+          : m.categories,
+        collections: collectionsData.collections?.length
+          ? collectionsData.collections
+          : m.collections,
+      }));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     setMeta(getMeta());
@@ -100,6 +139,73 @@ function ProductsInner() {
     return list;
   }, [rows, q, category, collection, status, stock]);
 
+  const filteredIds = useMemo(() => filtered.map((p) => p.id).filter(Boolean), [filtered]);
+  const selectedCount = selected.size;
+  const allFilteredSelected =
+    filteredIds.length > 0 && filteredIds.every((id) => selected.has(id));
+  const someFilteredSelected = filteredIds.some((id) => selected.has(id));
+
+  function toggleOne(id) {
+    if (!id) return;
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function toggleAllFiltered() {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (allFilteredSelected) {
+        for (const id of filteredIds) next.delete(id);
+      } else {
+        for (const id of filteredIds) next.add(id);
+      }
+      return next;
+    });
+  }
+
+  function clearSelection() {
+    setSelected(new Set());
+    setBulkMsg('');
+  }
+
+  async function runBulk(action) {
+    const ids = [...selected];
+    if (!ids.length || bulkBusy) return;
+
+    if (action === 'remove') {
+      const ok = window.confirm(
+        `Remove ${ids.length} product${ids.length === 1 ? '' : 's'}? This cannot be undone.`,
+      );
+      if (!ok) return;
+    }
+
+    setBulkBusy(true);
+    setBulkMsg('');
+    setError('');
+    try {
+      const res = await fetch('/api/catalog/products/bulk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids, action }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Bulk action failed');
+
+      const label = BULK_ACTIONS.find((a) => a.id === action)?.label || action;
+      setBulkMsg(`${label} · ${data.count || ids.length} updated`);
+      setSelected(new Set());
+      await loadProducts();
+    } catch (err) {
+      setError(err.message || 'Bulk action failed');
+    } finally {
+      setBulkBusy(false);
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -116,6 +222,9 @@ function ProductsInner() {
                 : error}
             </p>
           )}
+          {bulkMsg && !error ? (
+            <p className="mt-2 text-sm text-emerald-800">{bulkMsg}</p>
+          ) : null}
         </div>
         <Link href="/products/new" className="btn-primary">
           Add product
@@ -180,12 +289,56 @@ function ProductsInner() {
         </label>
       </div>
 
+      {selectedCount > 0 ? (
+        <div className="card sticky top-3 z-20 flex flex-wrap items-center gap-2 border border-[#5e062a]/15 bg-[#faf7f2] p-3 shadow-sm md:p-4">
+          <p className="font-num mr-2 text-sm text-[#2d2b2b]">
+            {selectedCount} selected
+          </p>
+          {BULK_ACTIONS.map((action) => (
+            <button
+              key={action.id}
+              type="button"
+              disabled={bulkBusy}
+              onClick={() => runBulk(action.id)}
+              className={
+                action.danger
+                  ? 'rounded-full border border-[#5e062a]/25 bg-white px-3 py-1.5 text-[11px] font-semibold tracking-wide text-[#5e062a] uppercase transition hover:bg-[#5e062a] hover:text-white disabled:opacity-50'
+                  : 'rounded-full border border-[#2d2b2b]/12 bg-white px-3 py-1.5 text-[11px] font-semibold tracking-wide text-[#2d2b2b] uppercase transition hover:border-[#5e062a]/30 hover:text-[#5e062a] disabled:opacity-50'
+              }
+            >
+              {bulkBusy ? '…' : action.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            disabled={bulkBusy}
+            onClick={clearSelection}
+            className="btn-ghost ml-auto px-3 py-1.5 text-[11px] uppercase tracking-wide"
+          >
+            Clear
+          </button>
+        </div>
+      ) : null}
+
       {loading ? <LoadingBlock label="Loading products…" /> : null}
 
       <div className={`table-wrap ${loading ? 'hidden' : ''}`}>
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-[#2d2b2b]/8 bg-[#faf7f2] text-[10px] tracking-[0.14em] text-[#7a736c] uppercase">
             <tr>
+              <th className="w-10 px-4 py-3">
+                <input
+                  type="checkbox"
+                  aria-label="Select all visible products"
+                  checked={allFilteredSelected}
+                  ref={(el) => {
+                    if (el) el.indeterminate = someFilteredSelected && !allFilteredSelected;
+                  }}
+                  onChange={toggleAllFiltered}
+                  disabled={!filteredIds.length}
+                  className="h-4 w-4 accent-[#5e062a]"
+                />
+              </th>
               <th className="px-4 py-3 font-semibold">Product</th>
               <th className="px-4 py-3 font-semibold">Price</th>
               <th className="px-4 py-3 font-semibold">Category</th>
@@ -196,50 +349,66 @@ function ProductsInner() {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#2d2b2b]/6">
-            {filtered.map((p) => (
-              <tr key={p.slug} className="hover:bg-[#faf7f2]/80">
-                <td className="px-4 py-3">
-                  <Link href={`/products/${p.slug}`} className="flex items-center gap-3">
-                    <span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-md bg-[#ebe3da]">
-                      {p.image ? (
-                        <Image src={p.image} alt="" fill className="object-cover" sizes="40px" unoptimized />
-                      ) : null}
+            {filtered.map((p) => {
+              const isChecked = selected.has(p.id);
+              return (
+                <tr
+                  key={p.slug}
+                  className={`hover:bg-[#faf7f2]/80 ${isChecked ? 'bg-[#5e062a]/[0.04]' : ''}`}
+                >
+                  <td className="px-4 py-3">
+                    <input
+                      type="checkbox"
+                      aria-label={`Select ${p.name}`}
+                      checked={isChecked}
+                      disabled={!p.id}
+                      onChange={() => toggleOne(p.id)}
+                      className="h-4 w-4 accent-[#5e062a]"
+                    />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Link href={`/products/${p.slug}`} className="flex items-center gap-3">
+                      <span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-md bg-[#ebe3da]">
+                        {p.image ? (
+                          <Image src={p.image} alt="" fill className="object-cover" sizes="40px" unoptimized />
+                        ) : null}
+                      </span>
+                      <span>
+                        <span className="block font-medium text-[#2d2b2b]">{p.name}</span>
+                        <span className="block text-xs text-[#7a736c]">{p.slug}</span>
+                      </span>
+                    </Link>
+                  </td>
+                  <td className="font-num px-4 py-3">{money(p.price)}</td>
+                  <td className="px-4 py-3">{labelCategory(p.category, meta.categories)}</td>
+                  <td className="px-4 py-3">{labelCollection(p.collection, meta.collections)}</td>
+                  <td className="font-num px-4 py-3">{p.colors || '—'}</td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${
+                        p.status === 'active'
+                          ? 'bg-emerald-50 text-emerald-800'
+                          : 'bg-amber-50 text-amber-800'
+                      }`}
+                    >
+                      {p.status}
                     </span>
-                    <span>
-                      <span className="block font-medium text-[#2d2b2b]">{p.name}</span>
-                      <span className="block text-xs text-[#7a736c]">{p.slug}</span>
-                    </span>
-                  </Link>
-                </td>
-                <td className="font-num px-4 py-3">{money(p.price)}</td>
-                <td className="px-4 py-3">{labelCategory(p.category, meta.categories)}</td>
-                <td className="px-4 py-3">{labelCollection(p.collection, meta.collections)}</td>
-                <td className="font-num px-4 py-3">{p.colors || '—'}</td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${
-                      p.status === 'active'
-                        ? 'bg-emerald-50 text-emerald-800'
-                        : 'bg-amber-50 text-amber-800'
-                    }`}
-                  >
-                    {p.status}
-                  </span>
-                </td>
-                <td className="font-num px-4 py-3">
-                  {p.outOfStock || p.stock <= 0 ? (
-                    <span className="text-[#5e062a]">Out</span>
-                  ) : p.stock <= 3 ? (
-                    <span className="text-amber-700">{p.stock} low</span>
-                  ) : (
-                    p.stock
-                  )}
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="font-num px-4 py-3">
+                    {p.outOfStock || p.stock <= 0 ? (
+                      <span className="text-[#5e062a]">Out</span>
+                    ) : p.stock <= 3 ? (
+                      <span className="text-amber-700">{p.stock} low</span>
+                    ) : (
+                      p.stock
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
             {!filtered.length && (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-sm text-[#7a736c]">
+                <td colSpan={8} className="px-4 py-10 text-center text-sm text-[#7a736c]">
                   No products yet.{' '}
                   <Link href="/products/new" className="text-[#5e062a]">
                     Add the first piece

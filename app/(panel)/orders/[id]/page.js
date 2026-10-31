@@ -348,6 +348,24 @@ export default function OrderDetailPage() {
             ) : null}
             {order.notes ? <p className="mt-2 text-xs text-[#7a736c]">{order.notes}</p> : null}
           </div>
+          {(order.giftWrap || order.giftMessage) && (
+            <div className="border-t border-[#2d2b2b]/8 pt-4">
+              <p className="font-label text-[10px] text-[#d4af64]">Gift</p>
+              {order.giftWrap ? (
+                <p className="mt-2 text-sm">
+                  Gift wrap
+                  {order.giftWrapFee > 0 ? (
+                    <span className="font-num text-[#7a736c]"> · {money(order.giftWrapFee)}</span>
+                  ) : null}
+                </p>
+              ) : null}
+              {order.giftMessage ? (
+                <blockquote className="mt-3 rounded-lg border border-[#d4af64]/35 bg-[#faf7f2] px-3 py-2.5 text-sm italic leading-relaxed text-[#2d2b2b]">
+                  {order.giftMessage}
+                </blockquote>
+              ) : null}
+            </div>
+          )}
         </div>
 
         <div className="card overflow-hidden lg:col-span-2">
@@ -407,6 +425,18 @@ export default function OrderDetailPage() {
               <span>Subtotal</span>
               <span className="font-num text-[#2d2b2b]">{money(order.subtotal ?? order.total)}</span>
             </div>
+            {order.discountAmount > 0 ? (
+              <div className="flex justify-between text-sm text-emerald-800">
+                <span>Discount{order.discountCode ? ` (${order.discountCode})` : ''}</span>
+                <span className="font-num">−{money(order.discountAmount)}</span>
+              </div>
+            ) : null}
+            {order.giftWrap && order.giftWrapFee > 0 ? (
+              <div className="flex justify-between text-sm text-[#7a736c]">
+                <span>Gift wrap</span>
+                <span className="font-num text-[#2d2b2b]">{money(order.giftWrapFee)}</span>
+              </div>
+            ) : null}
             <div className="flex justify-between text-sm text-[#7a736c]">
               <span>Shipping</span>
               <span className="font-num text-[#2d2b2b]">{money(order.shippingFee || 0)}</span>
