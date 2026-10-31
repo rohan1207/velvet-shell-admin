@@ -198,7 +198,10 @@ export default function GiftOptionsPage() {
               type="number"
               value={String(form.messageMaxLength ?? 200)}
               onChange={(v) =>
-                update('messageMaxLength', Math.min(500, Math.max(20, Math.round(Number(v) || 200)))}
+                update(
+                  'messageMaxLength',
+                  Math.min(500, Math.max(20, Math.round(Number(v) || 200))),
+                )
               }
             />
           </div>
