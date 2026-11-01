@@ -3115,51 +3115,51 @@
   "testimonials": [
     {
       "id": "ananya",
-      "name": "Ananya Mehra",
+      "name": "Ananya M.",
       "place": "Jaipur",
-      "image": "/images/testimonials/testimonial-ananya.jpg",
+      "image": "/images/testimonials/review-packaging-unbox.jpg",
       "image2": "",
-      "quote": "I ordered the Flower In The Rain bracelet for my sister’s birthday. The box arrived looking like a gift from a private atelier.",
+      "quote": "Ordered for my sister’s birthday. Packaging felt premium — shell box, ribbon, everything. Bracelet looks exactly like the listing.",
       "piece": "Flower In The Rain Bracelet",
       "active": true
     },
     {
       "id": "meera",
-      "name": "Meera Kapoor",
+      "name": "Meera K.",
       "place": "Mumbai",
-      "image": "/images/testimonials/testimonial-meera.jpg",
+      "image": "/images/testimonials/review-earrings-vanity.jpg",
       "image2": "",
-      "quote": "I wear the phalaenopsis hoops almost every day now.",
+      "quote": "Bought the orchid hoops after seeing them online. Light, no irritation. Photo is from my bathroom counter the morning they arrived.",
       "piece": "Phalaenopsis Flower Hoops",
       "active": true
     },
     {
       "id": "arjun",
-      "name": "Arjun Desai",
+      "name": "Arjun D.",
       "place": "Bengaluru",
-      "image": "/images/testimonials/testimonial-arjun.jpg",
+      "image": "/images/testimonials/review-brooch-blouse.jpg",
       "image2": "",
-      "quote": "Bought the calla lily brooch for my mother.",
+      "quote": "Gifted the calla lily brooch to my mother. She pinned it on her silk blouse the same evening.",
       "piece": "Calla Lily Brooch",
       "active": true
     },
     {
       "id": "isha",
-      "name": "Isha Nair",
+      "name": "Isha N.",
       "place": "Kochi",
-      "image": "/images/testimonials/testimonial-isha.jpg",
+      "image": "/images/testimonials/review-ring-hand-cafe.jpg",
       "image2": "",
-      "quote": "The aquamarine butterfly ring looks exactly like the photos.",
+      "quote": "Butterfly ring matches the site photos. Get compliments every time I’m out.",
       "piece": "Aquamarine Butterfly Ring",
       "active": true
     },
     {
       "id": "priya",
-      "name": "Priya Shah",
+      "name": "Priya S.",
       "place": "Ahmedabad",
-      "image": "/images/testimonials/testimonial-priya.jpg",
+      "image": "/images/testimonials/review-bracelet-hand-bed.jpg",
       "image2": "",
-      "quote": "I stacked the lotus whisper with a simple chain and it felt like my own edit.",
+      "quote": "Lotus whisper bracelet is soft and pretty. Photo taken the morning after delivery.",
       "piece": "Lotus Whisper Bracelet",
       "active": true
     }
