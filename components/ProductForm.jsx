@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { slugify } from '@/lib/format';
 import { DEFAULT_SHIPPING, normalizeShipping } from '@/lib/shipping';
+import { parseSwatch, serializeSwatch, swatchStyle } from '@/lib/swatch';
 
 function materialForColor(label = '') {
   const l = String(label).toLowerCase();
@@ -128,6 +129,18 @@ const SWATCH_PRESETS = [
   { label: 'White', swatch: '#F5F5F5' },
   { label: 'Purple', swatch: '#6B3FA0' },
   { label: 'Clear', swatch: '#E8EEF2' },
+];
+
+/** Two-tone swatches (e.g. stone + metal) — stored as `#A/#B`. */
+const TWO_TONE_PRESETS = [
+  { label: 'White / Gold', swatch: '#F5F5F5/#D4AF64' },
+  { label: 'Pink / Gold', swatch: '#E8B4C4/#D4AF64' },
+  { label: 'Green / Gold', swatch: '#2F6B4F/#D4AF64' },
+  { label: 'Blue / Gold', swatch: '#4A7BA7/#D4AF64' },
+  { label: 'Silver / Gold', swatch: '#C5C5C5/#D4AF64' },
+  { label: 'White / Silver', swatch: '#F5F5F5/#C5C5C5' },
+  { label: 'Pink / Silver', swatch: '#E8B4C4/#C5C5C5' },
+  { label: 'Green / Silver', swatch: '#2F6B4F/#C5C5C5' },
 ];
 
 export default function ProductForm({
@@ -973,7 +986,7 @@ export default function ProductForm({
                     >
                       <span
                         className="h-3 w-3 rounded-full border border-black/10"
-                        style={{ background: v.colorSwatch }}
+                        style={swatchStyle(v.colorSwatch)}
                       />
                       {v.colorLabel}
                       {v.isPrimary ? ' · primary' : ''}
@@ -1013,16 +1026,36 @@ export default function ProductForm({
                 <button
                   key={preset.label}
                   type="button"
-                  className="rounded-full border border-[#2d2b2b]/12 px-3 py-1 text-[11px]"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[#2d2b2b]/12 px-3 py-1 text-[11px]"
                   onClick={() => addColor(preset)}
                 >
+                  <span
+                    className="h-2.5 w-2.5 rounded-full border border-black/10"
+                    style={swatchStyle(preset.swatch)}
+                  />
+                  + {preset.label}
+                </button>
+              ))}
+              {TWO_TONE_PRESETS.map((preset) => (
+                <button
+                  key={preset.label}
+                  type="button"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[#5e062a]/20 bg-[#5e062a]/[0.03] px-3 py-1 text-[11px] text-[#5e062a]"
+                  onClick={() => addColor(preset)}
+                >
+                  <span
+                    className="h-2.5 w-2.5 rounded-full border border-black/10"
+                    style={swatchStyle(preset.swatch)}
+                  />
                   + {preset.label}
                 </button>
               ))}
               <button
                 type="button"
                 className="rounded-full border border-dashed border-[#2d2b2b]/25 px-3 py-1 text-[11px]"
-                onClick={() => addColor({ label: `Color ${form.variants.length + 1}`, swatch: '#CCCCCC' })}
+                onClick={() =>
+                  addColor({ label: `Color ${form.variants.length + 1}`, swatch: '#CCCCCC' })
+                }
               >
                 + Custom color
               </button>
@@ -1077,12 +1110,13 @@ export default function ProductForm({
             </p>
           </div>
           {form.hasColorVariants && (
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-end gap-3">
               <label className="block">
                 <span className="text-xs text-[#7a736c]">Color name</span>
                 <input
                   className="input mt-1"
                   value={variant.colorLabel}
+                  placeholder="e.g. Pink / Gold"
                   onChange={(e) => {
                     const colorLabel = e.target.value;
                     const next = { colorLabel };
@@ -1094,18 +1128,72 @@ export default function ProductForm({
                   }}
                 />
               </label>
-              <label className="block">
-                <span className="text-xs text-[#7a736c]">Swatch</span>
-                <input
-                  className="input mt-1 h-11 w-20 p-1"
-                  type="color"
-                  value={variant.colorSwatch || '#C5C5C5'}
-                  onChange={(e) =>
-                    patchVariant(form.activeVariantIndex, { colorSwatch: e.target.value })
-                  }
-                />
-              </label>
-              <label className="flex items-center gap-2 pt-6 text-sm">
+              {(() => {
+                const tones = parseSwatch(variant.colorSwatch);
+                return (
+                  <>
+                    <label className="block">
+                      <span className="text-xs text-[#7a736c]">Swatch colour 1</span>
+                      <input
+                        className="input mt-1 h-11 w-20 p-1"
+                        type="color"
+                        value={tones.primary}
+                        onChange={(e) =>
+                          patchVariant(form.activeVariantIndex, {
+                            colorSwatch: serializeSwatch(e.target.value, tones.secondary),
+                          })
+                        }
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-xs text-[#7a736c]">Swatch colour 2 (optional)</span>
+                      <div className="mt-1 flex items-center gap-2">
+                        <input
+                          className="input h-11 w-20 p-1"
+                          type="color"
+                          value={tones.secondary || tones.primary}
+                          onChange={(e) =>
+                            patchVariant(form.activeVariantIndex, {
+                              colorSwatch: serializeSwatch(tones.primary, e.target.value),
+                            })
+                          }
+                        />
+                        {tones.secondary ? (
+                          <button
+                            type="button"
+                            className="rounded-full border border-[#2d2b2b]/15 px-2.5 py-1.5 text-[11px] text-[#7a736c]"
+                            onClick={() =>
+                              patchVariant(form.activeVariantIndex, {
+                                colorSwatch: serializeSwatch(tones.primary, null),
+                              })
+                            }
+                          >
+                            Clear 2nd
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="rounded-full border border-[#5e062a]/25 px-2.5 py-1.5 text-[11px] text-[#5e062a]"
+                            onClick={() =>
+                              patchVariant(form.activeVariantIndex, {
+                                colorSwatch: serializeSwatch(tones.primary, '#D4AF64'),
+                              })
+                            }
+                          >
+                            Add 2nd colour
+                          </button>
+                        )}
+                        <span
+                          className="h-8 w-8 rounded-full border border-black/10 shadow-sm"
+                          style={swatchStyle(variant.colorSwatch)}
+                          title="Preview"
+                        />
+                      </div>
+                    </label>
+                  </>
+                );
+              })()}
+              <label className="flex items-center gap-2 pb-2 text-sm">
                 <input
                   type="checkbox"
                   checked={!!variant.isPrimary}
@@ -1337,7 +1425,7 @@ export default function ProductForm({
             <div className="flex items-center gap-2 rounded-full border border-[#2d2b2b]/10 bg-[#faf7f2] px-3 py-1.5 text-xs text-[#2d2b2b]">
               <span
                 className="h-3 w-3 rounded-full border border-black/10"
-                style={{ background: variant.colorSwatch }}
+                style={swatchStyle(variant.colorSwatch)}
               />
               {variant.colorLabel}
               <span className="text-[#7a736c]">
@@ -1405,7 +1493,7 @@ export default function ProductForm({
                     <div className="flex items-center gap-2 text-sm font-medium text-[#2d2b2b]">
                       <span
                         className="h-3.5 w-3.5 rounded-full border border-black/10"
-                        style={{ background: v.colorSwatch }}
+                        style={swatchStyle(v.colorSwatch)}
                       />
                       {v.colorLabel}
                       {selected ? (
